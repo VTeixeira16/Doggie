@@ -79,7 +79,7 @@ public class GameScreenIntro implements Screen, InputProcessor{
 		frameAtual = 0;
 		
 		
-		Texture doggieTx = manager.get("cao2.png", Texture.class);
+//		Texture doggieTx = manager.get("cao2.png", Texture.class);
 		doggie = new Sprite(cao[frameAtual]);
 //		doggie.setSize(100, 100);
 //		doggie.setCenter(0.5f,0.5f);

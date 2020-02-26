@@ -1,4 +1,5 @@
 package com.newhorizon.doggie;
+import com.newhorizon.doggie.Doggie;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -16,6 +17,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+
 public class GameScreenIntro implements Screen, InputProcessor{
 	
 	private AssetManager manager;
@@ -25,12 +27,13 @@ public class GameScreenIntro implements Screen, InputProcessor{
 	Viewport viewport;
 	OrthogonalTiledMapRenderer tiledMapRenderer;
 	
-	private Sprite doggie;
+//	private Sprite doggie;
 	private Texture cao[];
 	
 	private float tempoProx;
 	private int frameAtual;
 	
+	private Doggie doggie;
 	
 	
 
@@ -69,21 +72,23 @@ public class GameScreenIntro implements Screen, InputProcessor{
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMapIntro);
 		
 		batch = new SpriteBatch();
-		cao = new Texture[3];
-		for(int i = 1; i<=3; i++) {
-			cao[i-1] = manager.get("cao" + i + ".png");
-		}
+//		cao = new Texture[3];
+//		for(int i = 1; i<=3; i++) {
+//			cao[i-1] = manager.get("cao" + i + ".png");
+//		}
 		
 		
 		tempoProx = 0.08f;
 		frameAtual = 0;
 		
+		Gdx.app.log("log","Desenhando Doggie");
+		doggie = new Doggie(0,0);
 		
 //		Texture doggieTx = manager.get("cao2.png", Texture.class);
-		doggie = new Sprite(cao[frameAtual]);
+//		doggie = new Sprite(cao[frameAtual]);
 //		doggie.setSize(100, 100);
 //		doggie.setCenter(0.5f,0.5f);
-		doggie.setPosition(128, 128);
+//		doggie.setPosition(128, 128);
 		Gdx.input.setInputProcessor(this);
 	}
 
@@ -91,14 +96,12 @@ public class GameScreenIntro implements Screen, InputProcessor{
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
-
-		
 		Gdx.app.log("log", "GameScreenIntro Render");
 		Gdx.gl.glClearColor(1,1,1,1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		camera1.update();
-		camera1.position.set(doggie.getX() + 200 ,doggie.getY (),0);
+		camera1.position.set(doggie.corpo.getX() ,doggie.corpo.getY (),0);
 		tiledMapRenderer.setView(camera1);
 		tiledMapRenderer.render();
 
@@ -111,11 +114,12 @@ public class GameScreenIntro implements Screen, InputProcessor{
 		
 		batch.setProjectionMatrix(camera1.combined);
 		batch.begin();
-		batch.draw(cao[frameAtual],256,128,100,60);
+		
+		Desenha();
 		
 
 		
-		doggie.draw(batch);
+//		doggie.draw(batch);
 		
 		
 
@@ -124,11 +128,11 @@ public class GameScreenIntro implements Screen, InputProcessor{
 
 		
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-        	doggie.setX(doggie.getX() - 6);
+        	doggie.corpo.setX(doggie.corpo.getX() - 6);
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-        	doggie.setX(doggie.getX() + 6);
+        	doggie.corpo.setX(doggie.corpo.getX() + 6);
         }
         	
         	/*
@@ -145,10 +149,20 @@ public class GameScreenIntro implements Screen, InputProcessor{
 
         if(Gdx.input.isKeyPressed(Input.Keys.NUM_2))
         */
-
+        
+        doggie.update(frameAtual);
 		
 	}
-
+	private void Desenha()
+	{
+		
+		
+//		batch.draw(cao[frameAtual],256,128,100,60);
+		Gdx.app.log("log","Desenhando Doggie");
+		doggie.draw(batch);
+		
+	}
+	
 	@Override
 	public void resize(int width, int height) {
 		// TODO Auto-generated method stub

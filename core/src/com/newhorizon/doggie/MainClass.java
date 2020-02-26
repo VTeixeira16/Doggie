@@ -17,7 +17,6 @@ public class MainClass extends Game implements ApplicationListener {
 
 	@Override
 	public void create() {
-		// TODO Auto-generated method stub
 		
 		manager = new AssetManager();
 		manager.setLoader(TiledMap.class, loader);
@@ -27,7 +26,7 @@ public class MainClass extends Game implements ApplicationListener {
 		
 		for(int c = 1; c<=3; c++) {
 			manager.load("cao" + c + ".png", Texture.class);
-			Gdx.app.log("log", "Carregando");
+			Gdx.app.log("log", "Carregando Cao" + c);
 
 		}
 		manager.finishLoading();
@@ -35,7 +34,6 @@ public class MainClass extends Game implements ApplicationListener {
 	}
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
 		
 	}
 	@Override

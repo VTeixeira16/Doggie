@@ -36,7 +36,7 @@ public class Doggie {
 	public void draw(SpriteBatch batch)
 	{
 		batch.draw(framesCao[(int)auxFrames%3], corpo.x, corpo.y);
-		Gdx.app.log("log","frameAtual " + auxFrames);
+//		Gdx.app.log("log","frameAtual " + auxFrames);
 		
 	}
 	public void update(float time)

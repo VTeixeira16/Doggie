@@ -28,7 +28,9 @@ public class GameScreenIntro implements Screen, InputProcessor{
 	OrthogonalTiledMapRenderer tiledMapRenderer;
 	
 //	private Sprite doggie;
-	private Texture cao[];
+//	private Texture cao[];
+	
+	private Fundo fundo;
 	
 	private float tempoProx;
 	private int frameAtual;
@@ -57,6 +59,8 @@ public class GameScreenIntro implements Screen, InputProcessor{
 		
 		Gdx.gl.glClearColor(1,1,1,1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
+		fundo = new Fundo();
 		
 		
 		camera1 = new OrthographicCamera();
@@ -96,14 +100,11 @@ public class GameScreenIntro implements Screen, InputProcessor{
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
-		Gdx.app.log("log", "GameScreenIntro Render");
+//		Gdx.app.log("log", "GameScreenIntro Render");
 		Gdx.gl.glClearColor(1,1,1,1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		camera1.update();
-		camera1.position.set(doggie.corpo.getX() ,doggie.corpo.getY (),0);
-		tiledMapRenderer.setView(camera1);
-		tiledMapRenderer.render();
+
 
 		tempoProx -= Gdx.graphics.getDeltaTime();
 		if(tempoProx <= 0) {
@@ -124,6 +125,12 @@ public class GameScreenIntro implements Screen, InputProcessor{
 		
 
 		batch.end();
+		
+		
+		camera1.update();
+		camera1.position.set(doggie.corpo.getX() ,doggie.corpo.getY (),0);
+		tiledMapRenderer.setView(camera1);
+		tiledMapRenderer.render();
 
 
 		
@@ -149,7 +156,7 @@ public class GameScreenIntro implements Screen, InputProcessor{
 
         if(Gdx.input.isKeyPressed(Input.Keys.NUM_2))
         */
-        
+
         doggie.update(frameAtual);
 		
 	}
@@ -158,7 +165,9 @@ public class GameScreenIntro implements Screen, InputProcessor{
 		
 		
 //		batch.draw(cao[frameAtual],256,128,100,60);
-		Gdx.app.log("log","Desenhando Doggie");
+//		Gdx.app.log("log","Desenhando Doggie");
+		fundo.draw(batch);
+		
 		doggie.draw(batch);
 		
 	}

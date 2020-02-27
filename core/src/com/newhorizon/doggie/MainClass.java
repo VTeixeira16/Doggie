@@ -24,11 +24,11 @@ public class MainClass extends Game implements ApplicationListener {
 //		manager.load("Tiled/mapaIntro.tmx", TiledMap.class);
 		
 		
-		for(int c = 1; c<=3; c++) {
-			manager.load("cao" + c + ".png", Texture.class);
-			Gdx.app.log("log", "Carregando Cao" + c);
-
-		}
+//		for(int c = 1; c<=3; c++) {
+//			manager.load("cao" + c + ".png", Texture.class);
+//			Gdx.app.log("log", "Carregando Cao" + c);
+//
+//		}
 		manager.finishLoading();
 		setScreen(new SplashScreen(this, manager));
 	}
@@ -39,7 +39,7 @@ public class MainClass extends Game implements ApplicationListener {
 	@Override
 	public void render() {
 		 super.render();
-		 Gdx.app.log("log", "MainClass");
+//		 Gdx.app.log("log", "MainClass");
 		
 	}
 	@Override

@@ -1,6 +1,5 @@
 package com.newhorizon.doggie;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -8,15 +7,10 @@ public class Fundo {
 
 	private Texture texture;
 	
-	private float posX1;
-	private float posX2;
-	
 	public Fundo()
 	{
 		texture = new Texture("Tiled/tileset/BG/BG.png");
 		
-		posX1 = 0;
-		posX2 = Gdx.graphics.getWidth();
 		
 	}
 	
@@ -24,21 +18,16 @@ public class Fundo {
 	{
 		// CRIAR CLASSE DE CONSTANTES
 		
-		batch.draw(texture, posX1, 0, Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-		batch.draw(texture, posX2, 0, Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+		batch.draw(texture, 0, 0, 1000,750);
+		batch.draw(texture, 1000, 0, 1000,750);
+		batch.draw(texture, 2000, 0, 1000,750);
+		batch.draw(texture, 3000, 0, 1000,750);
 	}
 	
-	public void update(float time)
+	public void update()
 	{
-		 // AQUI OCORRER� A MOVIMENTA플O DO MAPA
-		if(posX1 + Gdx.graphics.getWidth() <=0) {
-			posX1 = Gdx.graphics.getWidth();
-			posX2 = 0;			
-		}
-		if(posX2 + Gdx.graphics.getWidth() <=0) {
-			posX2 = Gdx.graphics.getWidth();
-			posX1 = 0;			
-		}		
+		 // AQUI PODER� SER IMPLEMENTADO A MOVIMENTA플O DO MAPA
+
 	}
 	
 	public void dispose()

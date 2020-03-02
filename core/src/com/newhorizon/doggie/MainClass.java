@@ -14,10 +14,14 @@ public class MainClass extends Game implements ApplicationListener {
 
 //	private SplashScreen splashScreen = new SplashScreen();
 //	private int number = SplashScreen.Numero;
+	public int faseAtual;
+	
+	
 
 	@Override
 	public void create() {
 		
+		faseAtual = 0;
 		manager = new AssetManager();
 		manager.setLoader(TiledMap.class, loader);
 		manager.load("Tiled/mapa1.tmx", TiledMap.class);

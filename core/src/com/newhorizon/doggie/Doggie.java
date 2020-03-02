@@ -1,10 +1,8 @@
 package com.newhorizon.doggie;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.newhorizon.doggie.MainClass;
 
 public class Doggie {
 		
@@ -15,6 +13,9 @@ public class Doggie {
 	public Texture[] framesCao;
 	
 	private float auxFrames;	
+	int velocidade = 6;
+	
+	
 		
 	public Doggie (int posX, int posY)
 	{

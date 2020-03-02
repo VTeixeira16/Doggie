@@ -1,5 +1,6 @@
 package com.newhorizon.doggie;
 
+import com.newhorizon.doggie.MainClass;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -17,8 +18,8 @@ public class SplashScreen extends Game implements Screen {
 	private Texture barra;
 	
 	private float time = 0;
-	
-	
+		
+	public MainClass mainClass = new MainClass();
 	
 //	public static int Numero = 0;
 	
@@ -51,7 +52,9 @@ public class SplashScreen extends Game implements Screen {
 		
 		if (manager.update() && time >= 0 ) { // Original é 2 segundos
 //			game.setScreen(new MainScreen(game, manager));
-			game.setScreen(new GameScreenIntro(game, manager));
+			if(mainClass.faseAtual == 0)
+				game.setScreen(new GameScreenIntro(game, manager));
+			
 			Gdx.app.log("log","Splash to Game");
 			
 		}

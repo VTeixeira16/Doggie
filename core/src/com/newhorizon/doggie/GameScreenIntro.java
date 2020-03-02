@@ -1,6 +1,6 @@
 package com.newhorizon.doggie;
-import com.newhorizon.doggie.Doggie;
 
+import com.newhorizon.doggie.MainClass;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -9,8 +9,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -30,6 +28,7 @@ public class GameScreenIntro implements Screen, InputProcessor{
 //	private Sprite doggie;
 //	private Texture cao[];
 	
+	public MainClass mainClass = new MainClass();
 	private Fundo fundo;
 	
 	private float tempoProx;
@@ -135,11 +134,11 @@ public class GameScreenIntro implements Screen, InputProcessor{
 
 		
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-        	doggie.corpo.setX(doggie.corpo.getX() - 6);
+        	doggie.corpo.setX(doggie.corpo.getX() - doggie.velocidade);
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-        	doggie.corpo.setX(doggie.corpo.getX() + 6);
+        	doggie.corpo.setX(doggie.corpo.getX() + doggie.velocidade);
         }
         	
         	/*
@@ -158,6 +157,7 @@ public class GameScreenIntro implements Screen, InputProcessor{
         */
 
         doggie.update(frameAtual);
+        fundo.update();
 		
 	}
 	private void Desenha()

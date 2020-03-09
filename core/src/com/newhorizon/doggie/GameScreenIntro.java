@@ -1,6 +1,5 @@
 package com.newhorizon.doggie;
 
-import com.newhorizon.doggie.MainClass;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -10,8 +9,13 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -21,6 +25,12 @@ public class GameScreenIntro implements Screen, InputProcessor{
 	private AssetManager manager;
 	private SpriteBatch batch;
 	TiledMap tiledMapIntro;
+	private TiledMapTileLayer PlataformasLayer;
+	TiledMapTileLayer camadaColisores;
+	MapObjects PlatColisor;
+	int camadaObjetos = 0;
+	MapObjects objetos;
+	
 	OrthographicCamera camera1;
 	Viewport viewport;
 	OrthogonalTiledMapRenderer tiledMapRenderer;
@@ -73,6 +83,21 @@ public class GameScreenIntro implements Screen, InputProcessor{
 		// Tiled
 		TiledMap tiledMapIntro = manager.get("Tiled/mapa1.tmx", TiledMap.class);
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMapIntro);
+		PlataformasLayer = (TiledMapTileLayer) tiledMapIntro.getLayers().get("Plataformas");
+		TiledMapTileLayer camadaColisores = (TiledMapTileLayer)tiledMapIntro.getLayers().get(camadaObjetos);
+		MapObjects objetos = camadaColisores.getObjects();
+		
+		for (RectangleMapObject rectangleObject : objetos.getByType(RectangleMapObject.class))
+		{
+			
+			Rectangle rectangle = rectangleObject.getRectangle();
+			if(Intersector.overlaps(rectangle, doggie.corpo));
+				{
+					Gdx.app.log("log", "Colisão Ocorreu");
+				}
+		}
+		
+		
 		
 		batch = new SpriteBatch();
 //		cao = new Texture[3];
@@ -93,6 +118,15 @@ public class GameScreenIntro implements Screen, InputProcessor{
 //		doggie.setCenter(0.5f,0.5f);
 //		doggie.setPosition(128, 128);
 		Gdx.input.setInputProcessor(this);
+		
+//		for (RectangleMapObject rectangleObject : objetos.getByType(RectangleMapObject.class))
+		{
+//			Rectangle rectangle = rectangleObject.getRectangle();
+//			if(Intersector.overlaps(rectangle, doggie.corpo));
+//				{
+//					Gdx.app.log("log", "Colisão Ocorreu");
+//				}
+		}
 	}
 
 	
@@ -117,6 +151,10 @@ public class GameScreenIntro implements Screen, InputProcessor{
 		
 		Desenha();
 		
+		if(mainClass.faseAtual == 0)
+		{
+			
+		}
 
 		
 //		doggie.draw(batch);
@@ -130,7 +168,6 @@ public class GameScreenIntro implements Screen, InputProcessor{
 		camera1.position.set(doggie.corpo.getX() ,doggie.corpo.getY (),0);
 		tiledMapRenderer.setView(camera1);
 		tiledMapRenderer.render();
-
 
 		
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
@@ -158,6 +195,8 @@ public class GameScreenIntro implements Screen, InputProcessor{
 
         doggie.update(frameAtual);
         fundo.update();
+        
+        
 		
 	}
 	private void Desenha()

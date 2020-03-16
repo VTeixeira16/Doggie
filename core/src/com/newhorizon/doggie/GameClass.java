@@ -4,6 +4,9 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.newhorizon.doggie.handlers.Content;
+import com.newhorizon.doggie.handlers.GameInputProcessor;
+import com.newhorizon.doggie.handlers.GameInputs;
 import com.newhorizon.doggie.handlers.GameStateManager;
 
 public class GameClass implements ApplicationListener {
@@ -11,6 +14,7 @@ public class GameClass implements ApplicationListener {
 	public static final String GameName = "Doggie";
 	public static final int V_WIDTH = 720;
 	public static final int V_HEIGHT = 480;
+	public static final int SCALE = 2;
 	
 	public static final float STEP = 1/60f;
 	private float accum;
@@ -20,8 +24,14 @@ public class GameClass implements ApplicationListener {
 	private OrthographicCamera camera2;
 	
 	private GameStateManager gsm;
+	public static Content res;
 	
 	public void create() {
+				
+		Gdx.input.setInputProcessor(new GameInputProcessor());
+		
+		res = new Content();
+		res.loadTexture("images/bunny.png", "doggie");
 		
 		sb = new SpriteBatch();
 		camera1 = new OrthographicCamera();
@@ -39,16 +49,20 @@ public class GameClass implements ApplicationListener {
 	}
 	@Override
 	public void render() {
-		 Gdx.app.log("log", "GameClass");
 		 accum += Gdx.graphics.getDeltaTime();
 		 while(accum >= STEP)
 		 {
-			 Gdx.app.log("log", "STEP = " + STEP);
-			 Gdx.app.log("log", "accum = " + accum);
 			 accum -= STEP;
 			 gsm.update(STEP);
 			 gsm.render();
+			 
+			 GameInputs.update();
 		 }
+		 
+		 sb.setProjectionMatrix(camera2.combined);
+		 sb.begin();
+		 sb.draw(res.getTexture("doggie"), 0 , 0 );
+		 sb.end();
 		 
 		
 	}

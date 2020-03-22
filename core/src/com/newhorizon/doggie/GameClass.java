@@ -32,7 +32,8 @@ public class GameClass implements ApplicationListener {
 		
 		res = new Content();
 		res.loadTexture("images/bunny.png", "doggie");
-		
+		res.loadTexture("images/crystal.png", "coleiras");
+		res.loadTexture("images/hud.png", "hud");
 		sb = new SpriteBatch();
 		camera1 = new OrthographicCamera();
 		camera1.setToOrtho(false, V_WIDTH, V_HEIGHT);

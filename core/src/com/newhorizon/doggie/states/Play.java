@@ -19,6 +19,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -26,6 +27,7 @@ import com.badlogic.gdx.utils.Array;
 import com.newhorizon.doggie.GameClass;
 import com.newhorizon.doggie.entities.Coleiras;
 import com.newhorizon.doggie.entities.Doggie;
+import com.newhorizon.doggie.entities.HUD;
 import com.newhorizon.doggie.handlers.GameInputs;
 import com.newhorizon.doggie.handlers.GameStateManager;
 import com.newhorizon.doggie.handlers.ListenerContatos;
@@ -49,6 +51,8 @@ public class Play extends GameState{
 	private Doggie doggie;
 	private Array <Coleiras> coleiras;
 	
+	private HUD hud;
+	
 	public Play(GameStateManager gsm)
 	{
 		super(gsm);
@@ -70,6 +74,9 @@ public class Play extends GameState{
 			
 		b2dCamera = new OrthographicCamera();
 		b2dCamera.setToOrtho(false, GameClass.V_WIDTH/PixelsPorMetro, GameClass.V_HEIGHT/PixelsPorMetro);
+		
+		//set up HUD
+		hud = new HUD(doggie);
 					
 	}
 	
@@ -81,14 +88,14 @@ public class Play extends GameState{
 			if(cl.isPlayerOnGround())
 			{
 				// Controle de pulo
-				doggie.getBody().applyForceToCenter(0, 250, true);
-				
-
+				doggie.getBody().applyForceToCenter(0, 250, true);	
 			}
 		}
+		
+		// Trocando plataforma que tera colisao
 		if(GameInputs.isPressed(GameInputs.BUTTON2))
 		{
-			
+			switchBlocks();
 		}
 		
 		
@@ -127,6 +134,14 @@ public class Play extends GameState{
 		//Limpando a tela
 		Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
+		//Configurando câmera para seguir o Doggie
+		camera1.position.set(
+				doggie.getPosition().x * PixelsPorMetro,
+				GameClass.V_WIDTH / 2,
+				0);
+		camera1.update();
+		
+		
 		// Desenha o Mapa
 		tmr.setView(camera1);
 		tmr.render();
@@ -140,6 +155,10 @@ public class Play extends GameState{
 		for(int i = 0; i < coleiras.size; i++) {
 			coleiras.get(i).render(sb);
 		}
+		
+		//Desenha HUD
+		sb.setProjectionMatrix(camera2.combined);
+		hud.render(sb);
 
 		// Desenha caixas de colisão
 		if(debug) {
@@ -159,8 +178,7 @@ public class Play extends GameState{
 			
 				
 				//Criando Doggie		
-//				bDef.position.set(160/PixelsPorMetro ,200/PixelsPorMetro);
-				bDef.position.set(70/PixelsPorMetro ,200/PixelsPorMetro);
+				bDef.position.set(250/PixelsPorMetro ,425/PixelsPorMetro);
 				bDef.type = BodyType.DynamicBody;
 				bDef.linearVelocity.set(.5f,0); // Velocidade do Doggie
 				Body body = world.createBody(bDef);
@@ -282,9 +300,38 @@ public class Play extends GameState{
 			coleiras.add(c);
 			
 			body.setUserData(c);
-					
-			
+						
 		}
 	}
 	
+	private void switchBlocks()
+	{
+		Filter filter = doggie.getBody().getFixtureList().first()
+						.getFilterData();
+		short bits = filter.maskBits;
+		
+		//Trocando para a próxima plataforma
+		if((bits & b2dVariaveis.BIT_PLATAFORMA) !=0)
+		{
+			bits &= ~b2dVariaveis.BIT_PLATAFORMA;
+			bits |= b2dVariaveis.BIT_PLATAFORMA_ELEV;
+		}
+		else if((bits & b2dVariaveis.BIT_PLATAFORMA_ELEV) !=0)
+		{
+			bits &= ~b2dVariaveis.BIT_PLATAFORMA_ELEV;
+			bits |= b2dVariaveis.BIT_PLATAFORMA;
+		}
+		
+		
+		// Configura nova mascára de bits
+		filter.maskBits = bits;
+		doggie.getBody().getFixtureList().first().setFilterData(filter);
+		
+		// Configura mascára de bits para os pés
+		filter = doggie.getBody().getFixtureList().get(1).getFilterData();
+		bits &= ~b2dVariaveis.BIT_COLEIRAS;
+		filter.maskBits = bits;
+		doggie.getBody().getFixtureList().get(1).setFilterData(filter);
+		
+	}
 }

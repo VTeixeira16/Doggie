@@ -21,7 +21,7 @@ public class GameClass implements ApplicationListener {
 	
 	private SpriteBatch sb;
 	private OrthographicCamera camera1;
-	private OrthographicCamera camera2;
+	private OrthographicCamera cameraHUD;
 	
 	private GameStateManager gsm;
 	public static Content res;
@@ -37,8 +37,8 @@ public class GameClass implements ApplicationListener {
 		sb = new SpriteBatch();
 		camera1 = new OrthographicCamera();
 		camera1.setToOrtho(false, V_WIDTH, V_HEIGHT);
-		camera2 = new OrthographicCamera();
-		camera2.setToOrtho(false, V_WIDTH, V_HEIGHT);
+		cameraHUD = new OrthographicCamera();
+		cameraHUD.setToOrtho(false, V_WIDTH, V_HEIGHT);
 		
 	
 		gsm = new GameStateManager(this);
@@ -60,7 +60,7 @@ public class GameClass implements ApplicationListener {
 			 GameInputs.update();
 		 }
 		 
-		 sb.setProjectionMatrix(camera2.combined);
+		 sb.setProjectionMatrix(cameraHUD.combined);
 		 sb.begin();
 		 sb.draw(res.getTexture("doggie"), 0 , 0 );
 		 sb.end();
@@ -83,6 +83,6 @@ public class GameClass implements ApplicationListener {
 	
 	public SpriteBatch getSpriteBatch() { return sb;}
 	public OrthographicCamera getCamera1() {return camera1;}
-	public OrthographicCamera getCamera2() {return camera2;}
+	public OrthographicCamera getcameraHUD() {return cameraHUD;}
 	
 }

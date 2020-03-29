@@ -157,7 +157,7 @@ public class Play extends GameState{
 		}
 		
 		//Desenha HUD
-		sb.setProjectionMatrix(camera2.combined);
+		sb.setProjectionMatrix(cameraHUD.combined);
 		hud.render(sb);
 
 		// Desenha caixas de colisão

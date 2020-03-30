@@ -3,6 +3,7 @@ package com.newhorizon.doggie.states;
 import static com.newhorizon.doggie.handlers.b2dVariaveis.PixelsPorMetro;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapLayer;
@@ -35,7 +36,7 @@ import com.newhorizon.doggie.handlers.b2dVariaveis;
 
 public class Play extends GameState{
 	
-	private boolean debug = false;
+	private boolean debug = true;
 	
 	private World world;
 	
@@ -52,6 +53,8 @@ public class Play extends GameState{
 	private Array <Coleiras> coleiras;
 	
 	private HUD hud;
+	
+	BodyDef DoggiebDef = new BodyDef();
 	
 	public Play(GameStateManager gsm)
 	{
@@ -83,17 +86,35 @@ public class Play extends GameState{
 
 	public void handleInput() 
 	{
-		if(GameInputs.isPressed(GameInputs.BUTTON1))
+		float velocidade = 2f;
+		Gdx.app.log("log", "Velocidade: " +doggie.getBody().getLinearVelocity().x);
+		if(Gdx.input.isKeyPressed(Input.Keys.LEFT))
+		{
+			if(cl.isPlayerOnGround())
+				doggie.getBody().setLinearVelocity(-velocidade, 0f);
+		}
+		else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+		{
+			if(cl.isPlayerOnGround())
+				doggie.getBody().setLinearVelocity(velocidade, 0f);
+		}
+		else
+		{ 
+			if(cl.isPlayerOnGround())
+				doggie.getBody().setLinearVelocity(0f, 0f);
+		}
+		
+		if(Gdx.input.isKeyPressed(Input.Keys.Z))
 		{
 			if(cl.isPlayerOnGround())
 			{
 				// Controle de pulo
-				doggie.getBody().applyForceToCenter(0, 250, true);	
+				doggie.getBody().applyForceToCenter(0, 325, true);   
 			}
 		}
 		
 		// Trocando plataforma que tera colisao
-		if(GameInputs.isPressed(GameInputs.BUTTON2))
+		if(Gdx.input.isKeyPressed(Input.Keys.X))
 		{
 			switchBlocks();
 		}
@@ -137,7 +158,7 @@ public class Play extends GameState{
 		//Configurando câmera para seguir o Doggie
 		camera1.position.set(
 				doggie.getPosition().x * PixelsPorMetro,
-				GameClass.V_WIDTH / 2,
+				doggie.getPosition().y * PixelsPorMetro,
 				0);
 		camera1.update();
 		
@@ -163,6 +184,11 @@ public class Play extends GameState{
 		// Desenha caixas de colisão
 		if(debug) {
 			b2dDR.render(world, b2dCamera.combined);
+			b2dCamera.position.set(
+					doggie.getPosition().x,
+					doggie.getPosition().y,
+					0);
+			b2dCamera.update();
 		}
 		
 	}
@@ -171,28 +197,28 @@ public class Play extends GameState{
 	private void createDoggie() {
 		
 		//Cria Plataforma
-				BodyDef bDef = new BodyDef();
+				
 				FixtureDef fDef = new FixtureDef();
 				PolygonShape shape = new PolygonShape();
 
 			
 				
 				//Criando Doggie		
-				bDef.position.set(250/PixelsPorMetro ,425/PixelsPorMetro);
-				bDef.type = BodyType.DynamicBody;
-				bDef.linearVelocity.set(.5f,0); // Velocidade do Doggie
-				Body body = world.createBody(bDef);
+				DoggiebDef.position.set(150/PixelsPorMetro ,400/PixelsPorMetro);
+				DoggiebDef.type = BodyType.DynamicBody;
+//				bDef.linearVelocity.set(.5f,0); // Velocidade do Doggie
+				Body body = world.createBody(DoggiebDef);
 				
 				shape.setAsBox(13/PixelsPorMetro , 13/PixelsPorMetro); // Controla tamanho da caixa de colusão.
 				fDef.shape = shape;
 				fDef.filter.categoryBits = b2dVariaveis.BIT_DOGGIE;
 				fDef.filter.maskBits = b2dVariaveis.BIT_PLATAFORMA | b2dVariaveis.BIT_COLEIRAS;
 				// Faz quicar/
-				fDef.restitution = 0.5f;
+				fDef.restitution = 0.2f;
 				body.createFixture(fDef).setUserData("doggie");
 				
 				//Criando sensor de pés
-				shape.setAsBox(2/PixelsPorMetro, 2/PixelsPorMetro, new Vector2(13, -13/PixelsPorMetro), 0);
+				shape.setAsBox(10/PixelsPorMetro, 6/PixelsPorMetro, new Vector2(0, -10/PixelsPorMetro), 0);
 				fDef.shape = shape;
 				fDef.filter.categoryBits = b2dVariaveis.BIT_DOGGIE;
 				fDef.filter.maskBits = b2dVariaveis.BIT_PLATAFORMA;
@@ -227,6 +253,7 @@ public class Play extends GameState{
 		
 		BodyDef bDef = new BodyDef();
 		FixtureDef fDef = new FixtureDef();
+		PolygonShape shape = new PolygonShape();
 		
 		// Indo para linha e coluna de cada layer
 		for(int linha = 0; linha < layer.getHeight(); linha++){
@@ -246,17 +273,23 @@ public class Play extends GameState{
 					(linha + 0.5f) * tileSize / PixelsPorMetro					
 				);
 				
-				ChainShape cs = new ChainShape();
-				Vector2[] v = new Vector2[3];
-				v[0] = new Vector2(
-						-tileSize / 2 / PixelsPorMetro, -tileSize / 2 / PixelsPorMetro);
-				v[1] = new Vector2(
-						-tileSize / 2 / PixelsPorMetro, tileSize / 2 / PixelsPorMetro);
-				v[2] = new Vector2(
-						tileSize / 2 / PixelsPorMetro, tileSize / 2 / PixelsPorMetro);
-				cs.createChain(v);
+//				ChainShape cs = new ChainShape();
+//				Vector2[] v = new Vector2[3];
+//				v[0] = new Vector2(
+//						-tileSize / 2 / PixelsPorMetro, -tileSize / 2 / PixelsPorMetro);
+//				v[1] = new Vector2(
+//						-tileSize / 2 / PixelsPorMetro, tileSize / 2 / PixelsPorMetro);
+//				v[2] = new Vector2(
+//						tileSize / 2 / PixelsPorMetro, tileSize / 2 / PixelsPorMetro);
+//				v[3] = new Vector2(
+//						tileSize / 2 / PixelsPorMetro, -tileSize / 2 / PixelsPorMetro);
+				
+
+				shape.setAsBox(32/PixelsPorMetro , 32/PixelsPorMetro);
+				
+//				cs.createChain(v);
 				fDef.friction = 0;
-				fDef.shape = cs;
+				fDef.shape = shape;
 				fDef.filter.categoryBits = bits;
 				fDef.filter.maskBits = b2dVariaveis.BIT_DOGGIE;
 				fDef.isSensor = false;

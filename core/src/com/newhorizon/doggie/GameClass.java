@@ -25,7 +25,7 @@ public class GameClass implements ApplicationListener {
 	
 	private GameStateManager gsm;
 	public static Content res;
-	
+	  
 	public void create() {
 				
 		Gdx.input.setInputProcessor(new GameInputProcessor());

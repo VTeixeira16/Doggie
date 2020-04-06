@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -87,7 +88,6 @@ public class Play extends GameState{
 	public void handleInput() 
 	{
 		float velocidade = 2f;
-		Gdx.app.log("log", "Velocidade: " +doggie.getBody().getLinearVelocity().x);
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT))
 		{
 			if(cl.isPlayerOnGround())
@@ -200,8 +200,6 @@ public class Play extends GameState{
 				
 				FixtureDef fDef = new FixtureDef();
 				PolygonShape shape = new PolygonShape();
-
-			
 				
 				//Criando Doggie		
 				DoggiebDef.position.set(150/PixelsPorMetro ,400/PixelsPorMetro);
@@ -216,7 +214,7 @@ public class Play extends GameState{
 				// Faz quicar/
 				fDef.restitution = 0.2f;
 				body.createFixture(fDef).setUserData("doggie");
-				
+
 				//Criando sensor de pés
 				shape.setAsBox(10/PixelsPorMetro, 6/PixelsPorMetro, new Vector2(0, -10/PixelsPorMetro), 0);
 				fDef.shape = shape;
@@ -224,6 +222,7 @@ public class Play extends GameState{
 				fDef.filter.maskBits = b2dVariaveis.BIT_PLATAFORMA;
 				fDef.isSensor = true;
 				body.createFixture(fDef).setUserData("footDoggie");
+				
 		
 				// Cria Doggie
 				doggie = new Doggie(body);

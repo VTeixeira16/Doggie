@@ -6,7 +6,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -19,7 +18,6 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -30,7 +28,6 @@ import com.newhorizon.doggie.GameClass;
 import com.newhorizon.doggie.entities.Coleiras;
 import com.newhorizon.doggie.entities.Doggie;
 import com.newhorizon.doggie.entities.HUD;
-import com.newhorizon.doggie.handlers.GameInputs;
 import com.newhorizon.doggie.handlers.GameStateManager;
 import com.newhorizon.doggie.handlers.ListenerContatos;
 import com.newhorizon.doggie.handlers.b2dVariaveis;
@@ -91,17 +88,28 @@ public class Play extends GameState{
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT))
 		{
 			if(cl.isPlayerOnGround())
+			{
 				doggie.getBody().setLinearVelocity(-velocidade, 0f);
+				doggie.flip = true;
+				doggie.emMovimento = true;
+			}
 		}
 		else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT))
 		{
 			if(cl.isPlayerOnGround())
+			{
 				doggie.getBody().setLinearVelocity(velocidade, 0f);
+				doggie.flip = false;
+				doggie.emMovimento = true;
+			}
 		}
 		else
 		{ 
 			if(cl.isPlayerOnGround())
+			{
 				doggie.getBody().setLinearVelocity(0f, 0f);
+				doggie.emMovimento = false;
+			}
 		}
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.Z))

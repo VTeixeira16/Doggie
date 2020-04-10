@@ -62,7 +62,7 @@ public class GameClass implements ApplicationListener {
 		 
 		 sb.setProjectionMatrix(cameraHUD.combined);
 		 sb.begin();
-		 sb.draw(res.getTexture("doggie"), 0 , 0 );
+//		 sb.draw(res.getTexture("doggie"), 0 , 0 );
 		 sb.end();
 		 
 		

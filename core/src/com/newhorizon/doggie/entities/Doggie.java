@@ -17,6 +17,8 @@ public class Doggie extends B2DSprite {
 		Texture tex = GameClass.res.getTexture("doggie");
 		TextureRegion[] spritesDoggie = TextureRegion.split(tex, 32, 32)[0]; // Recorte do SpriteSheet
 		
+		
+		
 		setAnimation(spritesDoggie, 1 / 12f);	// Velocidade da troca de frames
 	}
 	

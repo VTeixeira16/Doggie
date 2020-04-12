@@ -37,7 +37,10 @@ public class Doggie extends B2DMultiSprites {
 		animation.update(dt);
 		animationIdle.update(dt);
 		
-		if(this.getPosition().y < (0))
+		if(this.getPosition().x < 0)
+			body.setTransform(0, body.getPosition().y, 0);
+		
+		if(this.getPosition().y < 0)
 		{
 			RecebeDano();
 		}
@@ -47,7 +50,7 @@ public class Doggie extends B2DMultiSprites {
 	{
 
 		if(this.totalVidas > 0)
-			body.setTransform(100 /PixelsPorMetro, 200 /PixelsPorMetro, 0);
+			body.setTransform(50 /PixelsPorMetro, 100 /PixelsPorMetro, 0);
 		
 		setTotalVidas(this.totalVidas -1);
 

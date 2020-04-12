@@ -227,7 +227,7 @@ public class Play extends GameState{
 				PolygonShape shape = new PolygonShape();
 				
 				//Criando Doggie		
-				DoggiebDef.position.set(150/PixelsPorMetro ,200/PixelsPorMetro);
+				DoggiebDef.position.set(50/PixelsPorMetro ,100/PixelsPorMetro);
 				DoggiebDef.type = BodyType.DynamicBody;
 //				bDef.linearVelocity.set(.5f,0); // Velocidade do Doggie
 				Body body = world.createBody(DoggiebDef);

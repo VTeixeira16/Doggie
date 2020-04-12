@@ -146,7 +146,8 @@ public class Play extends GameState{
 			Body b = bodies.get(i);
 			coleiras.removeValue((Coleiras)b.getUserData(), true);
 			world.destroyBody(b);
-			doggie.collectColeiras();			
+			doggie.collectColeiras();	
+			Gdx.app.log("log", "Coleiras: " + Integer.toString(doggie.getNumColeiras()));
 		}
 		
 		bodies.clear();
@@ -157,6 +158,11 @@ public class Play extends GameState{
 			coleiras.get(i).update(dt);	
 		}
 		
+		
+		
+		
+		
+				
 	}
 	public void render () {
 		
@@ -169,6 +175,7 @@ public class Play extends GameState{
 				doggie.getPosition().y * PixelsPorMetro,
 				0);
 		camera1.update();
+		
 		
 		
 		// Desenha o Mapa

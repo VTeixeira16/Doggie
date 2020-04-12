@@ -29,7 +29,7 @@ public class B2DMultiSprites extends B2DSprite{
 	}
 	
 	public void update (float dt) {
-		
+		//A Classe Doggie possui essa implementação própria. Avaliar no futuro a possibilidade de exclusão dessa função.
 		animation.update(dt);
 		animationIdle.update(dt);
 	}
@@ -61,7 +61,7 @@ public class B2DMultiSprites extends B2DSprite{
 				body.getPosition().x * b2dVariaveis.PixelsPorMetro + widthIdle / 2,
 				body.getPosition().y * b2dVariaveis.PixelsPorMetro - heightIdle / 2, 
 				-widthIdle,
-				heightIdle);
+				heightIdle);		
 		}
 		else if (!flip && !emMovimento)
 		{

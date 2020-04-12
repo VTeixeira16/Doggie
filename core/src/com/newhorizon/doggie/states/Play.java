@@ -147,12 +147,14 @@ public class Play extends GameState{
 			coleiras.removeValue((Coleiras)b.getUserData(), true);
 			world.destroyBody(b);
 			doggie.collectColeiras();	
-			Gdx.app.log("log", "Coleiras: " + Integer.toString(doggie.getNumColeiras()));
 		}
 		
 		bodies.clear();
 		
+
 		doggie.update(dt);
+		
+
 
 		for(int i = 0; i < coleiras.size; i++) {
 			coleiras.get(i).update(dt);	
@@ -207,17 +209,25 @@ public class Play extends GameState{
 		}
 		
 	}
-	public void dispose() {}
+	public void dispose() {
+				
+		tiledMap.dispose();
+		tmr.dispose();
+		world.dispose();
+		sb.dispose();
+		b2dDR.dispose();
+	}
 	
 	private void createDoggie() {
 		
 		//Cria Plataforma
 				
+
 				FixtureDef fDef = new FixtureDef();
 				PolygonShape shape = new PolygonShape();
 				
 				//Criando Doggie		
-				DoggiebDef.position.set(150/PixelsPorMetro ,400/PixelsPorMetro);
+				DoggiebDef.position.set(150/PixelsPorMetro ,200/PixelsPorMetro);
 				DoggiebDef.type = BodyType.DynamicBody;
 //				bDef.linearVelocity.set(.5f,0); // Velocidade do Doggie
 				Body body = world.createBody(DoggiebDef);
@@ -241,7 +251,7 @@ public class Play extends GameState{
 		
 				// Cria Doggie
 				doggie = new Doggie(body);
-				
+				doggie.setTotalVidas(3);
 				body.setUserData(doggie);
 				
 	}

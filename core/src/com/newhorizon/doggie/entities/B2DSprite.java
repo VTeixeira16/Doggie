@@ -58,7 +58,7 @@ public class B2DSprite {
 	}
 	
 	public Body getBody() {return body;}
-	public Vector2 getPosition() {return body.getPosition(); }
+	public Vector2 getPosition() {return body.getPosition();}
 	public float getWidth() { return width;}
 	public float getHeigth() {return height;}
 }

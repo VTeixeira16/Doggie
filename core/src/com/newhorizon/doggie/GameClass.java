@@ -2,8 +2,11 @@ package com.newhorizon.doggie;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.newhorizon.doggie.handlers.Content;
 import com.newhorizon.doggie.handlers.GameInputProcessor;
 import com.newhorizon.doggie.handlers.GameInputs;
@@ -23,6 +26,10 @@ public class GameClass implements ApplicationListener {
 	private OrthographicCamera camera1;
 	private OrthographicCamera cameraHUD;
 	
+	private FreeTypeFontGenerator fontGenerator;
+	private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
+	public static BitmapFont font;
+	
 	private GameStateManager gsm;
 	public static Content res;
 	  
@@ -39,6 +46,18 @@ public class GameClass implements ApplicationListener {
 		camera1.setToOrtho(false, V_WIDTH, V_HEIGHT);
 		cameraHUD = new OrthographicCamera();
 		cameraHUD.setToOrtho(false, V_WIDTH, V_HEIGHT);
+		
+		//fonts
+		fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Arial Black.ttf"));
+		fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+		fontParameter.size = 18;
+		fontParameter.borderWidth = 1;
+		fontParameter.borderColor = Color.RED;
+		fontParameter.color = Color.WHITE;
+		font = fontGenerator.generateFont(fontParameter);
+		
+		
+		
 		
 	
 		gsm = new GameStateManager(this);
@@ -78,7 +97,7 @@ public class GameClass implements ApplicationListener {
 	}
 	@Override
 	public void dispose() {
-
+		font.dispose();
 	}
 	
 	public SpriteBatch getSpriteBatch() { return sb;}

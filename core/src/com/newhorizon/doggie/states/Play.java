@@ -28,8 +28,10 @@ import com.newhorizon.doggie.GameClass;
 import com.newhorizon.doggie.entities.Coleiras;
 import com.newhorizon.doggie.entities.Doggie;
 import com.newhorizon.doggie.entities.HUD;
+import com.newhorizon.doggie.entities.Inimigos;
 import com.newhorizon.doggie.handlers.GameStateManager;
 import com.newhorizon.doggie.handlers.ListenerContatos;
+import com.newhorizon.doggie.handlers.ThreadsDoggie;
 import com.newhorizon.doggie.handlers.b2dVariaveis;
 
 public class Play extends GameState{
@@ -48,15 +50,34 @@ public class Play extends GameState{
 	private OrthogonalTiledMapRenderer tmr;
 	
 	private Doggie doggie;
+	private Inimigos enemy1;
+	
 	private Array <Coleiras> coleiras;
 	
 	private HUD hud;
 	
 	BodyDef DoggiebDef = new BodyDef();
 	
+	BodyDef Enemy1bDef = new BodyDef();
+	
+	
+	ThreadsDoggie thread = new ThreadsDoggie();
+	
+	static int i = 0;
+
+	
 	public Play(GameStateManager gsm)
 	{
 		super(gsm);
+		
+		// Classe threads poderá ser utilizada no futuro.
+//		thread.create();
+//		thread.t1.run();
+//		thread.t2.run();
+		
+		new Thread(thread1).start();
+		new Thread(thread2).start();
+		
 		
 		// Controla gravidade
 		world = new World(new Vector2(0, -9.81f), true); 
@@ -66,6 +87,9 @@ public class Play extends GameState{
 		
 		// Criando Doggie
 		createDoggie();
+		
+		//Criando inimigos
+		createEnemy1();
 		
 		// Criando Tiles
 		createTiles();
@@ -153,6 +177,7 @@ public class Play extends GameState{
 		
 
 		doggie.update(dt);
+		enemy1.update(dt);
 		
 
 
@@ -187,6 +212,7 @@ public class Play extends GameState{
 		
 		//Desenha doggie
 		sb.setProjectionMatrix(camera1.combined);
+		enemy1.render(sb);
 		doggie.render(sb);
 		
 		//Desenha coleiras
@@ -235,7 +261,7 @@ public class Play extends GameState{
 				shape.setAsBox(13/PixelsPorMetro , 13/PixelsPorMetro); // Controla tamanho da caixa de colusão.
 				fDef.shape = shape;
 				fDef.filter.categoryBits = b2dVariaveis.BIT_DOGGIE;
-				fDef.filter.maskBits = b2dVariaveis.BIT_PLATAFORMA | b2dVariaveis.BIT_COLEIRAS;
+				fDef.filter.maskBits = b2dVariaveis.BIT_PLATAFORMA | b2dVariaveis.BIT_COLEIRAS | b2dVariaveis.BIT_INIMIGO1;
 				// Faz quicar/
 				fDef.restitution = 0.2f;
 				body.createFixture(fDef).setUserData("doggie");
@@ -244,7 +270,7 @@ public class Play extends GameState{
 				shape.setAsBox(10/PixelsPorMetro, 6/PixelsPorMetro, new Vector2(0, -10/PixelsPorMetro), 0);
 				fDef.shape = shape;
 				fDef.filter.categoryBits = b2dVariaveis.BIT_DOGGIE;
-				fDef.filter.maskBits = b2dVariaveis.BIT_PLATAFORMA;
+				fDef.filter.maskBits = b2dVariaveis.BIT_PLATAFORMA | b2dVariaveis.BIT_INIMIGO1;
 				fDef.isSensor = true;
 				body.createFixture(fDef).setUserData("footDoggie");
 				
@@ -253,6 +279,44 @@ public class Play extends GameState{
 				doggie = new Doggie(body);
 				doggie.setTotalVidas(3);
 				body.setUserData(doggie);
+				
+	}
+	
+	private void createEnemy1() {
+		
+
+				
+
+				FixtureDef fDef = new FixtureDef();
+				PolygonShape shape = new PolygonShape();
+				
+				//Criando Doggie		
+				Enemy1bDef.position.set(100/PixelsPorMetro ,120/PixelsPorMetro);
+				Enemy1bDef.type = BodyType.DynamicBody;
+//				bDef.linearVelocity.set(.5f,0); // Velocidade do Doggie
+				Body body = world.createBody(Enemy1bDef);
+				
+				shape.setAsBox(13/PixelsPorMetro , 13/PixelsPorMetro); // Controla tamanho da caixa de colusão.
+				fDef.shape = shape;
+				fDef.filter.categoryBits = b2dVariaveis.BIT_INIMIGO1;
+				fDef.filter.maskBits = b2dVariaveis.BIT_PLATAFORMA | b2dVariaveis.BIT_DOGGIE;
+				// Faz quicar/
+				fDef.restitution = 0.2f;
+				body.createFixture(fDef).setUserData("inimigo1");
+
+				//Criando sensor de pés
+//				shape.setAsBox(10/PixelsPorMetro, 6/PixelsPorMetro, new Vector2(0, -10/PixelsPorMetro), 0);
+//				fDef.shape = shape;
+//				fDef.filter.categoryBits = b2dVariaveis.BIT_DOGGIE;
+//				fDef.filter.maskBits = b2dVariaveis.BIT_PLATAFORMA;
+//				fDef.isSensor = true;
+//				body.createFixture(fDef).setUserData("footDoggie");
+				
+		
+				// Cria Doggie
+				enemy1 = new Inimigos(body);
+//				enemy1.setTotalVidas(3);
+				body.setUserData(enemy1);
 				
 	}
 	
@@ -315,7 +379,7 @@ public class Play extends GameState{
 				fDef.friction = 0;
 				fDef.shape = shape;
 				fDef.filter.categoryBits = bits;
-				fDef.filter.maskBits = b2dVariaveis.BIT_DOGGIE;
+				fDef.filter.maskBits = b2dVariaveis.BIT_DOGGIE | b2dVariaveis.BIT_INIMIGO1;
 				fDef.isSensor = false;
 				world.createBody(bDef).createFixture(fDef);
 				
@@ -391,4 +455,41 @@ public class Play extends GameState{
 		doggie.getBody().getFixtureList().get(1).setFilterData(filter);
 		
 	}
+	
+	private Runnable thread1 = new Runnable()
+	{
+
+		public void run() 
+		{
+			sb.begin();
+			enemy1.render(sb);
+			for(int i=0; i<5;i++)
+			{
+				printaThread("t1");
+			}
+		}
+
+	};
+	
+	private Runnable thread2 = new Runnable()
+	{
+
+		public void run() 
+		{
+			for(int i=0; i<5;i++)
+			{
+				printaThread("t2");
+			}
+		}
+
+	};
+	
+	private static void printaThread(String name)
+	{
+		i++;
+		System.out.print("Contador atual " + i + ", processo: " + name + "\n");
+		
+	}
+	
+	
 }

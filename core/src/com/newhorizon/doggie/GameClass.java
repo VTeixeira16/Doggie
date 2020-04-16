@@ -12,6 +12,7 @@ import com.newhorizon.doggie.handlers.GameInputProcessor;
 import com.newhorizon.doggie.handlers.GameInputs;
 import com.newhorizon.doggie.handlers.GameStateManager;
 
+
 public class GameClass implements ApplicationListener {
 
 	public static final String GameName = "Doggie";
@@ -34,7 +35,9 @@ public class GameClass implements ApplicationListener {
 	public static Content res;
 	  
 	public void create() {
-				
+		
+
+		
 		Gdx.input.setInputProcessor(new GameInputProcessor());
 		
 		res = new Content();

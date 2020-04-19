@@ -61,7 +61,7 @@ public class Play extends GameState{
 	BodyDef Enemy1bDef = new BodyDef();
 	
 	
-	ThreadsDoggie thread = new ThreadsDoggie();
+//	ThreadsDoggie thread = new ThreadsDoggie();
 	
 	static int i = 0;
 
@@ -267,7 +267,7 @@ public class Play extends GameState{
 				body.createFixture(fDef).setUserData("doggie");
 
 				//Criando sensor de pés
-				shape.setAsBox(10/PixelsPorMetro, 6/PixelsPorMetro, new Vector2(0, -10/PixelsPorMetro), 0);
+				shape.setAsBox(12/PixelsPorMetro, 6/PixelsPorMetro, new Vector2(0, -10/PixelsPorMetro), 0);
 				fDef.shape = shape;
 				fDef.filter.categoryBits = b2dVariaveis.BIT_DOGGIE;
 				fDef.filter.maskBits = b2dVariaveis.BIT_PLATAFORMA | b2dVariaveis.BIT_INIMIGO1;
@@ -298,6 +298,7 @@ public class Play extends GameState{
 				
 				shape.setAsBox(13/PixelsPorMetro , 13/PixelsPorMetro); // Controla tamanho da caixa de colusão.
 				fDef.shape = shape;
+				fDef.density = 1000.0f;
 				fDef.filter.categoryBits = b2dVariaveis.BIT_INIMIGO1;
 				fDef.filter.maskBits = b2dVariaveis.BIT_PLATAFORMA | b2dVariaveis.BIT_DOGGIE;
 				// Faz quicar/
@@ -313,10 +314,11 @@ public class Play extends GameState{
 //				body.createFixture(fDef).setUserData("footDoggie");
 				
 		
-				// Cria Doggie
+				// Cria inimigo
 				enemy1 = new Inimigos(body);
 //				enemy1.setTotalVidas(3);
 				body.setUserData(enemy1);
+				enemy1.flip = true;
 				
 	}
 	
@@ -461,8 +463,9 @@ public class Play extends GameState{
 
 		public void run() 
 		{
-			sb.begin();
-			enemy1.render(sb);
+//			Gdx.app.log("log", "thread rodando");
+//			sb.begin();
+//			enemy1.render(sb);
 			for(int i=0; i<5;i++)
 			{
 				printaThread("t1");

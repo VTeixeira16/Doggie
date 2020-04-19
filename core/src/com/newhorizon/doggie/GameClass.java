@@ -42,6 +42,7 @@ public class GameClass implements ApplicationListener {
 		
 		res = new Content();
 		res.loadTexture("images/bunny.png", "doggie");
+		res.loadTexture("images/bunny_idle.png", "doggieIdle");
 		res.loadTexture("images/crystal.png", "coleiras");
 		res.loadTexture("images/hud.png", "hud");
 		sb = new SpriteBatch();
@@ -55,7 +56,7 @@ public class GameClass implements ApplicationListener {
 		fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		fontParameter.size = 18;
 		fontParameter.borderWidth = 1;
-		fontParameter.borderColor = Color.RED;
+		fontParameter.borderColor = Color.BLUE;
 		fontParameter.color = Color.WHITE;
 		font = fontGenerator.generateFont(fontParameter);
 		

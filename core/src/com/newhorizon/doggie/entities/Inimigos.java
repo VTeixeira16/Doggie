@@ -13,13 +13,13 @@ public class Inimigos extends B2DMultiSprites{
 		super(body);
 
 		
-		Texture tex = GameClass.res.getTexture("doggie");
+		Texture tex = GameClass.res.getTexture("doggieIdle");
 		TextureRegion[] spritesDoggie = TextureRegion.split(tex, 32, 32)[0]; // Recorte do SpriteSheet
 		
 			
 		
 		setAnimation(spritesDoggie, 1 / 12f);	// Velocidade da troca de frame;
-		setAnimationIdle(spritesDoggie, 1 / 1f);
+		setAnimationIdle(spritesDoggie, 1 / 12f);
 		
 	}
 

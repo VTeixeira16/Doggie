@@ -16,8 +16,8 @@ import com.newhorizon.doggie.handlers.GameStateManager;
 public class GameClass implements ApplicationListener {
 
 	public static final String GameName = "Doggie";
-	public static final int V_WIDTH = 720;
-	public static final int V_HEIGHT = 480;
+	public static final int V_WIDTH = 800;
+	public static final int V_HEIGHT = 600;
 	public static final int SCALE = 2;
 	
 	public static final float STEP = 1/60f;
@@ -43,6 +43,7 @@ public class GameClass implements ApplicationListener {
 		res = new Content();
 		res.loadTexture("images/bunny.png", "doggie");
 		res.loadTexture("images/bunny_idle.png", "doggieIdle");
+		res.loadTexture("images/dogIdle.png", "dogIdle");
 		res.loadTexture("images/crystal.png", "coleiras");
 		res.loadTexture("images/hud.png", "hud");
 		sb = new SpriteBatch();

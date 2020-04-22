@@ -115,7 +115,6 @@ public class Play extends GameState{
 			{
 				doggie.getBody().setLinearVelocity(-velocidade, 0f);
 				doggie.flip = true;
-				doggie.emMovimento = true;
 			}
 		}
 		else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT))
@@ -124,7 +123,6 @@ public class Play extends GameState{
 			{
 				doggie.getBody().setLinearVelocity(velocidade, 0f);
 				doggie.flip = false;
-				doggie.emMovimento = true;
 			}
 		}
 		else
@@ -132,7 +130,6 @@ public class Play extends GameState{
 			if(cl.isPlayerOnGround())
 			{
 				doggie.getBody().setLinearVelocity(0f, 0f);
-				doggie.emMovimento = false;
 			}
 		}
 		

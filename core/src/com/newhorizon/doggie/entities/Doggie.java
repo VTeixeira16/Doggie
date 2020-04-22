@@ -44,6 +44,12 @@ public class Doggie extends B2DMultiSprites {
 		{
 			RecebeDano();
 		}
+		
+		if(this.body.getLinearVelocity().x != 0)
+			this.emMovimento = true;
+		else
+			this.emMovimento = false;
+	
 	}
 	
 	public void RecebeDano() 

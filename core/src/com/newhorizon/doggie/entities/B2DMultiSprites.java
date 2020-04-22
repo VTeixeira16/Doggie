@@ -32,6 +32,11 @@ public class B2DMultiSprites extends B2DSprite{
 		//A Classe Doggie possui essa implementação própria. Avaliar no futuro a possibilidade de exclusão dessa função.
 		animation.update(dt);
 		animationIdle.update(dt);
+		
+		if(this.body.getLinearVelocity().x != 0)
+			this.emMovimento = true;
+		else
+			this.emMovimento = false;
 	}
 	
 	public void render (SpriteBatch sb) {

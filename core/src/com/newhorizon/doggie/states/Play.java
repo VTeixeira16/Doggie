@@ -148,7 +148,7 @@ public class Play extends GameState{
 		// Trocando plataforma que tera colisao
 		if(Gdx.input.isKeyPressed(Input.Keys.X))
 		{
-			switchBlocks();
+		
 		}
 		
 		
@@ -335,7 +335,7 @@ public class Play extends GameState{
 		createLayer(layer, b2dVariaveis.BIT_PLATAFORMA);
 		
 		layer = (TiledMapTileLayer) tiledMap.getLayers().get("PlataformasElevadas");
-		createLayer(layer, b2dVariaveis.BIT_PLATAFORMA_ELEV);
+		createLayer(layer, b2dVariaveis.BIT_PLATAFORMA);
 		
 	}
 	
@@ -373,9 +373,11 @@ public class Play extends GameState{
 //						tileSize / 2 / PixelsPorMetro, tileSize / 2 / PixelsPorMetro);
 //				v[3] = new Vector2(
 //						tileSize / 2 / PixelsPorMetro, -tileSize / 2 / PixelsPorMetro);
-				
-
-				shape.setAsBox(32/PixelsPorMetro , 32/PixelsPorMetro);
+				if(layer == (TiledMapTileLayer) tiledMap.getLayers().get("Plataformas"))
+					shape.setAsBox(32/PixelsPorMetro , 32/PixelsPorMetro);
+				else if(layer == (TiledMapTileLayer) tiledMap.getLayers().get("PlataformasElevadas"))
+					shape.setAsBox(32/PixelsPorMetro , 24/PixelsPorMetro, new Vector2(0,-9/PixelsPorMetro),0);
+					
 				
 //				cs.createChain(v);
 				fDef.friction = 0;
@@ -425,37 +427,6 @@ public class Play extends GameState{
 			body.setUserData(c);
 						
 		}
-	}
-	
-	private void switchBlocks()
-	{
-		Filter filter = doggie.getBody().getFixtureList().first()
-						.getFilterData();
-		short bits = filter.maskBits;
-		
-		//Trocando para a próxima plataforma
-		if((bits & b2dVariaveis.BIT_PLATAFORMA) !=0)
-		{
-			bits &= ~b2dVariaveis.BIT_PLATAFORMA;
-			bits |= b2dVariaveis.BIT_PLATAFORMA_ELEV;
-		}
-		else if((bits & b2dVariaveis.BIT_PLATAFORMA_ELEV) !=0)
-		{
-			bits &= ~b2dVariaveis.BIT_PLATAFORMA_ELEV;
-			bits |= b2dVariaveis.BIT_PLATAFORMA;
-		}
-		
-		
-		// Configura nova mascára de bits
-		filter.maskBits = bits;
-		doggie.getBody().getFixtureList().first().setFilterData(filter);
-		
-		// Configura mascára de bits para os pés
-		filter = doggie.getBody().getFixtureList().get(1).getFilterData();
-		bits &= ~b2dVariaveis.BIT_COLEIRAS;
-		filter.maskBits = bits;
-		doggie.getBody().getFixtureList().get(1).setFilterData(filter);
-		
 	}
 	
 	private Runnable thread1 = new Runnable()

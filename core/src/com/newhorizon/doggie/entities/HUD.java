@@ -1,10 +1,10 @@
 package com.newhorizon.doggie.entities;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.newhorizon.doggie.GameClass;
-import com.newhorizon.doggie.handlers.b2dVariaveis;
 
 public class HUD {
 	
@@ -30,14 +30,9 @@ public class HUD {
 		short bits = doggie.getBody().getFixtureList().first()
 						.getFilterData().maskBits;
 		sb.begin();
-		if((bits & b2dVariaveis.BIT_PLATAFORMA) != 0) 
-		{
-			sb.draw(blocks[0], 40, 200);
-		}
-		if((bits & b2dVariaveis.BIT_PLATAFORMA_ELEV)!= 0)
-		{
-			sb.draw(blocks[1], 40, 200);
-		}
+		GameClass.font.draw(sb, "Vidas: " + doggie.getTotalVidas() , Gdx.graphics.getWidth() - 100, Gdx.graphics.getHeight() - 10);
+		GameClass.font.draw(sb, "Coleiras: " + doggie.getNumColeiras(), 5, Gdx.graphics.getHeight() - 10);
+		
 		sb.end();
 		
 		

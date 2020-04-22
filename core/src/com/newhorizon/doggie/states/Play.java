@@ -3,6 +3,7 @@ package com.newhorizon.doggie.states;
 import static com.newhorizon.doggie.handlers.b2dVariaveis.PixelsPorMetro;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapLayer;
@@ -17,7 +18,6 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -28,14 +28,15 @@ import com.newhorizon.doggie.GameClass;
 import com.newhorizon.doggie.entities.Coleiras;
 import com.newhorizon.doggie.entities.Doggie;
 import com.newhorizon.doggie.entities.HUD;
-import com.newhorizon.doggie.handlers.GameInputs;
+import com.newhorizon.doggie.entities.Inimigos;
 import com.newhorizon.doggie.handlers.GameStateManager;
 import com.newhorizon.doggie.handlers.ListenerContatos;
+import com.newhorizon.doggie.handlers.ThreadsDoggie;
 import com.newhorizon.doggie.handlers.b2dVariaveis;
 
 public class Play extends GameState{
 	
-	private boolean debug = false;
+	private boolean debug = true;
 	
 	private World world;
 	
@@ -49,13 +50,34 @@ public class Play extends GameState{
 	private OrthogonalTiledMapRenderer tmr;
 	
 	private Doggie doggie;
+	private Inimigos enemy1;
+	
 	private Array <Coleiras> coleiras;
 	
 	private HUD hud;
 	
+	BodyDef DoggiebDef = new BodyDef();
+	
+	BodyDef Enemy1bDef = new BodyDef();
+	
+	
+//	ThreadsDoggie thread = new ThreadsDoggie();
+	
+	static int i = 0;
+
+	
 	public Play(GameStateManager gsm)
 	{
 		super(gsm);
+		
+		// Classe threads poderá ser utilizada no futuro.
+//		thread.create();
+//		thread.t1.run();
+//		thread.t2.run();
+		
+		new Thread(thread1).start();
+		new Thread(thread2).start();
+		
 		
 		// Controla gravidade
 		world = new World(new Vector2(0, -9.81f), true); 
@@ -65,6 +87,9 @@ public class Play extends GameState{
 		
 		// Criando Doggie
 		createDoggie();
+		
+		//Criando inimigos
+		createEnemy1();
 		
 		// Criando Tiles
 		createTiles();
@@ -83,17 +108,45 @@ public class Play extends GameState{
 
 	public void handleInput() 
 	{
-		if(GameInputs.isPressed(GameInputs.BUTTON1))
+		float velocidade = 2f;
+		if(Gdx.input.isKeyPressed(Input.Keys.LEFT))
+		{
+			if(cl.isPlayerOnGround())
+			{
+				doggie.getBody().setLinearVelocity(-velocidade, 0f);
+				doggie.flip = true;
+				doggie.emMovimento = true;
+			}
+		}
+		else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+		{
+			if(cl.isPlayerOnGround())
+			{
+				doggie.getBody().setLinearVelocity(velocidade, 0f);
+				doggie.flip = false;
+				doggie.emMovimento = true;
+			}
+		}
+		else
+		{ 
+			if(cl.isPlayerOnGround())
+			{
+				doggie.getBody().setLinearVelocity(0f, 0f);
+				doggie.emMovimento = false;
+			}
+		}
+		
+		if(Gdx.input.isKeyPressed(Input.Keys.Z))
 		{
 			if(cl.isPlayerOnGround())
 			{
 				// Controle de pulo
-				doggie.getBody().applyForceToCenter(0, 250, true);	
+				doggie.getBody().applyForceToCenter(0, 325, true);   
 			}
 		}
 		
 		// Trocando plataforma que tera colisao
-		if(GameInputs.isPressed(GameInputs.BUTTON2))
+		if(Gdx.input.isKeyPressed(Input.Keys.X))
 		{
 			switchBlocks();
 		}
@@ -117,17 +170,26 @@ public class Play extends GameState{
 			Body b = bodies.get(i);
 			coleiras.removeValue((Coleiras)b.getUserData(), true);
 			world.destroyBody(b);
-			doggie.collectColeiras();			
+			doggie.collectColeiras();	
 		}
 		
 		bodies.clear();
 		
+
 		doggie.update(dt);
+		enemy1.update(dt);
+		
+
 
 		for(int i = 0; i < coleiras.size; i++) {
 			coleiras.get(i).update(dt);	
 		}
 		
+		
+		
+		
+		
+				
 	}
 	public void render () {
 		
@@ -137,9 +199,10 @@ public class Play extends GameState{
 		//Configurando câmera para seguir o Doggie
 		camera1.position.set(
 				doggie.getPosition().x * PixelsPorMetro,
-				GameClass.V_WIDTH / 2,
+				doggie.getPosition().y * PixelsPorMetro,
 				0);
 		camera1.update();
+		
 		
 		
 		// Desenha o Mapa
@@ -149,6 +212,7 @@ public class Play extends GameState{
 		
 		//Desenha doggie
 		sb.setProjectionMatrix(camera1.combined);
+		enemy1.render(sb);
 		doggie.render(sb);
 		
 		//Desenha coleiras
@@ -157,52 +221,104 @@ public class Play extends GameState{
 		}
 		
 		//Desenha HUD
-		sb.setProjectionMatrix(camera2.combined);
+		sb.setProjectionMatrix(cameraHUD.combined);
 		hud.render(sb);
 
 		// Desenha caixas de colisão
 		if(debug) {
 			b2dDR.render(world, b2dCamera.combined);
+			b2dCamera.position.set(
+					doggie.getPosition().x,
+					doggie.getPosition().y,
+					0);
+			b2dCamera.update();
 		}
 		
 	}
-	public void dispose() {}
+	public void dispose() {
+				
+		tiledMap.dispose();
+		tmr.dispose();
+		world.dispose();
+		sb.dispose();
+		b2dDR.dispose();
+	}
 	
 	private void createDoggie() {
 		
 		//Cria Plataforma
-				BodyDef bDef = new BodyDef();
+				
+
 				FixtureDef fDef = new FixtureDef();
 				PolygonShape shape = new PolygonShape();
-
-			
 				
 				//Criando Doggie		
-				bDef.position.set(250/PixelsPorMetro ,425/PixelsPorMetro);
-				bDef.type = BodyType.DynamicBody;
-				bDef.linearVelocity.set(.5f,0); // Velocidade do Doggie
-				Body body = world.createBody(bDef);
+				DoggiebDef.position.set(50/PixelsPorMetro ,100/PixelsPorMetro);
+				DoggiebDef.type = BodyType.DynamicBody;
+//				bDef.linearVelocity.set(.5f,0); // Velocidade do Doggie
+				Body body = world.createBody(DoggiebDef);
 				
 				shape.setAsBox(13/PixelsPorMetro , 13/PixelsPorMetro); // Controla tamanho da caixa de colusão.
 				fDef.shape = shape;
 				fDef.filter.categoryBits = b2dVariaveis.BIT_DOGGIE;
-				fDef.filter.maskBits = b2dVariaveis.BIT_PLATAFORMA | b2dVariaveis.BIT_COLEIRAS;
+				fDef.filter.maskBits = b2dVariaveis.BIT_PLATAFORMA | b2dVariaveis.BIT_COLEIRAS | b2dVariaveis.BIT_INIMIGO1;
 				// Faz quicar/
-				fDef.restitution = 0.5f;
+				fDef.restitution = 0.2f;
 				body.createFixture(fDef).setUserData("doggie");
-				
+
 				//Criando sensor de pés
-				shape.setAsBox(2/PixelsPorMetro, 2/PixelsPorMetro, new Vector2(13, -13/PixelsPorMetro), 0);
+				shape.setAsBox(12/PixelsPorMetro, 6/PixelsPorMetro, new Vector2(0, -10/PixelsPorMetro), 0);
 				fDef.shape = shape;
 				fDef.filter.categoryBits = b2dVariaveis.BIT_DOGGIE;
-				fDef.filter.maskBits = b2dVariaveis.BIT_PLATAFORMA;
+				fDef.filter.maskBits = b2dVariaveis.BIT_PLATAFORMA | b2dVariaveis.BIT_INIMIGO1;
 				fDef.isSensor = true;
 				body.createFixture(fDef).setUserData("footDoggie");
+				
 		
 				// Cria Doggie
 				doggie = new Doggie(body);
-				
+				doggie.setTotalVidas(3);
 				body.setUserData(doggie);
+				
+	}
+	
+	private void createEnemy1() {
+		
+
+				
+
+				FixtureDef fDef = new FixtureDef();
+				PolygonShape shape = new PolygonShape();
+				
+				//Criando Doggie		
+				Enemy1bDef.position.set(100/PixelsPorMetro ,120/PixelsPorMetro);
+				Enemy1bDef.type = BodyType.DynamicBody;
+//				bDef.linearVelocity.set(.5f,0); // Velocidade do Doggie
+				Body body = world.createBody(Enemy1bDef);
+				
+				shape.setAsBox(13/PixelsPorMetro , 13/PixelsPorMetro); // Controla tamanho da caixa de colusão.
+				fDef.shape = shape;
+				fDef.density = 1000.0f;
+				fDef.filter.categoryBits = b2dVariaveis.BIT_INIMIGO1;
+				fDef.filter.maskBits = b2dVariaveis.BIT_PLATAFORMA | b2dVariaveis.BIT_DOGGIE;
+				// Faz quicar/
+				fDef.restitution = 0.2f;
+				body.createFixture(fDef).setUserData("inimigo1");
+
+				//Criando sensor de pés
+//				shape.setAsBox(10/PixelsPorMetro, 6/PixelsPorMetro, new Vector2(0, -10/PixelsPorMetro), 0);
+//				fDef.shape = shape;
+//				fDef.filter.categoryBits = b2dVariaveis.BIT_DOGGIE;
+//				fDef.filter.maskBits = b2dVariaveis.BIT_PLATAFORMA;
+//				fDef.isSensor = true;
+//				body.createFixture(fDef).setUserData("footDoggie");
+				
+		
+				// Cria inimigo
+				enemy1 = new Inimigos(body);
+//				enemy1.setTotalVidas(3);
+				body.setUserData(enemy1);
+				enemy1.flip = true;
 				
 	}
 	
@@ -227,6 +343,7 @@ public class Play extends GameState{
 		
 		BodyDef bDef = new BodyDef();
 		FixtureDef fDef = new FixtureDef();
+		PolygonShape shape = new PolygonShape();
 		
 		// Indo para linha e coluna de cada layer
 		for(int linha = 0; linha < layer.getHeight(); linha++){
@@ -246,19 +363,25 @@ public class Play extends GameState{
 					(linha + 0.5f) * tileSize / PixelsPorMetro					
 				);
 				
-				ChainShape cs = new ChainShape();
-				Vector2[] v = new Vector2[3];
-				v[0] = new Vector2(
-						-tileSize / 2 / PixelsPorMetro, -tileSize / 2 / PixelsPorMetro);
-				v[1] = new Vector2(
-						-tileSize / 2 / PixelsPorMetro, tileSize / 2 / PixelsPorMetro);
-				v[2] = new Vector2(
-						tileSize / 2 / PixelsPorMetro, tileSize / 2 / PixelsPorMetro);
-				cs.createChain(v);
+//				ChainShape cs = new ChainShape();
+//				Vector2[] v = new Vector2[3];
+//				v[0] = new Vector2(
+//						-tileSize / 2 / PixelsPorMetro, -tileSize / 2 / PixelsPorMetro);
+//				v[1] = new Vector2(
+//						-tileSize / 2 / PixelsPorMetro, tileSize / 2 / PixelsPorMetro);
+//				v[2] = new Vector2(
+//						tileSize / 2 / PixelsPorMetro, tileSize / 2 / PixelsPorMetro);
+//				v[3] = new Vector2(
+//						tileSize / 2 / PixelsPorMetro, -tileSize / 2 / PixelsPorMetro);
+				
+
+				shape.setAsBox(32/PixelsPorMetro , 32/PixelsPorMetro);
+				
+//				cs.createChain(v);
 				fDef.friction = 0;
-				fDef.shape = cs;
+				fDef.shape = shape;
 				fDef.filter.categoryBits = bits;
-				fDef.filter.maskBits = b2dVariaveis.BIT_DOGGIE;
+				fDef.filter.maskBits = b2dVariaveis.BIT_DOGGIE | b2dVariaveis.BIT_INIMIGO1;
 				fDef.isSensor = false;
 				world.createBody(bDef).createFixture(fDef);
 				
@@ -334,4 +457,42 @@ public class Play extends GameState{
 		doggie.getBody().getFixtureList().get(1).setFilterData(filter);
 		
 	}
+	
+	private Runnable thread1 = new Runnable()
+	{
+
+		public void run() 
+		{
+//			Gdx.app.log("log", "thread rodando");
+//			sb.begin();
+//			enemy1.render(sb);
+			for(int i=0; i<5;i++)
+			{
+				printaThread("t1");
+			}
+		}
+
+	};
+	
+	private Runnable thread2 = new Runnable()
+	{
+
+		public void run() 
+		{
+			for(int i=0; i<5;i++)
+			{
+				printaThread("t2");
+			}
+		}
+
+	};
+	
+	private static void printaThread(String name)
+	{
+		i++;
+		System.out.print("Contador atual " + i + ", processo: " + name + "\n");
+		
+	}
+	
+	
 }

@@ -12,7 +12,7 @@ public abstract class GameState {
 	
 	protected SpriteBatch sb;
 	protected OrthographicCamera camera1;
-	protected OrthographicCamera camera2;
+	protected OrthographicCamera cameraHUD;
 	
 	protected GameState(GameStateManager gsm)
 	{
@@ -20,7 +20,7 @@ public abstract class GameState {
 		game = gsm.game();
 		sb = game.getSpriteBatch();
 		camera1 = game.getCamera1();
-		camera2 = game.getCamera2();
+		cameraHUD = game.getcameraHUD();
 		
 	}
 	

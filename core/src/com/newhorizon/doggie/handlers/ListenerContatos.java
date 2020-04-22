@@ -39,7 +39,7 @@ public class ListenerContatos implements ContactListener {
 		{
 			numDoggieGround ++;
 		}
-				
+				  
 		if(fixtureA.getUserData() != null && fixtureA.getUserData().equals("coleiras"))
 		{
 			//Remove coleira

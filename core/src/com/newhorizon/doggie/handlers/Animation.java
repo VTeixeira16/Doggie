@@ -2,6 +2,7 @@ package com.newhorizon.doggie.handlers;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+
 public class Animation {
 
 	private TextureRegion[] frames;

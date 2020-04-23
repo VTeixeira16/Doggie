@@ -51,6 +51,7 @@ public class Play extends GameState{
 	
 	private Doggie doggie;
 	private Inimigos enemy1;
+	private Inimigos enemy2;
 	
 	private Array <Coleiras> coleiras;
 	
@@ -59,6 +60,7 @@ public class Play extends GameState{
 	BodyDef DoggiebDef = new BodyDef();
 	
 	BodyDef Enemy1bDef = new BodyDef();
+	BodyDef Enemy2bDef = new BodyDef();
 	
 	
 //	ThreadsDoggie thread = new ThreadsDoggie();
@@ -175,6 +177,7 @@ public class Play extends GameState{
 
 		doggie.update(dt);
 		enemy1.update(dt);
+		enemy2.update(dt);
 		
 
 
@@ -210,6 +213,7 @@ public class Play extends GameState{
 		//Desenha doggie
 		sb.setProjectionMatrix(camera1.combined);
 		enemy1.render(sb);
+		enemy2.render(sb);
 		doggie.render(sb);
 		
 		//Desenha coleiras
@@ -281,17 +285,19 @@ public class Play extends GameState{
 	
 	private void createEnemy1() {
 		
-
-				
-
 				FixtureDef fDef = new FixtureDef();
 				PolygonShape shape = new PolygonShape();
 				
 				//Criando Doggie		
 				Enemy1bDef.position.set(100/PixelsPorMetro ,120/PixelsPorMetro);
 				Enemy1bDef.type = BodyType.DynamicBody;
+				
+				Enemy2bDef.position.set(300/PixelsPorMetro ,160/PixelsPorMetro);
+				Enemy2bDef.type = BodyType.DynamicBody;
 //				bDef.linearVelocity.set(.5f,0); // Velocidade do Doggie
+						
 				Body body = world.createBody(Enemy1bDef);
+				Body body2 = world.createBody(Enemy2bDef);
 				
 				shape.setAsBox(13/PixelsPorMetro , 13/PixelsPorMetro); // Controla tamanho da caixa de colusão.
 				fDef.shape = shape;
@@ -301,6 +307,7 @@ public class Play extends GameState{
 				// Faz quicar/
 				fDef.restitution = 0.2f;
 				body.createFixture(fDef).setUserData("inimigo1");
+				body2.createFixture(fDef).setUserData("inimigo1");
 
 				//Criando sensor de pés
 //				shape.setAsBox(10/PixelsPorMetro, 6/PixelsPorMetro, new Vector2(0, -10/PixelsPorMetro), 0);
@@ -315,7 +322,13 @@ public class Play extends GameState{
 				enemy1 = new Inimigos(body);
 //				enemy1.setTotalVidas(3);
 				body.setUserData(enemy1);
-				enemy1.flip = true;
+//				enemy1.flip = true;
+				
+				
+				enemy2 = new Inimigos(body2);
+				body.setUserData(enemy2);
+				
+				
 				
 	}
 	

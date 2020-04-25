@@ -223,10 +223,7 @@ public class Play extends GameState{
 		}
 		
 		
-		Gdx.app.log("log", "posXbase" + enemy2.posXBase);
-		Gdx.app.log("log", "posXbase" + enemy2.esqXBase);
-		Gdx.app.log("log", "posXbase" + enemy2.dirXBase);
-		Gdx.app.log("log", "posição Atual" + enemy2.getPosition().x);
+//		Gdx.app.log("log", "posição Atual" + enemy2.getPosition().x);
 		
 		
 				
@@ -369,13 +366,6 @@ public class Play extends GameState{
 				
 				enemy2 = new Inimigos(body2);
 				body.setUserData(enemy2);
-				enemy2.posXBase = enemy2.getPosition().x;
-				enemy2.esqXBase = enemy2.getPosition().x - 2;
-				enemy2.dirXBase = enemy2.getPosition().x + 2;
-				
-				Gdx.app.log("log", "posXbase" + enemy2.posXBase);
-				Gdx.app.log("log", "posXbase" + enemy2.esqXBase);
-				Gdx.app.log("log", "posXbase" + enemy2.dirXBase);
 				
 				
 	}

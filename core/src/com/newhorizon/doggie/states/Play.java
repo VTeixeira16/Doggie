@@ -1,6 +1,7 @@
 package com.newhorizon.doggie.states;
 
 import static com.newhorizon.doggie.handlers.b2dVariaveis.PixelsPorMetro;
+import static com.newhorizon.doggie.handlers.b2dVariaveis.gravidade;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -48,7 +49,7 @@ public class Play extends GameState{
 	private Box2DDebugRenderer b2dDR;
 	
 	private OrthographicCamera b2dCamera;
-	ShapeRenderer sr = new ShapeRenderer();
+//	ShapeRenderer sr = new ShapeRenderer();
 	
 	private ListenerContatos cl;
 	 	
@@ -70,6 +71,7 @@ public class Play extends GameState{
 	BodyDef Enemy2bDef = new BodyDef();
 	
 	
+	
 //	ThreadsDoggie thread = new ThreadsDoggie();
 	
 	static int i = 0;
@@ -88,9 +90,11 @@ public class Play extends GameState{
 		new Thread(thread1).start();
 		new Thread(thread2).start();
 		
+
+		
 		
 		// Controla gravidade
-		world = new World(new Vector2(0, -9.81f), true); 
+		world = new World(new Vector2(0, gravidade), true); 
 		cl = new ListenerContatos();
 		world.setContactListener(cl);
 		b2dDR = new Box2DDebugRenderer();
@@ -113,31 +117,31 @@ public class Play extends GameState{
 		//set up HUD
 		hud = new HUD(doggie);
 		
-		Gdx.input.setInputProcessor(new InputAdapter() {
-			Vector3 tmp = new Vector3();
+//		Gdx.input.setInputProcessor(new InputAdapter() {
+//			Vector3 tmp = new Vector3();
+//			
+//			RayCastCallback callback = new RayCastCallback() {
+//
+//				public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
+//					collison.set(point);
+//					Play.this.normal.set(normal).add(point);
+//					return 1;
+//				}
+//				
+//			};
 			
-			RayCastCallback callback = new RayCastCallback() {
-
-				public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
-					collison.set(point);
-					Play.this.normal.set(normal).add(point);
-					return 0;
-				}
-				
-			};
-			
-			public boolean touchDragged(int screenX, int screenY, int pointer) {
-				tmp.set(screenX, screenY, 0);
-				b2dCamera.unproject(tmp);
-				if(Gdx.input.isButtonPressed(Buttons.LEFT))
-					p2.set(tmp.x, tmp.y);
-				else if(Gdx.input.isButtonPressed(Buttons.RIGHT))
-					p1.set(tmp.x,tmp.y);				
-				world.rayCast(callback, p1, p2);
-				
-				return true;
-			}
-		});
+//			public boolean touchDragged(int screenX, int screenY, int pointer) {
+//				tmp.set(screenX, screenY, 0);
+//				b2dCamera.unproject(tmp);
+//				if(Gdx.input.isButtonPressed(Buttons.LEFT))
+//					p2.set(tmp.x, tmp.y);
+//				else if(Gdx.input.isButtonPressed(Buttons.RIGHT))
+//					p1.set(tmp.x,tmp.y);				
+//				world.rayCast(callback, p1, p2);
+//				
+//				return true;
+//			}
+//		});
 					
 	}
 	
@@ -190,7 +194,6 @@ public class Play extends GameState{
 	public void update(float dt) {
 		
 		
-		
 		// Checa input
 		handleInput();
 		
@@ -215,14 +218,15 @@ public class Play extends GameState{
 		enemy1.update(dt);
 		enemy2.update(dt);
 		
-
-
 		for(int i = 0; i < coleiras.size; i++) {
 			coleiras.get(i).update(dt);	
 		}
 		
 		
-		
+		Gdx.app.log("log", "posXbase" + enemy2.posXBase);
+		Gdx.app.log("log", "posXbase" + enemy2.esqXBase);
+		Gdx.app.log("log", "posXbase" + enemy2.dirXBase);
+		Gdx.app.log("log", "posição Atual" + enemy2.getPosition().x);
 		
 		
 				
@@ -270,14 +274,16 @@ public class Play extends GameState{
 					0);
 			b2dCamera.update();
 			
-			sr.setProjectionMatrix(b2dCamera.combined);
-			sr.begin(ShapeType.Line);
-			sr.line(p1,p2);
-			sr.line(collison, normal);
-			sr.end();
+//			sr.setProjectionMatrix(b2dCamera.combined);
+//			sr.begin(ShapeType.Line);
+//			p1.set(enemy1.getPosition().x -1, enemy1.getPosition().y);
+//			p2.set(enemy1.getPosition().x, enemy1.getPosition().y);
+//			sr.line(p1,p2);
+//			sr.line(collison, normal);
+//			sr.end();
 		}
-		p1 = enemy1.getPosition();
-		p2.set(enemy1.getPosition().x, enemy1.getPosition().y);
+//		p1.set(enemy1.getPosition().x -1, enemy1.getPosition().y);
+//		p2.set(enemy1.getPosition().x, enemy1.getPosition().y);
 				
 	}
 	
@@ -363,7 +369,13 @@ public class Play extends GameState{
 				
 				enemy2 = new Inimigos(body2);
 				body.setUserData(enemy2);
+				enemy2.posXBase = enemy2.getPosition().x;
+				enemy2.esqXBase = enemy2.getPosition().x - 2;
+				enemy2.dirXBase = enemy2.getPosition().x + 2;
 				
+				Gdx.app.log("log", "posXbase" + enemy2.posXBase);
+				Gdx.app.log("log", "posXbase" + enemy2.esqXBase);
+				Gdx.app.log("log", "posXbase" + enemy2.dirXBase);
 				
 				
 	}
@@ -518,7 +530,7 @@ public class Play extends GameState{
 		world.dispose();
 		sb.dispose();
 		b2dDR.dispose();
-		sr.dispose();
+//		sr.dispose();
 	}
 	
 	

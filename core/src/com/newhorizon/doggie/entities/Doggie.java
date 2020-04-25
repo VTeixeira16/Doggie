@@ -2,13 +2,14 @@ package com.newhorizon.doggie.entities;
 
 import static com.newhorizon.doggie.handlers.b2dVariaveis.PixelsPorMetro;
 
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.newhorizon.doggie.GameClass;
 
-public class Doggie extends B2DMultiSprites {
+public final class Doggie extends B2DMultiSprites {
 	
 	private int numColeiras;
 	private int totalColeiras;

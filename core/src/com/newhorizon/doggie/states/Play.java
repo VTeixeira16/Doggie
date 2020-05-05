@@ -1,11 +1,16 @@
 package com.newhorizon.doggie.states;
 
 import static com.newhorizon.doggie.handlers.b2dVariaveis.PixelsPorMetro;
+import static com.newhorizon.doggie.handlers.b2dVariaveis.gravidade;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Input.Buttons;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -14,14 +19,16 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.Filter;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.newhorizon.doggie.GameClass;
@@ -31,7 +38,6 @@ import com.newhorizon.doggie.entities.HUD;
 import com.newhorizon.doggie.entities.Inimigos;
 import com.newhorizon.doggie.handlers.GameStateManager;
 import com.newhorizon.doggie.handlers.ListenerContatos;
-import com.newhorizon.doggie.handlers.ThreadsDoggie;
 import com.newhorizon.doggie.handlers.b2dVariaveis;
 
 public class Play extends GameState{
@@ -43,6 +49,8 @@ public class Play extends GameState{
 	private Box2DDebugRenderer b2dDR;
 	
 	private OrthographicCamera b2dCamera;
+//	ShapeRenderer sr = new ShapeRenderer();
+	
 	private ListenerContatos cl;
 	 	
 	private TiledMap tiledMap;
@@ -51,6 +59,7 @@ public class Play extends GameState{
 	
 	private Doggie doggie;
 	private Inimigos enemy1;
+	private Inimigos enemy2;
 	
 	private Array <Coleiras> coleiras;
 	
@@ -59,17 +68,20 @@ public class Play extends GameState{
 	BodyDef DoggiebDef = new BodyDef();
 	
 	BodyDef Enemy1bDef = new BodyDef();
+	BodyDef Enemy2bDef = new BodyDef();
+	
 	
 	
 //	ThreadsDoggie thread = new ThreadsDoggie();
 	
 	static int i = 0;
 
+	Vector2 p1 = new Vector2(), p2 = new Vector2(), collison = new Vector2(), normal = new Vector2();
+	
 	
 	public Play(GameStateManager gsm)
 	{
 		super(gsm);
-		
 		// Classe threads poderá ser utilizada no futuro.
 //		thread.create();
 //		thread.t1.run();
@@ -78,9 +90,11 @@ public class Play extends GameState{
 		new Thread(thread1).start();
 		new Thread(thread2).start();
 		
+
+		
 		
 		// Controla gravidade
-		world = new World(new Vector2(0, -9.81f), true); 
+		world = new World(new Vector2(0, gravidade), true); 
 		cl = new ListenerContatos();
 		world.setContactListener(cl);
 		b2dDR = new Box2DDebugRenderer();
@@ -89,7 +103,7 @@ public class Play extends GameState{
 		createDoggie();
 		
 		//Criando inimigos
-		createEnemy1();
+		createEnemys();
 		
 		// Criando Tiles
 		createTiles();
@@ -102,6 +116,32 @@ public class Play extends GameState{
 		
 		//set up HUD
 		hud = new HUD(doggie);
+		
+//		Gdx.input.setInputProcessor(new InputAdapter() {
+//			Vector3 tmp = new Vector3();
+//			
+//			RayCastCallback callback = new RayCastCallback() {
+//
+//				public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
+//					collison.set(point);
+//					Play.this.normal.set(normal).add(point);
+//					return 1;
+//				}
+//				
+//			};
+			
+//			public boolean touchDragged(int screenX, int screenY, int pointer) {
+//				tmp.set(screenX, screenY, 0);
+//				b2dCamera.unproject(tmp);
+//				if(Gdx.input.isButtonPressed(Buttons.LEFT))
+//					p2.set(tmp.x, tmp.y);
+//				else if(Gdx.input.isButtonPressed(Buttons.RIGHT))
+//					p1.set(tmp.x,tmp.y);				
+//				world.rayCast(callback, p1, p2);
+//				
+//				return true;
+//			}
+//		});
 					
 	}
 	
@@ -115,7 +155,6 @@ public class Play extends GameState{
 			{
 				doggie.getBody().setLinearVelocity(-velocidade, 0f);
 				doggie.flip = true;
-				doggie.emMovimento = true;
 			}
 		}
 		else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT))
@@ -124,7 +163,6 @@ public class Play extends GameState{
 			{
 				doggie.getBody().setLinearVelocity(velocidade, 0f);
 				doggie.flip = false;
-				doggie.emMovimento = true;
 			}
 		}
 		else
@@ -132,7 +170,6 @@ public class Play extends GameState{
 			if(cl.isPlayerOnGround())
 			{
 				doggie.getBody().setLinearVelocity(0f, 0f);
-				doggie.emMovimento = false;
 			}
 		}
 		
@@ -148,13 +185,14 @@ public class Play extends GameState{
 		// Trocando plataforma que tera colisao
 		if(Gdx.input.isKeyPressed(Input.Keys.X))
 		{
-			switchBlocks();
+		
 		}
 		
 		
 	}
 	
 	public void update(float dt) {
+		
 		
 		// Checa input
 		handleInput();
@@ -178,15 +216,14 @@ public class Play extends GameState{
 
 		doggie.update(dt);
 		enemy1.update(dt);
+		enemy2.update(dt);
 		
-
-
 		for(int i = 0; i < coleiras.size; i++) {
 			coleiras.get(i).update(dt);	
 		}
 		
 		
-		
+//		Gdx.app.log("log", "posição Atual" + enemy2.getPosition().x);
 		
 		
 				
@@ -213,6 +250,7 @@ public class Play extends GameState{
 		//Desenha doggie
 		sb.setProjectionMatrix(camera1.combined);
 		enemy1.render(sb);
+		enemy2.render(sb);
 		doggie.render(sb);
 		
 		//Desenha coleiras
@@ -232,16 +270,18 @@ public class Play extends GameState{
 					doggie.getPosition().y,
 					0);
 			b2dCamera.update();
+			
+//			sr.setProjectionMatrix(b2dCamera.combined);
+//			sr.begin(ShapeType.Line);
+//			p1.set(enemy1.getPosition().x -1, enemy1.getPosition().y);
+//			p2.set(enemy1.getPosition().x, enemy1.getPosition().y);
+//			sr.line(p1,p2);
+//			sr.line(collison, normal);
+//			sr.end();
 		}
-		
-	}
-	public void dispose() {
+//		p1.set(enemy1.getPosition().x -1, enemy1.getPosition().y);
+//		p2.set(enemy1.getPosition().x, enemy1.getPosition().y);
 				
-		tiledMap.dispose();
-		tmr.dispose();
-		world.dispose();
-		sb.dispose();
-		b2dDR.dispose();
 	}
 	
 	private void createDoggie() {
@@ -282,19 +322,22 @@ public class Play extends GameState{
 				
 	}
 	
-	private void createEnemy1() {
+	private void createEnemys() {
 		
-
-				
-
 				FixtureDef fDef = new FixtureDef();
 				PolygonShape shape = new PolygonShape();
 				
 				//Criando Doggie		
 				Enemy1bDef.position.set(100/PixelsPorMetro ,120/PixelsPorMetro);
 				Enemy1bDef.type = BodyType.DynamicBody;
+				
+				Enemy2bDef.position.set(300/PixelsPorMetro ,160/PixelsPorMetro);
+				Enemy2bDef.type = BodyType.DynamicBody;
 //				bDef.linearVelocity.set(.5f,0); // Velocidade do Doggie
+						
 				Body body = world.createBody(Enemy1bDef);
+				
+				Body body2 = world.createBody(Enemy2bDef);
 				
 				shape.setAsBox(13/PixelsPorMetro , 13/PixelsPorMetro); // Controla tamanho da caixa de colusão.
 				fDef.shape = shape;
@@ -304,6 +347,7 @@ public class Play extends GameState{
 				// Faz quicar/
 				fDef.restitution = 0.2f;
 				body.createFixture(fDef).setUserData("inimigo1");
+				body2.createFixture(fDef).setUserData("inimigo1");
 
 				//Criando sensor de pés
 //				shape.setAsBox(10/PixelsPorMetro, 6/PixelsPorMetro, new Vector2(0, -10/PixelsPorMetro), 0);
@@ -318,7 +362,11 @@ public class Play extends GameState{
 				enemy1 = new Inimigos(body);
 //				enemy1.setTotalVidas(3);
 				body.setUserData(enemy1);
-				enemy1.flip = true;
+				
+				
+				enemy2 = new Inimigos(body2);
+				body.setUserData(enemy2);
+				
 				
 	}
 	
@@ -335,7 +383,7 @@ public class Play extends GameState{
 		createLayer(layer, b2dVariaveis.BIT_PLATAFORMA);
 		
 		layer = (TiledMapTileLayer) tiledMap.getLayers().get("PlataformasElevadas");
-		createLayer(layer, b2dVariaveis.BIT_PLATAFORMA_ELEV);
+		createLayer(layer, b2dVariaveis.BIT_PLATAFORMA);
 		
 	}
 	
@@ -373,9 +421,11 @@ public class Play extends GameState{
 //						tileSize / 2 / PixelsPorMetro, tileSize / 2 / PixelsPorMetro);
 //				v[3] = new Vector2(
 //						tileSize / 2 / PixelsPorMetro, -tileSize / 2 / PixelsPorMetro);
-				
-
-				shape.setAsBox(32/PixelsPorMetro , 32/PixelsPorMetro);
+				if(layer == (TiledMapTileLayer) tiledMap.getLayers().get("Plataformas"))
+					shape.setAsBox(32/PixelsPorMetro , 32/PixelsPorMetro);
+				else if(layer == (TiledMapTileLayer) tiledMap.getLayers().get("PlataformasElevadas"))
+					shape.setAsBox(32/PixelsPorMetro , 24/PixelsPorMetro, new Vector2(0,-9/PixelsPorMetro),0);
+					
 				
 //				cs.createChain(v);
 				fDef.friction = 0;
@@ -427,37 +477,6 @@ public class Play extends GameState{
 		}
 	}
 	
-	private void switchBlocks()
-	{
-		Filter filter = doggie.getBody().getFixtureList().first()
-						.getFilterData();
-		short bits = filter.maskBits;
-		
-		//Trocando para a próxima plataforma
-		if((bits & b2dVariaveis.BIT_PLATAFORMA) !=0)
-		{
-			bits &= ~b2dVariaveis.BIT_PLATAFORMA;
-			bits |= b2dVariaveis.BIT_PLATAFORMA_ELEV;
-		}
-		else if((bits & b2dVariaveis.BIT_PLATAFORMA_ELEV) !=0)
-		{
-			bits &= ~b2dVariaveis.BIT_PLATAFORMA_ELEV;
-			bits |= b2dVariaveis.BIT_PLATAFORMA;
-		}
-		
-		
-		// Configura nova mascára de bits
-		filter.maskBits = bits;
-		doggie.getBody().getFixtureList().first().setFilterData(filter);
-		
-		// Configura mascára de bits para os pés
-		filter = doggie.getBody().getFixtureList().get(1).getFilterData();
-		bits &= ~b2dVariaveis.BIT_COLEIRAS;
-		filter.maskBits = bits;
-		doggie.getBody().getFixtureList().get(1).setFilterData(filter);
-		
-	}
-	
 	private Runnable thread1 = new Runnable()
 	{
 
@@ -492,6 +511,16 @@ public class Play extends GameState{
 		i++;
 		System.out.print("Contador atual " + i + ", processo: " + name + "\n");
 		
+	}
+	
+	public void dispose() {
+		
+		tiledMap.dispose();
+		tmr.dispose();
+		world.dispose();
+		sb.dispose();
+		b2dDR.dispose();
+//		sr.dispose();
 	}
 	
 	

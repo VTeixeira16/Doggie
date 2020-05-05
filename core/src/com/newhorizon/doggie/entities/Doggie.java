@@ -2,13 +2,14 @@ package com.newhorizon.doggie.entities;
 
 import static com.newhorizon.doggie.handlers.b2dVariaveis.PixelsPorMetro;
 
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.newhorizon.doggie.GameClass;
 
-public class Doggie extends B2DMultiSprites {
+public final class Doggie extends B2DMultiSprites {
 	
 	private int numColeiras;
 	private int totalColeiras;
@@ -23,11 +24,11 @@ public class Doggie extends B2DMultiSprites {
 		super(body);
 		
 		Texture tex = GameClass.res.getTexture("doggie");
-		TextureRegion[] spritesDoggie = TextureRegion.split(tex, 32, 32)[0]; // Recorte do SpriteSheet
+		TextureRegion[] spritesDoggie = TextureRegion.split(tex, 82, 60)[0]; // Recorte do SpriteSheet
 		
 			
 		
-		setAnimation(spritesDoggie, 1 / 12f);	// Velocidade da troca de frame;
+		setAnimation(spritesDoggie, 1 / 16f);	// Velocidade da troca de frame;
 		setAnimationIdle(spritesDoggie, 1 / 1f);
 	}
 	public void update(float dt)
@@ -44,6 +45,12 @@ public class Doggie extends B2DMultiSprites {
 		{
 			RecebeDano();
 		}
+		
+		if(this.body.getLinearVelocity().x != 0)
+			this.emMovimento = true;
+		else
+			this.emMovimento = false;
+	
 	}
 	
 	public void RecebeDano() 

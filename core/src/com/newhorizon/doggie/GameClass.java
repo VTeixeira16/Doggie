@@ -1,6 +1,6 @@
 package com.newhorizon.doggie;
 
-import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -13,7 +13,7 @@ import com.newhorizon.doggie.handlers.GameInputs;
 import com.newhorizon.doggie.handlers.GameStateManager;
 
 
-public class GameClass implements ApplicationListener {
+public class GameClass extends Game {
 
 	public static final String GameName = "Doggie";
 	public static final int V_WIDTH = 800;
@@ -41,8 +41,8 @@ public class GameClass implements ApplicationListener {
 		Gdx.input.setInputProcessor(new GameInputProcessor());
 		
 		res = new Content();
-		res.loadTexture("images/bunny.png", "doggie");
-		res.loadTexture("images/bunny_idle.png", "doggieIdle");
+		res.loadTexture("images/doggie.png", "doggie");
+		res.loadTexture("images/doggie.png", "doggieIdle");
 		res.loadTexture("images/dogIdle.png", "dogIdle");
 		res.loadTexture("images/crystal.png", "coleiras");
 		res.loadTexture("images/hud.png", "hud");

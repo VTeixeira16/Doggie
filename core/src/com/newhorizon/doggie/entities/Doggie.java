@@ -24,11 +24,11 @@ public final class Doggie extends B2DMultiSprites {
 		super(body);
 		
 		Texture tex = GameClass.res.getTexture("doggie");
-		TextureRegion[] spritesDoggie = TextureRegion.split(tex, 32, 32)[0]; // Recorte do SpriteSheet
+		TextureRegion[] spritesDoggie = TextureRegion.split(tex, 82, 60)[0]; // Recorte do SpriteSheet
 		
 			
 		
-		setAnimation(spritesDoggie, 1 / 12f);	// Velocidade da troca de frame;
+		setAnimation(spritesDoggie, 1 / 16f);	// Velocidade da troca de frame;
 		setAnimationIdle(spritesDoggie, 1 / 1f);
 	}
 	public void update(float dt)

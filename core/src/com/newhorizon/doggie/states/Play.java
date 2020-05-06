@@ -42,7 +42,8 @@ import com.newhorizon.doggie.handlers.b2dVariaveis;
 
 public class Play extends GameState{
 	
-	private boolean debug = true;
+	// Exibe camera de colisao
+	private boolean debug = false;
 	
 	private World world;
 	

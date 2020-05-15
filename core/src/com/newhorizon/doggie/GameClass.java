@@ -3,42 +3,35 @@ package com.newhorizon.doggie;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.newhorizon.doggie.handlers.Content;
-import com.newhorizon.doggie.handlers.GameInputProcessor;
-import com.newhorizon.doggie.handlers.GameInputs;
-import com.newhorizon.doggie.handlers.GameStateManager;
+import com.newhorizon.doggie.telas.PlayScreen;
+import com.newhorizon.doggie.tools.Content;
 
 
 public class GameClass extends Game {
 
-	public static final String GameName = "Doggie";
+	// Nome e tamanho do jogo
+	public static final String GAMENAME = "Doggie";
 	public static final int V_WIDTH = 800;
-	public static final int V_HEIGHT = 600;
-	public static final int SCALE = 2;
+	public static final int V_HEIGHT = 600;	
 	
-	public static final float STEP = 1/60f;
-	private float accum;
 	
-	private SpriteBatch sb;
-	private OrthographicCamera camera1;
-	private OrthographicCamera cameraHUD;
+	public SpriteBatch sb;
 	
+	
+	// Fontes
 	private FreeTypeFontGenerator fontGenerator;
 	private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
 	public static BitmapFont font;
 	
-	private GameStateManager gsm;
+
+	// Necessário implementar Manager Cenas
 	public static Content res;
 	  
 	public void create() {
-		
-
-		
-		Gdx.input.setInputProcessor(new GameInputProcessor());
 		
 		res = new Content();
 		res.loadTexture("images/doggie.png", "doggie");
@@ -47,12 +40,9 @@ public class GameClass extends Game {
 		res.loadTexture("images/crystal.png", "coleiras");
 		res.loadTexture("images/hud.png", "hud");
 		sb = new SpriteBatch();
-		camera1 = new OrthographicCamera();
-		camera1.setToOrtho(false, V_WIDTH, V_HEIGHT);
-		cameraHUD = new OrthographicCamera();
-		cameraHUD.setToOrtho(false, V_WIDTH, V_HEIGHT);
 		
-		//fonts
+		
+		// Maneira complexa que permite utilização de fontes externas.
 		fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Arial Black.ttf"));
 		fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		fontParameter.size = 18;
@@ -64,49 +54,27 @@ public class GameClass extends Game {
 		
 		
 		
-	
-		gsm = new GameStateManager(this);
+		
+		setScreen(new PlayScreen(this));
+		
+		
 		
 	}
 	@Override
-	public void resize(int width, int height) {
-		
-	}
-	@Override
-	public void render() {
-		 accum += Gdx.graphics.getDeltaTime();
-		 while(accum >= STEP)
-		 {
-			 accum -= STEP;
-			 gsm.update(STEP);
-			 gsm.render();
-			 
-			 GameInputs.update();
-		 }
-		 
-		 sb.setProjectionMatrix(cameraHUD.combined);
-		 sb.begin();
-//		 sb.draw(res.getTexture("doggie"), 0 , 0 );
-		 sb.end();
-		 
-		
-	}
-	@Override
-	public void pause() {
+	public void resize(int width, int height) {	}
 
-		
-	}
-	@Override
-	public void resume() {
-		
-	}
-	@Override
-	public void dispose() {
-		font.dispose();
+	public void render() { 
+		super.render();
 	}
 	
-	public SpriteBatch getSpriteBatch() { return sb;}
-	public OrthographicCamera getCamera1() {return camera1;}
-	public OrthographicCamera getcameraHUD() {return cameraHUD;}
+	public void pause() {}
+	
+	public void resume() {}
+
+	public void dispose() {
+		super.dispose();
+		sb.dispose();		
+	}
+	
 	
 }

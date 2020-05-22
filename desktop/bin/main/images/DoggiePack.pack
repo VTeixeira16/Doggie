@@ -1,0 +1,12 @@
+
+DoggiePack.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+doggie
+  rotate: false
+  xy: 1, 1
+  size: 660, 60
+  orig: 660, 60
+  offset: 0, 0
+  index: -1

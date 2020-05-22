@@ -9,6 +9,7 @@ public class B2dVariaveis {
 	public static final float PPM = 100; // Pixels Por Metro
 	
 	// Bits Colisores
+	public static final short BIT_NADA = 1;
 	public static final short BIT_DOGGIE = 2;
 	public static final short BIT_PLATAFORMA = 4;
 	public static final short BIT_PLATAFORMA_ELEV = 8;

@@ -8,16 +8,25 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.newhorizon.doggie.telas.PlayScreen;
 import com.newhorizon.doggie.tools.B2dVariaveis;
 
 public class TiledMapManager {
+	// DESATIVADA PROVISORIAMENTE
 	
+	// CLASSE NÃO ESTÁ EXECUTANDO CORRETAMENTE, QUEBRANDO NO WORLD. SERÁ NECESSÁRIO CORRIGI-LA OU DELETAR DE VEZ;
+	
+//	public World world;
+	public Body body;
+	
+	private PlayScreen screen;
 	
 	// Variáveis da PlayScreen vão ser migradas para cá
     //Tiled map (Deve ser migrado para o TiledMapManager)
@@ -26,10 +35,23 @@ public class TiledMapManager {
     private float tileSize;
     private OrthogonalTiledMapRenderer tmr;
     // Necessário copiar world do PlayScreen para evitar que PolygonShape quebre
-    private World world = new World(new Vector2(0, -10), true);
+    World world = new World(new Vector2(0, -10), true);
     private Box2DDebugRenderer b2dDR = new Box2DDebugRenderer();
-    public void createTiles() {
+    
+	public BodyDef bDef;
+	public FixtureDef fDef;
+    
+    public TiledMapManager(PlayScreen screen) {
+		this.screen = screen;
+		this.world = screen.getWorld();
     	
+    	createTiles();
+    	Gdx.app.log("log","TiledMapManager executado");
+    }
+    
+    
+    public void createTiles() {
+    	Gdx.app.log("log","createTiles executado");
 		// Carregando mapa
 		tiledMap = new TmxMapLoader().load("Tiled/mapa1.tmx");
 		tmr = new OrthogonalTiledMapRenderer(tiledMap);
@@ -46,6 +68,8 @@ public class TiledMapManager {
 	}
 	
     public void createLayer(TiledMapTileLayer layer, short bits) {
+    	
+    	Gdx.app.log("log", "createLayer executado");
 		
 		BodyDef bDef = new BodyDef();
 		FixtureDef fDef = new FixtureDef();
@@ -92,7 +116,8 @@ public class TiledMapManager {
 				fDef.filter.categoryBits = bits;
 				fDef.filter.maskBits = B2dVariaveis.BIT_DOGGIE | B2dVariaveis.BIT_INIMIGO1;
 				fDef.isSensor = false;
-				world.createBody(bDef).createFixture(fDef);
+//				world.createBody(bDef).createFixture(fDef);
+				Gdx.app.log("log","world body executado");
 				
 			}
 			

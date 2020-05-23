@@ -12,12 +12,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import com.newhorizon.doggie.GameClass;
 import com.newhorizon.doggie.telas.PlayScreen;
 import com.newhorizon.doggie.tools.Animation;
@@ -64,11 +64,8 @@ public class Doggie extends Sprite{
 	protected Animation animationIdle;
 	protected float widthIdle;
 	protected float heightIdle;
-	
-	
-	// Verificar se vale a pena manter este modelo anterior de flip e emMovimento
+
 	public boolean flip;
-	public boolean emMovimento;
 	
 	
 	public Doggie(PlayScreen screen) {
@@ -84,6 +81,8 @@ public class Doggie extends Sprite{
 		defineDoggie();
 //		setBounds(0,0, 16 / PPM, 16 / PPM);
 		
+		
+		// Animações do Doggie
 		animation = new Animation();
 		animationIdle = new Animation();
 		
@@ -111,6 +110,8 @@ public class Doggie extends Sprite{
 	}
 	
 	public void update(float dt){
+		
+		verificaEstado(dt);
 
 //		if(screen.cl.isPlayerOnGround())
 //			Gdx.app.log("log", "Doggie no chão");
@@ -136,23 +137,28 @@ public class Doggie extends Sprite{
 			RecebeDano();
 		}
 		
-		if(this.body.getLinearVelocity().x != 0)
-			this.emMovimento = true;
-		else
-			this.emMovimento = false;
-		
 	}
 	
 	public void RecebeDano() 
 	{
-
+		if(this.totalVidas <= 0)
+		{
+			this.totalVidas = 0;
+			morreu();
+			
+		}
 		if(this.totalVidas > 0)
+		{
+			// Joga pra posição "inicial" caso tenha vidas
 			body.setTransform(50 / PPM, 100 / PPM, 0);
+		}
 		
 		setTotalVidas(this.totalVidas -1);
-
-		if(this.totalVidas < 0)
+		
+		if (this.totalVidas < 0)
 			this.totalVidas = 0;
+
+
 		
 	}
 	
@@ -170,7 +176,7 @@ public class Doggie extends Sprite{
 		sb.begin();
 
 		// Ideal é aprimorar a máquina de estados do jogo.
-		if(flip && emMovimento)
+		if(flip && estadoAtual == Estado.CORRENDO)
 		{
 		sb.draw(
 				animation.getFrame(),
@@ -178,8 +184,8 @@ public class Doggie extends Sprite{
 				body.getPosition().y * PPM - height / 2, 
 				-width,
 				height);
-		}
-		else if (!flip && emMovimento)
+		}	
+		else if (!flip && estadoAtual == Estado.CORRENDO)
 		{
 			sb.draw(
 			animation.getFrame(),
@@ -187,7 +193,7 @@ public class Doggie extends Sprite{
 			body.getPosition().y * PPM - height / 2
 			);
 		}
-		else if(flip && !emMovimento)
+		else if(flip && estadoAtual == Estado.PARADO)
 		{
 		sb.draw(
 				animationIdle.getFrame(),
@@ -196,7 +202,7 @@ public class Doggie extends Sprite{
 				-widthIdle,
 				heightIdle);		
 		}
-		else if (!flip && !emMovimento)
+		else if (!flip && estadoAtual == Estado.PARADO)
 		{
 			sb.draw(
 			animationIdle.getFrame(),
@@ -206,73 +212,66 @@ public class Doggie extends Sprite{
 		}
 		
 		sb.end();
-		
-		
 	}
 	
-	  public TextureRegion getFrame(float dt){
+	  public Estado verificaEstado(float dt){
 //		  {CAINDO, PULANDO, PARADO, CORRENDO, ATACANDO, MORTO};
+		  estadoAnterior = estadoAtual;
 		  estadoAtual = getState();
 		  
-		  TextureRegion region;
+//		  TextureRegion region;
 		  
 		//depending on the state, get corresponding animation keyFrame.
 	        switch(estadoAtual){
 	            case MORTO:
-	                region = doggieMorreuTex;
-	                break;
-	            case PULANDO:
-	                region = doggiePulandoTex;
-	                break;
-	            case CORRENDO:
-	                region = doggieRunTex;
+	                morreu();
 	                break;
 	            case CAINDO:
-	            case PARADO:
+	            	caindo();
+	            	break;
+	            case PULANDO:
+	                jump();
+	                break;
+//	            case CORRENDO:
+//	                correndo(); // Classe que será criada caso seja necessário
+//	                break;
+//	            case PARADO:
+//	                parado(); // Classe que será criada caso seja necessário	            	
+//	            	break;
 	            default:
-	                region = doggieIdleTex;
-	        }
-	        Gdx.app.log("log", "getframeDoggie");
-	        Gdx.app.log("log", "getframeDoggie");
-	        //if mario is running left and the texture isnt facing left... flip it.
-	        if((body.getLinearVelocity().x < 0 || !correndoDireita) && !region.isFlipX()){
-	            region.flip(true, false);
-	            correndoDireita = false;
-	        }
-
-	        //if mario is running right and the texture isnt facing right... flip it.
-	        else if((body.getLinearVelocity().x > 0 || correndoDireita) && region.isFlipX()){
-	            region.flip(true, false);
-	            correndoDireita = true;
+	                estadoAtual = Estado.PARADO;
+//	                Gdx.app.log("log", "NENHUMESTADODETECTADO");
 	        }
 		  
 	        stateTimer = estadoAtual == estadoAnterior ? stateTimer + dt : 0;
-	        
-	        estadoAnterior = estadoAtual;
-	        
-	        return region;
+        
+	        return estadoAtual;
 	  }
 	    public Estado getState(){
-	        //Test to Box2D for velocity on the X and Y-Axis
-	        //if mario is going positive in Y-Axis he is jumping... or if he just jumped and is falling remain in jump state
+	    	
+	        // Não há else pois se a velocidade for 0, o ideal é que ele permaneça no flip atual
+	        if(body.getLinearVelocity().x < 0)
+	        	flip = true;
+	        else if (body.getLinearVelocity().x > 0)
+	        	flip = false;
+	    	
 	        if(doggieMorreu)
 	            return Estado.MORTO;
-	        else if((body.getLinearVelocity().y > 0 && estadoAtual == Estado.PULANDO) || (body.getLinearVelocity().y < 0 && estadoAnterior == Estado.PULANDO))
+	        else if((body.getLinearVelocity().y > 0 && estadoAtual == Estado.PULANDO)) // || (body.getLinearVelocity().y < 0 && estadoAnterior == Estado.PULANDO))
 	            return Estado.PULANDO;
-	        //if negative in Y-Axis mario is falling
-	        else if(body.getLinearVelocity().y < 0)
+	        else if(body.getLinearVelocity().y < 0 ) // && estadoAtual == Estado.CAINDO)
 	            return Estado.CAINDO;
-	        //if mario is positive or negative in the X axis he is running
+	        // Se a velocidade for diferente de 0 significa que está em movimento
 	        else if(body.getLinearVelocity().x != 0)
 	            return Estado.CORRENDO;
-	        //if none of these return then he must be standing
+	        // Cairá nessa função caso nenhuma condição anterior seja acionada. Vericar posssibilidade de criar ataques.
 	        else
 	            return Estado.PARADO;
 	    }
 	    
 	    public void morreu()
 	    {
-	        if (!doggieMorto()) {
+	        if (!doggieMorreu) {
 
 	        	// Para música do jogo e toca som de morte. 
 	        	
@@ -280,17 +279,14 @@ public class Doggie extends Sprite{
 	            Filter filter = new Filter();
 	            filter.maskBits = B2dVariaveis.BIT_NADA;
 
-	            for (Fixture fixture : body.getFixtureList()) {
-	                fixture.setFilterData(filter);
-	            }
-
-	            body.applyLinearImpulse(new Vector2(0, 4f), body.getWorldCenter(), true);
+//	            for (Fixture fixture : body.getFixtureList()) {
+//	                fixture.setFilterData(filter);
+//	            }
+	            Gdx.app.log("log","Morreeeeeeu");
+//	            body.applyLinearImpulse(new Vector2(0, 4f), body.getWorldCenter(), true);
+	            
 	        }
     	}
-	    
-	    public boolean doggieMorto(){
-	        return doggieMorreu;
-	    }
 
 	    public float getStateTimer(){
 	        return stateTimer;
@@ -299,10 +295,17 @@ public class Doggie extends Sprite{
 	    public void jump(){
 	    	
 	    	// Comentado provisoriamente enquanto os Estados não são atualizados.
-//	        if ( estadoAtual != Estado.PULANDO ) {
+	        if ( estadoAtual != Estado.PULANDO ) {
 	            body.applyLinearImpulse(new Vector2(0, 5f), body.getWorldCenter(), true);
 	            estadoAtual = Estado.PULANDO;
-//	        }
+	        }
+	    }
+	    public void caindo(){
+	    	
+	    	// Comentado provisoriamente enquanto os Estados não são atualizados.
+	        if ( estadoAtual != Estado.CAINDO ) {
+	            estadoAtual = Estado.CAINDO;
+	        }
 	    }
 	    
 //	    public void hit(Enemy enemy){
@@ -329,23 +332,23 @@ private void defineDoggie() {
 		
 		PolygonShape shape = new PolygonShape();
 		
+		CircleShape cShape = new CircleShape();
+		cShape.setRadius(23 / PPM);
+		
 		//Criando Doggie		
 		DoggiebDef.position.set(50/PPM ,100/PPM);
 		DoggiebDef.type = BodyType.DynamicBody;
-//				bDef.linearVelocity.set(.5f,0); // Velocidade do Doggie
 		body = world.createBody(DoggiebDef);
-//		Gdx.app.log("log", "DoggiebDefCriado");
-		shape.setAsBox(13/PPM , 13/PPM); // Controla tamanho da caixa de colusão.
-		fDef.shape = shape;
+		shape.setAsBox(28/PPM , 28/PPM); // Controla tamanho da caixa de colusão.
+		fDef.shape = cShape;
 		fDef.filter.categoryBits = B2dVariaveis.BIT_DOGGIE;
 		fDef.filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_COLEIRAS | B2dVariaveis.BIT_INIMIGO1;
 		// Faz quicar/
 		fDef.restitution = 0.2f;
 		body.createFixture(fDef).setUserData("doggie");
-//		Gdx.app.log("log", "fDef");
 
 		//Criando sensor de pés
-		shape.setAsBox(12/PPM, 6/PPM, new Vector2(0, -10/PPM), 0);
+		shape.setAsBox(26/PPM, 6/PPM, new Vector2(0, -22/PPM), 0);
 		fDef.shape = shape;
 		fDef.filter.categoryBits = B2dVariaveis.BIT_DOGGIE;
 		fDef.filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_INIMIGO1;
@@ -353,10 +356,7 @@ private void defineDoggie() {
 		body.createFixture(fDef).setUserData("footDoggie");
 		
 		// IMPLEMENTAR FUTURAMENTE O DOGGIEHEAD
-
-		// Cria Doggie
-//				doggie = new Doggie(body);
-//				this.setTotalVidas(3);
+		
 		body.createFixture(fDef).setUserData(this);
 		
 	}

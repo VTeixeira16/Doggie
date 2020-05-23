@@ -1,5 +1,12 @@
-Tiles:
+Tiles: (Cenário inicial)
 https://www.gameart2d.com/free-platformer-game-tileset.html
+
+Bricks: (tijolo)
+https://opengameart.org/content/bricks-tiled-texture-64x64
+
+Cidade:
+https://craftpix.net/file-licenses/
 
 Cat and Dog:
 https://www.gameart2d.com/cat-and-dog-free-sprites.html
+

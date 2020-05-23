@@ -1,7 +1,6 @@
-package com.newhorizon.doggie.handlers;
+package com.newhorizon.doggie.tools;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-
 
 public class Animation {
 

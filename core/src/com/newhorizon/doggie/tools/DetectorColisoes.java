@@ -1,4 +1,4 @@
-package com.newhorizon.doggie.handlers;
+package com.newhorizon.doggie.tools;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -8,13 +8,13 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.utils.Array;
 
-public class ListenerContatos implements ContactListener {
+public class DetectorColisoes implements ContactListener{
 	
 	private int numDoggieGround;
 	private Array<Body> bodiesToRemove;
 	
 	
-	public ListenerContatos() 
+	public DetectorColisoes() 
 	{
 		super();
 		bodiesToRemove = new Array<Body>();
@@ -24,7 +24,7 @@ public class ListenerContatos implements ContactListener {
 	//Chamado quando 2 fixtures colidem
 	public void beginContact(Contact contact)
 	{
-//		Gdx.app.log("log", "Colisão começou!");
+//		Gdx.app.log("log", "ColisÄƒo comeÃ§ou!");
 		Fixture fixtureA = contact.getFixtureA();
 		Fixture fixtureB = contact.getFixtureB();	
 		
@@ -90,5 +90,5 @@ public class ListenerContatos implements ContactListener {
 	public void preSolve(Contact contact, Manifold oldManifold) {}
 
 	public void postSolve(Contact contact, ContactImpulse impulse) {}
-	
+
 }

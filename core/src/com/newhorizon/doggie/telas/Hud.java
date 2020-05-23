@@ -1,19 +1,22 @@
-package com.newhorizon.doggie.entities;
+package com.newhorizon.doggie.telas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.newhorizon.doggie.GameClass;
+import com.newhorizon.doggie.sprites.Doggie;
 
-public class HUD {
-	
+public class Hud{
+
 	private Doggie doggie;
 	
 	private TextureRegion[] blocks;
 	
-	public HUD(Doggie doggie)
-	{
+	
+	public Hud(Doggie doggie) {
+		// TODO Auto-generated constructor stub
+		
 		this.doggie = doggie;
 		
 		Texture tex = GameClass.res.getTexture("hud");
@@ -24,7 +27,7 @@ public class HUD {
 			blocks [i] = new TextureRegion(tex, 32 + i * 16, 0, 16, 16);
 		}
 	}
-	
+
 	public void render (SpriteBatch sb) {
 		
 		short bits = doggie.getBody().getFixtureList().first()
@@ -34,9 +37,6 @@ public class HUD {
 		GameClass.font.draw(sb, "Coleiras: " + doggie.getNumColeiras(), 5, Gdx.graphics.getHeight() - 10);
 		
 		sb.end();
-		
-		
+			
 	}
-	
-
 }

@@ -1,4 +1,4 @@
-package com.newhorizon.doggie.handlers;
+package com.newhorizon.doggie.tools;
 
 import java.util.HashMap;
 
@@ -28,4 +28,5 @@ public class Content {
 		if(tex != null) tex.dispose();
 	}
 	
+
 }

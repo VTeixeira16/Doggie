@@ -137,8 +137,8 @@ public class Inimigos extends Sprite{
 		
 					
 		
-		//Criando Doggie		
-		EnemybDef.position.set(100/PPM ,120/PPM);
+		//Criando Inimigo. necessário reposicionar sempre que um novo for criado	
+		EnemybDef.position.set(100/PPM ,204/PPM);
 		EnemybDef.type = BodyType.DynamicBody;
 		
 				

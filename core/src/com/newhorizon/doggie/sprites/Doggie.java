@@ -14,7 +14,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Filter;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -37,21 +36,8 @@ public class Doggie extends Sprite{
 	private int numVidas;
 	private int totalVidas;
 	public boolean vivo;
-	private int flagVivo;
-	
-	
-	// Estrutrura será alterada completamente conforme for implementado os estados de forma correta
-	private TextureRegion doggieIdleTex;
-	private TextureRegion doggieRunTex;
-	private TextureRegion doggieMorreuTex;
-	private TextureRegion doggiePulandoTex;
-//	private Animation doggieIdleAnim;
-//	private Animation doggieRunAnim;
-//	private Animation doggieMorreuAnim;
-//	private Animation doggiePulandoAnim;
-	
+
 	private float stateTimer;
-	private boolean correndoDireita;
 	private boolean doggieMorreu;
 	
 	private PlayScreen screen;
@@ -76,7 +62,7 @@ public class Doggie extends Sprite{
 		estadoAtual = Estado.PARADO;
 		estadoAnterior = Estado.PARADO;
 		stateTimer = 0;
-		correndoDireita = true;
+		flip = false;
 		
 		defineDoggie();
 //		setBounds(0,0, 16 / PPM, 16 / PPM);
@@ -123,9 +109,6 @@ public class Doggie extends Sprite{
 		
 //		setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
 		
-// DESCOMENTAR ESSA PARTE ou usar estrutura antiga do projeto.
-//		setRegion(getFrame(dt));
-		
 		animation.update(dt);
 		animationIdle.update(dt);
 		
@@ -150,7 +133,7 @@ public class Doggie extends Sprite{
 		if(this.totalVidas > 0)
 		{
 			// Joga pra posição "inicial" caso tenha vidas
-			body.setTransform(50 / PPM, 100 / PPM, 0);
+			body.setTransform(50 / PPM, 204/ PPM, 0);
 		}
 		
 		setTotalVidas(this.totalVidas -1);
@@ -232,9 +215,10 @@ public class Doggie extends Sprite{
 	            case PULANDO:
 	                jump();
 	                break;
-//	            case CORRENDO:
+	            case CORRENDO:
+	            	estadoAtual = Estado.CORRENDO;
 //	                correndo(); // Classe que será criada caso seja necessário
-//	                break;
+	                break;
 //	            case PARADO:
 //	                parado(); // Classe que será criada caso seja necessário	            	
 //	            	break;
@@ -254,6 +238,8 @@ public class Doggie extends Sprite{
 	        	flip = true;
 	        else if (body.getLinearVelocity().x > 0)
 	        	flip = false;
+	        
+//	        Gdx.app.log("log", "velocidade:" + body.getLinearVelocity().x);
 	    	
 	        if(doggieMorreu)
 	            return Estado.MORTO;
@@ -296,7 +282,7 @@ public class Doggie extends Sprite{
 	    	
 	    	// Comentado provisoriamente enquanto os Estados não são atualizados.
 	        if ( estadoAtual != Estado.PULANDO ) {
-	            body.applyLinearImpulse(new Vector2(0, 5f), body.getWorldCenter(), true);
+	            body.applyLinearImpulse(new Vector2(0, 6f), body.getWorldCenter(), true);
 	            estadoAtual = Estado.PULANDO;
 	        }
 	    }
@@ -336,7 +322,7 @@ private void defineDoggie() {
 		cShape.setRadius(23 / PPM);
 		
 		//Criando Doggie		
-		DoggiebDef.position.set(50/PPM ,100/PPM);
+		DoggiebDef.position.set(50/PPM ,204/PPM);
 		DoggiebDef.type = BodyType.DynamicBody;
 		body = world.createBody(DoggiebDef);
 		shape.setAsBox(28/PPM , 28/PPM); // Controla tamanho da caixa de colusão.

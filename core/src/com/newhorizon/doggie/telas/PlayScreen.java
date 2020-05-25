@@ -149,7 +149,7 @@ public class PlayScreen implements Screen {
 		handleInput(dt);
 		gamecam.update();
 
-		Gdx.app.log("log", "Estado atual: " + doggie.estadoAtual);
+		
 
 		// Apagando coleiras
 		Array<Body> bodies = cl.getBodiesToRemove();
@@ -164,6 +164,8 @@ public class PlayScreen implements Screen {
 		doggie.update(dt);
 		inimigo.update(dt);
 //        coleiras.update(dt);
+		
+//		Gdx.app.log("log", "Estado atual: " + doggie.estadoAtual);
 
 		bodies.clear();
 
@@ -179,7 +181,7 @@ public class PlayScreen implements Screen {
 		update(delta);
 
 		// Limpa o fundo do jogo com o RGB escolhido.
-		Gdx.gl.glClearColor(1, 0, 0, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		// Trava a câmera na posição do Doggie
@@ -192,10 +194,14 @@ public class PlayScreen implements Screen {
 		doggie.render(game.sb);
 		inimigo.render(game.sb);
 //        coleiras.render(game.sb);
-
+		// Camadas são renderizadas depois em cima do Doggie e de inimigos.
+		tmr.getBatch().begin();
+		tmr.renderTileLayer((TiledMapTileLayer) tiledMap.getLayers().get("FrenteCenario"));
+		tmr.getBatch().end();
 		game.sb.setProjectionMatrix(cameraHUD.combined);
 		hud.render(game.sb);
 
+		
 		// Renderiza a câmera do Box2D
 		if (debug) {
 			b2dDR.render(world, b2dCamera.combined);
@@ -239,10 +245,10 @@ public class PlayScreen implements Screen {
 		tileSize = (int) tiledMap.getProperties().get("tilewidth");
 
 		TiledMapTileLayer layer;
-		layer = (TiledMapTileLayer) tiledMap.getLayers().get("Plataformas");
+		layer = (TiledMapTileLayer) tiledMap.getLayers().get("Calcada");
 		createLayer(layer, B2dVariaveis.BIT_PLATAFORMA);
-
-		layer = (TiledMapTileLayer) tiledMap.getLayers().get("PlataformasElevadas");
+		
+		layer = (TiledMapTileLayer) tiledMap.getLayers().get("Muro");
 		createLayer(layer, B2dVariaveis.BIT_PLATAFORMA);
 
 	}
@@ -270,10 +276,10 @@ public class PlayScreen implements Screen {
 				bDef.type = BodyType.StaticBody;
 				bDef.position.set((col + 0.5f) * tileSize / PPM, (linha + 0.5f) * tileSize / PPM);
 
-				if (layer == (TiledMapTileLayer) tiledMap.getLayers().get("Plataformas"))
-					shape.setAsBox(32 / PPM, 32 / PPM);
-				else if (layer == (TiledMapTileLayer) tiledMap.getLayers().get("PlataformasElevadas"))
-					shape.setAsBox(32 / PPM, 24 / PPM, new Vector2(0, -9 / PPM), 0);
+				if (layer == (TiledMapTileLayer) tiledMap.getLayers().get("Calcada"))
+					shape.setAsBox(32 / PPM, 16 / PPM, new Vector2(0, -16 /PPM), 0);
+				else if (layer == (TiledMapTileLayer) tiledMap.getLayers().get("Muro"))
+					shape.setAsBox(32 / PPM, 4 / PPM, new Vector2(0, 13 / PPM), 0);
 
 				fDef.friction = 0;
 				fDef.shape = shape;

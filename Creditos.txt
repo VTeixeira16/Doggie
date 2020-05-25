@@ -7,6 +7,9 @@ https://opengameart.org/content/bricks-tiled-texture-64x64
 Cidade:
 https://craftpix.net/file-licenses/
 
+Fundo do jogo (céu)
+https://opengameart.org/content/ocean-background
+
 Cat and Dog:
 https://www.gameart2d.com/cat-and-dog-free-sprites.html
 

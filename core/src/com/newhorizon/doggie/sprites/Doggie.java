@@ -112,8 +112,9 @@ public class Doggie extends Sprite{
 		animation.update(dt);
 		animationIdle.update(dt);
 		
-		if(this.getPosition().x < 0)
-			body.setTransform(0, body.getPosition().y, 0);
+		// Evita que Doggie saia da tela 
+		if(this.getPosition().x < 60 / PPM)
+			body.setTransform(60 / PPM, body.getPosition().y, 0);
 		
 		if(this.getPosition().y < 0)
 		{
@@ -322,7 +323,7 @@ private void defineDoggie() {
 		cShape.setRadius(23 / PPM);
 		
 		//Criando Doggie		
-		DoggiebDef.position.set(50/PPM ,204/PPM);
+		DoggiebDef.position.set(80/PPM ,204/PPM);
 		DoggiebDef.type = BodyType.DynamicBody;
 		body = world.createBody(DoggiebDef);
 		shape.setAsBox(28/PPM , 28/PPM); // Controla tamanho da caixa de colusão.

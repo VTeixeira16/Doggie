@@ -284,7 +284,7 @@ public class PlayScreen implements Screen {
 				fDef.friction = 0;
 				fDef.shape = shape;
 				fDef.filter.categoryBits = bits;
-				fDef.filter.maskBits = B2dVariaveis.BIT_DOGGIE | B2dVariaveis.BIT_INIMIGO1;
+				fDef.filter.maskBits = B2dVariaveis.BIT_INIMIGO1 | B2dVariaveis.BIT_DOGGIE |B2dVariaveis.BIT_DOGGIE_PES;
 				fDef.isSensor = false;
 				world.createBody(bDef).createFixture(fDef);
 
@@ -312,7 +312,7 @@ public class PlayScreen implements Screen {
 
 			bDef.position.set(x, y);
 			CircleShape cShape = new CircleShape();
-			cShape.setRadius(8 / PPM);
+			cShape.setRadius(9 / PPM);
 
 			fDef.shape = cShape;
 			fDef.isSensor = true;

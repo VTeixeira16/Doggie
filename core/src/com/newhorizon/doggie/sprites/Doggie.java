@@ -337,12 +337,18 @@ private void defineDoggie() {
 		//Criando sensor de pés
 		shape.setAsBox(26/PPM, 6/PPM, new Vector2(0, -22/PPM), 0);
 		fDef.shape = shape;
-		fDef.filter.categoryBits = B2dVariaveis.BIT_DOGGIE;
+		fDef.filter.categoryBits = B2dVariaveis.BIT_DOGGIE_PES;
 		fDef.filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_INIMIGO1;
 		fDef.isSensor = true;
 		body.createFixture(fDef).setUserData("footDoggie");
 		
-		// IMPLEMENTAR FUTURAMENTE O DOGGIEHEAD
+		//Criando sensor da cabeça
+		shape.setAsBox(26/PPM, 6/PPM, new Vector2(0, 22/PPM), 0);
+		fDef.shape = shape;
+		fDef.filter.categoryBits = B2dVariaveis.BIT_DOGGIE_HEAD;
+		fDef.filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_INIMIGO1;
+		fDef.isSensor = true;
+		body.createFixture(fDef).setUserData("headDoggie");
 		
 		body.createFixture(fDef).setUserData(this);
 		

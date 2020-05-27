@@ -15,5 +15,8 @@ public class B2dVariaveis {
 	public static final short BIT_PLATAFORMA_ELEV = 8;
 	public static final short BIT_COLEIRAS = 16;
 	public static final short BIT_INIMIGO1 = 32;
+	public static final short BIT_DOGGIE_HEAD = 64;
+	public static final short BIT_DOGGIE_PES = 128;
+	
 
 }

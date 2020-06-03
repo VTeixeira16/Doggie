@@ -31,6 +31,7 @@ public class Doggie extends Sprite{
 	public World world;
 	public Body body;
 	
+	
 	private int numColeiras;
 	private int totalColeiras;
 	private int numVidas;
@@ -42,7 +43,7 @@ public class Doggie extends Sprite{
 	
 	private PlayScreen screen;
 	
-	protected Animation animation;
+	public Animation animation;
 	protected float width;
 	protected float height;
 	
@@ -58,6 +59,7 @@ public class Doggie extends Sprite{
 		
 		this.screen = screen;
 		this.world = screen.getWorld();
+		
 
 		estadoAtual = Estado.PARADO;
 		estadoAnterior = Estado.PARADO;
@@ -96,6 +98,7 @@ public class Doggie extends Sprite{
 	}
 	
 	public void update(float dt){
+
 		
 		verificaEstado(dt);
 

@@ -31,6 +31,7 @@ import com.newhorizon.doggie.sprites.Coleiras;
 import com.newhorizon.doggie.sprites.Doggie;
 import com.newhorizon.doggie.sprites.Doggie.Estado;
 import com.newhorizon.doggie.sprites.Inimigos;
+import com.newhorizon.doggie.threads.DoggieThread;
 import com.newhorizon.doggie.tools.B2dVariaveis;
 import com.newhorizon.doggie.tools.DetectorColisoes;
 
@@ -63,6 +64,7 @@ public class PlayScreen implements Screen {
 
 	// sprites
 	private Doggie doggie;
+	private DoggieThread doggieThread;
 	private Inimigos inimigo;
 //    private Coleiras coleiras;
 //    private TiledMapManager tiledMapMan;
@@ -105,6 +107,7 @@ public class PlayScreen implements Screen {
 
 		// Criando Sprites no mundo.
 		doggie = new Doggie(this);
+		doggieThread = new DoggieThread(doggie);
 		inimigo = new Inimigos(this);
 		// coleiras = new Coleiras(this);
 
@@ -191,8 +194,13 @@ public class PlayScreen implements Screen {
 		// Renderiza o mapa do jogo com os sprites.
 		tmr.setView(gamecam);
 		tmr.render();
-		doggie.render(game.sb);
-		inimigo.render(game.sb);
+		
+		// Migrado para DoggieThread
+//		doggie.render(game.sb);
+		doggieThread.run();
+		
+		
+		inimigo.render(game.sb);	
 //        coleiras.render(game.sb);
 		// Camadas são renderizadas depois em cima do Doggie e de inimigos.
 		tmr.getBatch().begin();

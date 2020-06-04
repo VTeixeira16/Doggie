@@ -14,8 +14,8 @@ public class Coleiras extends B2DSprites {
 //		Texture tex = GameClass.res.getTexture("coleiras");
 //		TextureRegion[] sprites = TextureRegion.split(tex, 16, 16)[0];
 		
-		Texture tex = GameClass.res.getTexture("ossos");
-		TextureRegion[] sprites = TextureRegion.split(tex, 24, 24)[0];
+		Texture tex = GameClass.res.getTexture("osso2");
+		TextureRegion[] sprites = TextureRegion.split(tex, 30, 24)[0];
 		
 		setAnimation(sprites, 1 / 6f );
 	}

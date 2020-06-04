@@ -32,6 +32,7 @@ import com.newhorizon.doggie.sprites.Doggie;
 import com.newhorizon.doggie.sprites.Doggie.Estado;
 import com.newhorizon.doggie.sprites.Inimigos;
 import com.newhorizon.doggie.threads.DoggieThread;
+import com.newhorizon.doggie.threads.InimigoThread;
 import com.newhorizon.doggie.tools.B2dVariaveis;
 import com.newhorizon.doggie.tools.DetectorColisoes;
 
@@ -65,6 +66,7 @@ public class PlayScreen implements Screen {
 	// sprites
 	private Doggie doggie;
 	private DoggieThread doggieThread;
+	private InimigoThread inimigo1Thread;
 	private Inimigos inimigo;
 //    private Coleiras coleiras;
 //    private TiledMapManager tiledMapMan;
@@ -109,6 +111,7 @@ public class PlayScreen implements Screen {
 		doggie = new Doggie(this);
 		doggieThread = new DoggieThread(doggie);
 		inimigo = new Inimigos(this);
+		inimigo1Thread = new InimigoThread(inimigo);
 		// coleiras = new Coleiras(this);
 
 		// Cria HUD, onde valores e textos serão exibidos na tela. Na prática é uma
@@ -198,9 +201,10 @@ public class PlayScreen implements Screen {
 		// Migrado para DoggieThread
 //		doggie.render(game.sb);
 		doggieThread.run();
+		inimigo1Thread.run();
 		
 		
-		inimigo.render(game.sb);	
+//		inimigo.render(game.sb);	
 //        coleiras.render(game.sb);
 		// Camadas são renderizadas depois em cima do Doggie e de inimigos.
 		tmr.getBatch().begin();

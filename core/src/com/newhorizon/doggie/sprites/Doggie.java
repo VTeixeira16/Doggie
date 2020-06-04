@@ -24,7 +24,7 @@ import com.newhorizon.doggie.tools.B2dVariaveis;
 
 
 public class Doggie extends Sprite{
-	public enum Estado {CAINDO, PULANDO, PARADO, CORRENDO, ATACANDO, MORTO};
+	public enum Estado {CAINDO, PULANDO, PARADO, CORRENDO, ATACANDO, MORTO, GAMEOVER}; // NECESSÁRIO CRIAR UM ESTADO DE GAME OVER (PÓS MORTE)
 	public Estado estadoAtual;
 	public Estado estadoAnterior;
 	
@@ -52,7 +52,7 @@ public class Doggie extends Sprite{
 	protected float widthIdle;
 	protected float heightIdle;
 
-	public boolean flip;
+	private boolean flip;
 	
 	
 	public Doggie(PlayScreen screen) {
@@ -226,6 +226,8 @@ public class Doggie extends Sprite{
 //	            case PARADO:
 //	                parado(); // Classe que será criada caso seja necessário	            	
 //	            	break;
+//	            case GAMEOVER:
+//	            	SERÁ CRIADO FUNÇÃO QUE DESTRÓI O OBJETO
 	            default:
 	                estadoAtual = Estado.PARADO;
 //	                Gdx.app.log("log", "NENHUMESTADODETECTADO");
@@ -275,6 +277,9 @@ public class Doggie extends Sprite{
 	            Gdx.app.log("log","Morreeeeeeu");
 //	            body.applyLinearImpulse(new Vector2(0, 4f), body.getWorldCenter(), true);
 	            
+//	            COLOCAR UM TIMER PARA TROCAR PARA O ESTADO DE GAME OVER APÓS O FIM DA ANIMAÇÃO.
+//	            IMPLEMENTAÇÃO DEVE ROLAR AQUI OU NA MÁQUINA DE ESTADOS.
+	            
 	        }
     	}
 
@@ -298,6 +303,9 @@ public class Doggie extends Sprite{
 	        }
 	    }
 	    
+	    
+	    
+	    
 //	    public void hit(Enemy enemy){
 //	        if(enemy instanceof Turtle && ((Turtle) enemy).currentState == Turtle.State.STANDING_SHELL)
 //	            ((Turtle) enemy).kick(enemy.b2body.getPosition().x > b2body.getPosition().x ? Turtle.KICK_RIGHT : Turtle.KICK_LEFT);
@@ -313,7 +321,7 @@ public class Doggie extends Sprite{
 //	        }
 //	    }
 	  
-private void defineDoggie() {
+	    private void defineDoggie() {
 		
 		//Cria Doggie
 		BodyDef DoggiebDef = new BodyDef();				
@@ -328,8 +336,10 @@ private void defineDoggie() {
 		//Criando Doggie		
 		DoggiebDef.position.set(80/PPM ,204/PPM);
 		DoggiebDef.type = BodyType.DynamicBody;
+		
 		body = world.createBody(DoggiebDef);
-		shape.setAsBox(28/PPM , 28/PPM); // Controla tamanho da caixa de colusão.
+
+//		shape.setAsBox(28/PPM , 28/PPM); // Controla tamanho da caixa de colusão.
 		fDef.shape = cShape;
 		fDef.filter.categoryBits = B2dVariaveis.BIT_DOGGIE;
 		fDef.filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_COLEIRAS | B2dVariaveis.BIT_INIMIGO1;
@@ -341,7 +351,7 @@ private void defineDoggie() {
 		shape.setAsBox(26/PPM, 6/PPM, new Vector2(0, -22/PPM), 0);
 		fDef.shape = shape;
 		fDef.filter.categoryBits = B2dVariaveis.BIT_DOGGIE_PES;
-		fDef.filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_INIMIGO1;
+		fDef.filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_INIMIGO1 | B2dVariaveis.BIT_INIMIGO1_HEAD;
 		fDef.isSensor = true;
 		body.createFixture(fDef).setUserData("footDoggie");
 		

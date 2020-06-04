@@ -1,8 +1,5 @@
 package com.newhorizon.doggie.threads;
 
-import static com.newhorizon.doggie.tools.B2dVariaveis.PPM;
-
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.newhorizon.doggie.GameClass;
 import com.newhorizon.doggie.sprites.Doggie;
 import com.newhorizon.doggie.sprites.Doggie.Estado;
@@ -11,24 +8,17 @@ public class DoggieThread extends Thread{
 	
 	Doggie doggie;
 	
-	public SpriteBatch sb;
-
 	public DoggieThread(Doggie doggie) {
-		this.doggie = doggie;
-		
-		sb = new SpriteBatch();
-		
-		
-		
+		this.doggie = doggie;		
 	}
 	
 	public void run() {
+//		FUTURAMENTE, O ESTADO DEVERÁ SER ALTERADO PARA GAMEOVER, VISTO QUE HÁ ANIMAÇÕES DE MORTE
 		if(doggie.estadoAtual != Estado.MORTO)
 		{
-			System.out.println("Thread rodando");
+			System.out.println("Thread Doggie");
 //			System.out.println("Estado atual" + doggie.estadoAtual);
 			doggie.render(GameClass.sb);			
 		}
 	}
-
 }

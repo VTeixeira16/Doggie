@@ -19,7 +19,7 @@ public class GameClass extends Game {
 	public static final int V_HEIGHT = 600;	
 	
 	
-	public SpriteBatch sb;
+	public static SpriteBatch sb;
 	
 	
 	// Fontes
@@ -36,9 +36,11 @@ public class GameClass extends Game {
 		res = new Content();
 		res.loadTexture("images/doggie.png", "doggie");
 		res.loadTexture("images/doggie.png", "doggieIdle");
-		res.loadTexture("images/bunny_idle.png", "dogIdle");
+		res.loadTexture("images/doggieBlack.png", "dogIdle");
 		res.loadTexture("images/crystal.png", "coleiras");
-		res.loadTexture("images/bones.png", "ossos");
+//		res.loadTexture("images/osso4.png", "osso4");
+		res.loadTexture("images/bones.png", "osso2");
+
 		sb = new SpriteBatch();
 		
 		
@@ -46,7 +48,7 @@ public class GameClass extends Game {
 		fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Arial Black.ttf"));
 		fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		fontParameter.size = 18;
-		fontParameter.borderWidth = 1;
+		fontParameter.borderWidth = 2;
 		fontParameter.borderColor = Color.BLUE;
 		fontParameter.color = Color.WHITE;
 		font = fontGenerator.generateFont(fontParameter);

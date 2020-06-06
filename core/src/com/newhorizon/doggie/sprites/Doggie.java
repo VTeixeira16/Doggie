@@ -55,7 +55,7 @@ public class Doggie extends Sprite{
 	private boolean flip;
 	
 	
-	public Doggie(PlayScreen screen) {
+	public Doggie(PlayScreen screen, int x, int y) {
 		
 		this.screen = screen;
 		this.world = screen.getWorld();
@@ -66,7 +66,7 @@ public class Doggie extends Sprite{
 		stateTimer = 0;
 		flip = false;
 		
-		defineDoggie();
+		defineDoggie(x, y);
 //		setBounds(0,0, 16 / PPM, 16 / PPM);
 		
 		
@@ -150,7 +150,7 @@ public class Doggie extends Sprite{
 	}
 	
 	public void collectColeiras() {numColeiras++;}
-	public int getNumColeiras() {return numColeiras / 2;}
+	public int getNumColeiras() {return numColeiras;}
 	public void setTotalColeiras(int i) {totalColeiras = i; }
 	public int getTotalColeiras() {return totalColeiras;}
 	
@@ -321,7 +321,7 @@ public class Doggie extends Sprite{
 //	        }
 //	    }
 	  
-	    private void defineDoggie() {
+	    private void defineDoggie(int x, int y) {
 		
 		//Cria Doggie
 		BodyDef DoggiebDef = new BodyDef();				
@@ -334,7 +334,7 @@ public class Doggie extends Sprite{
 		cShape.setRadius(23 / PPM);
 		
 		//Criando Doggie		
-		DoggiebDef.position.set(80/PPM ,204/PPM);
+		DoggiebDef.position.set(x/PPM ,y/PPM);
 		DoggiebDef.type = BodyType.DynamicBody;
 		
 		body = world.createBody(DoggiebDef);

@@ -68,6 +68,8 @@ public class PlayScreen implements Screen {
 	private DoggieThread doggieThread;
 	private InimigoThread inimigo1Thread;
 	private Inimigos inimigo;
+	private InimigoThread inimigo2Thread;
+	private Inimigos inimigo2;
 //    private Coleiras coleiras;
 //    private TiledMapManager tiledMapMan;
 
@@ -108,10 +110,20 @@ public class PlayScreen implements Screen {
 		b2dDR = new Box2DDebugRenderer();
 
 		// Criando Sprites no mundo.
-		doggie = new Doggie(this);
+		// ((this), Posição X, Posição Y)
+		doggie = new Doggie(this, 80, 204);
 		doggieThread = new DoggieThread(doggie);
-		inimigo = new Inimigos(this);
+		
+		inimigo = new Inimigos(this, 400, 200);
 		inimigo1Thread = new InimigoThread(inimigo);
+		inimigo2 = new Inimigos(this, 200, 200);
+		inimigo2Thread = new InimigoThread(inimigo2);
+		
+		
+		doggieThread.start();
+		inimigo1Thread.start();
+		inimigo2Thread.start();
+		
 		// coleiras = new Coleiras(this);
 
 		// Cria HUD, onde valores e textos serão exibidos na tela. Na prática é uma
@@ -154,6 +166,7 @@ public class PlayScreen implements Screen {
 		world.step(dt, 6, 2);
 		handleInput(dt);
 		gamecam.update();
+//		System.out.println("Inimigo estado:" + inimigo.estadoAtual);
 
 		
 
@@ -169,8 +182,8 @@ public class PlayScreen implements Screen {
 
 		doggie.update(dt);
 		inimigo.update(dt);
+		inimigo2.update(dt);
 //        coleiras.update(dt);
-		
 //		Gdx.app.log("log", "Estado atual: " + doggie.estadoAtual);
 
 		bodies.clear();
@@ -200,8 +213,13 @@ public class PlayScreen implements Screen {
 		
 		// Migrado para DoggieThread
 //		doggie.render(game.sb);
+		
+//		IMPLEMENTAÇÃO USADA APENAS ENQUANTO NÃO FOR RESOLVIDO O PROBLEMA DE MULTITHREADS
+		
 		doggieThread.run();
 		inimigo1Thread.run();
+		inimigo2Thread.run();
+
 		
 		
 //		inimigo.render(game.sb);	

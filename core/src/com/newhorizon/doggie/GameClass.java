@@ -39,7 +39,7 @@ public class GameClass extends Game {
 		res.loadTexture("images/doggieBlack.png", "dogIdle");
 		res.loadTexture("images/crystal.png", "coleiras");
 //		res.loadTexture("images/osso4.png", "osso4");
-		res.loadTexture("images/bones.png", "osso2");
+		res.loadTexture("images/ossinho.png", "ossinho");
 
 		sb = new SpriteBatch();
 		

@@ -44,7 +44,7 @@ public class Inimigos extends Sprite{
 	private PlayScreen screen;
 	private World world;
 	
-	public Inimigos(PlayScreen screen) {
+	public Inimigos(PlayScreen screen, int x, int y) {
 		this.screen = screen;
 		this.world = screen.getWorld();
 		animation = new Animation();
@@ -53,7 +53,7 @@ public class Inimigos extends Sprite{
 		Texture tex = GameClass.res.getTexture("dogIdle");
 		TextureRegion[] spritesInimigo = TextureRegion.split(tex, 82, 60)[0]; // Recorte do SpriteSheet
 		
-		criaInimigo();
+		criaInimigo(x,y);
 //		setBounds(0,0, 16 / PPM, 16 / PPM);
 		
 		setAnimation(spritesInimigo, 1 / 12f);	// Velocidade da troca de frame;
@@ -215,7 +215,7 @@ public class Inimigos extends Sprite{
 	public float getWidth() { return width;}
 	public float getHeigth() {return height;}
 	
-	private void criaInimigo() {
+	private void criaInimigo(int x, int y) {
 		
 		BodyDef EnemybDef = new BodyDef();	
 		FixtureDef fDef = new FixtureDef();
@@ -224,7 +224,7 @@ public class Inimigos extends Sprite{
 					
 		
 		//Criando Inimigo. necessário reposicionar sempre que um novo for criado	
-		EnemybDef.position.set(400/PPM ,204/PPM);
+		EnemybDef.position.set(x/PPM , y/PPM);
 		EnemybDef.type = BodyType.DynamicBody;
 				
 		CircleShape cShape = new CircleShape();

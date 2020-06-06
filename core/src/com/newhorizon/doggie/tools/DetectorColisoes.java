@@ -12,6 +12,7 @@ public class DetectorColisoes implements ContactListener{
 	
 	private int numDoggieGround;
 	private Array<Body> bodiesToRemove;
+	private boolean inimigoHeadTocado = false;
 	
 	
 	public DetectorColisoes() 
@@ -24,7 +25,6 @@ public class DetectorColisoes implements ContactListener{
 	//Chamado quando 2 fixtures colidem
 	public void beginContact(Contact contact)
 	{
-//		Gdx.app.log("log", "Colisăo começou!");
 		Fixture fixtureA = contact.getFixtureA();
 		Fixture fixtureB = contact.getFixtureB();	
 		
@@ -52,6 +52,18 @@ public class DetectorColisoes implements ContactListener{
 			bodiesToRemove.add(fixtureB.getBody());	
 		}
 		
+		if(fixtureA.getUserData() != null && fixtureA.getUserData().equals("headInimigo"))
+		{
+			System.out.println("Cabeça do Inimigo tocada");
+			inimigoHeadTocado = true;
+		}
+		if(fixtureB.getUserData() != null && fixtureB.getUserData().equals("headInimigo"))
+		{
+			System.out.println("Cabeça do Inimigo tocada");
+			inimigoHeadTocado = true;
+		}
+		
+		
 	}
 
 	//Chamado quando 2 fixtures deixam de colidir
@@ -70,16 +82,10 @@ public class DetectorColisoes implements ContactListener{
 		{
 			numDoggieGround --;
 		}
-		if(fixtureA.getUserData() != null && fixtureA.getUserData().equals("coleiras"))
-		{
-			//Remove coleira
-			bodiesToRemove.add(fixtureA.getBody());
-		}
-		if(fixtureB.getUserData() != null && fixtureB.getUserData().equals("coleiras"))
-		{
-			//Remove coleira
-			bodiesToRemove.add(fixtureB.getBody());			
-		}
+		
+		
+
+		
 		
 	}
 	

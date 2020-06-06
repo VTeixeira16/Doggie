@@ -7,13 +7,13 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.utils.Array;
+import com.newhorizon.doggie.sprites.Doggie;
+import com.newhorizon.doggie.sprites.Inimigos;
 
 public class DetectorColisoes implements ContactListener{
 	
 	private int numDoggieGround;
 	private Array<Body> bodiesToRemove;
-	private boolean inimigoHeadTocado = false;
-	
 	
 	public DetectorColisoes() 
 	{
@@ -25,21 +25,31 @@ public class DetectorColisoes implements ContactListener{
 	//Chamado quando 2 fixtures colidem
 	public void beginContact(Contact contact)
 	{
+		// Estruta de fixture deverá ser trocada pela de category bits
 		Fixture fixtureA = contact.getFixtureA();
 		Fixture fixtureB = contact.getFixtureB();	
-		
-		
-		if(fixtureA == null || fixtureB == null) return;
-		
-		if(fixtureA.getUserData() != null && fixtureA.getUserData().equals("footDoggie"))
-		{
-			numDoggieGround ++;
+		int fixA = fixtureA.getFilterData().categoryBits;
+		int fixB = fixtureB.getFilterData().categoryBits;
+		int fixC = fixtureA.getFilterData().categoryBits | fixtureB.getFilterData().categoryBits;
+//		System.out.println("A: " + fixtureA.getUserData());
+//		System.out.println("B: " + fixtureB.getUserData());
+//		System.out.println("C: " + fixC);
+				
+		switch(fixC) {
+			case B2dVariaveis.BIT_DOGGIE_PES | B2dVariaveis.BIT_INIMIGO_HEAD:	
+	            if(fixtureA.getFilterData().categoryBits == B2dVariaveis.BIT_INIMIGO_HEAD)
+                    ((Inimigos)fixtureA.getUserData()).hitOnHead((Doggie) fixtureB.getUserData());
+	            else
+                    ((Inimigos)fixtureB.getUserData()).hitOnHead((Doggie) fixtureA.getUserData());
+				break;	
+				
 		}
-		if(fixtureB.getUserData() != null && fixtureB.getUserData().equals("footDoggie"))
-		{
+		
+		if(fixA == B2dVariaveis.BIT_DOGGIE_PES || fixB == B2dVariaveis.BIT_DOGGIE_PES)
 			numDoggieGround ++;
-		}
-				  
+		
+//		ESTRUTURA ABAIXO DEVERÁ SER PORTADA PARA O CASE ACIMA
+		 			  
 		if(fixtureA.getUserData() != null && fixtureA.getUserData().equals("coleiras"))
 		{
 			//Remove coleira
@@ -50,20 +60,7 @@ public class DetectorColisoes implements ContactListener{
 		{
 			//Remove coleira
 			bodiesToRemove.add(fixtureB.getBody());	
-		}
-		
-		if(fixtureA.getUserData() != null && fixtureA.getUserData().equals("headInimigo"))
-		{
-			System.out.println("Cabeça do Inimigo tocada");
-			inimigoHeadTocado = true;
-		}
-		if(fixtureB.getUserData() != null && fixtureB.getUserData().equals("headInimigo"))
-		{
-			System.out.println("Cabeça do Inimigo tocada");
-			inimigoHeadTocado = true;
-		}
-		
-		
+		}		
 	}
 
 	//Chamado quando 2 fixtures deixam de colidir
@@ -71,22 +68,15 @@ public class DetectorColisoes implements ContactListener{
 	{
 		Fixture fixtureA = contact.getFixtureA();
 		Fixture fixtureB = contact.getFixtureB();	
+		int fixA = fixtureA.getFilterData().categoryBits;
+		int fixB = fixtureB.getFilterData().categoryBits;
+		int fixC = fixtureA.getFilterData().categoryBits | fixtureB.getFilterData().categoryBits;
+		
 		
 		if(fixtureA == null || fixtureB == null) return;
 		
-		if(fixtureA.getUserData() != null && fixtureA.getUserData().equals("footDoggie"))
-		{
-			numDoggieGround --;			
-		}
-		if(fixtureB.getUserData() != null && fixtureB.getUserData().equals("footDoggie"))
-		{
-			numDoggieGround --;
-		}
-		
-		
-
-		
-		
+		if(fixA == B2dVariaveis.BIT_DOGGIE_PES | fixB == B2dVariaveis.BIT_DOGGIE_PES)
+			numDoggieGround --;		
 	}
 	
 	public boolean isPlayerOnGround() {return numDoggieGround > 0;}

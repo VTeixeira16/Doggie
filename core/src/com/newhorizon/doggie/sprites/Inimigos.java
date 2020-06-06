@@ -3,31 +3,24 @@ package com.newhorizon.doggie.sprites;
 import static com.newhorizon.doggie.tools.B2dVariaveis.PPM;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Filter;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.newhorizon.doggie.GameClass;
-import com.newhorizon.doggie.sprites.Doggie.Estado;
 import com.newhorizon.doggie.telas.PlayScreen;
 import com.newhorizon.doggie.tools.Animation;
 import com.newhorizon.doggie.tools.B2dVariaveis;
+import com.newhorizon.doggie.sprites.Doggie;
 
-public class Inimigos extends Sprite{
+public abstract class Inimigos extends Sprite{
 	public enum EstadoInimigos {PARADO, CORRENDO, ATACANDO, FERIDO, MORTO, GAMEOVER}; 
 	public EstadoInimigos estadoAtual;
 	public EstadoInimigos estadoAnterior;
 	
-	private boolean inimigoMorreu;
+	protected boolean inimigoMorreu;
 	protected Body body;
 	
 	protected Animation animation;	
@@ -41,25 +34,30 @@ public class Inimigos extends Sprite{
 	
 	private boolean flip;
 	
-	private PlayScreen screen;
-	private World world;
+	protected PlayScreen screen;
+	protected World world;
+
 	
 	public Inimigos(PlayScreen screen, int x, int y) {
-		this.screen = screen;
-		this.world = screen.getWorld();
-		animation = new Animation();
-		animationIdle = new Animation();
-		
-		Texture tex = GameClass.res.getTexture("dogIdle");
-		TextureRegion[] spritesInimigo = TextureRegion.split(tex, 82, 60)[0]; // Recorte do SpriteSheet
-		
-		criaInimigo(x,y);
-//		setBounds(0,0, 16 / PPM, 16 / PPM);
-		
-		setAnimation(spritesInimigo, 1 / 12f);	// Velocidade da troca de frame;
-		setAnimationIdle(spritesInimigo, 1 / 1f);
+//		this.screen = screen;
+//		this.world = screen.getWorld();
+//		animation = new Animation();
+//		animationIdle = new Animation();
+//		
+//		Texture tex = GameClass.res.getTexture("dogIdle");
+//		TextureRegion[] spritesInimigo = TextureRegion.split(tex, 82, 60)[0]; // Recorte do SpriteSheet
+//		
+//		criaInimigo(x,y);
+////		setBounds(0,0, 16 / PPM, 16 / PPM);
+//		
+//		setAnimation(spritesInimigo, 1 / 12f);	// Velocidade da troca de frame;
+//		setAnimationIdle(spritesInimigo, 1 / 1f);
 	}
 	
+	
+    public abstract void hitOnHead(Doggie doggie);
+    public abstract void hitByEnemy(Inimigos inimigos);
+    
 	public void setAnimation(TextureRegion[] reg, float delay) {
 		animation.setFrames(reg, delay);
 		width = reg[0].getRegionWidth();
@@ -144,12 +142,11 @@ public class Inimigos extends Sprite{
 //		  {CAINDO, PULANDO, PARADO, CORRENDO, ATACANDO, MORTO};
 	  estadoAnterior = estadoAtual;
 	  estadoAtual = getState();
-	  
 //		  TextureRegion region;
-	  
-	//depending on the state, get corresponding animation keyFrame.
+//	  Gdx.app.log("log","estado" + this.estadoAtual); 
         switch(estadoAtual){
-            case MORTO:
+        
+            case MORTO:          	  
                 morreu();
                 break;
             case CORRENDO:
@@ -190,19 +187,23 @@ public class Inimigos extends Sprite{
     
     public void morreu()
     {
+//    	Gdx.app.log("log","Morreeeeeeu");
+    	
         if (!inimigoMorreu) {
 
         	// Para música do jogo e toca som de morte. 
         	
         	inimigoMorreu = true;
-            Filter filter = new Filter();
-            filter.maskBits = B2dVariaveis.BIT_NADA;
+//            Filter filter = new Filter();
+//            filter.maskBits = B2dVariaveis.BIT_NADA;
 
-//            for (Fixture fixture : body.getFixtureList()) {
-//                fixture.setFilterData(filter);
-//            }
             Gdx.app.log("log","Morreeeeeeu");
-//            body.applyLinearImpulse(new Vector2(0, 4f), body.getWorldCenter(), true);
+            
+            Gdx.app.postRunnable(new Runnable(){
+                public void run(){
+                    world.destroyBody(body);
+                }
+            });
             
 //            COLOCAR UM TIMER PARA TROCAR PARA O ESTADO DE GAME OVER APÓS O FIM DA ANIMAÇÃO.
 //            IMPLEMENTAÇÃO DEVE ROLAR AQUI OU NA MÁQUINA DE ESTADOS.
@@ -215,62 +216,6 @@ public class Inimigos extends Sprite{
 	public float getWidth() { return width;}
 	public float getHeigth() {return height;}
 	
-	private void criaInimigo(int x, int y) {
-		
-		BodyDef EnemybDef = new BodyDef();	
-		FixtureDef fDef = new FixtureDef();
-		PolygonShape shape = new PolygonShape();
-		
-					
-		
-		//Criando Inimigo. necessário reposicionar sempre que um novo for criado	
-		EnemybDef.position.set(x/PPM , y/PPM);
-		EnemybDef.type = BodyType.DynamicBody;
-				
-		CircleShape cShape = new CircleShape();
-		cShape.setRadius(23 / PPM);
-		
-		body = world.createBody(EnemybDef);
-		
-//		shape.setAsBox(28/PPM , 28/PPM); // Controla tamanho da caixa de colusão.
-		fDef.shape = cShape;
-		fDef.density = 1000.0f;
-		fDef.filter.categoryBits = B2dVariaveis.BIT_INIMIGO1;
-		fDef.filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_DOGGIE;
-		// Faz quicar/
-		fDef.restitution = 0.2f;
-		body.createFixture(fDef).setUserData("inimigo1");
-		
-		//Criando sensor de pés
-		shape.setAsBox(26/PPM, 6/PPM, new Vector2(0, -22/PPM), 0);
-		fDef.shape = shape;
-		fDef.filter.categoryBits = B2dVariaveis.BIT_INIMIGO1_PES;
-		fDef.filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_DOGGIE;
-		fDef.isSensor = true;
-		body.createFixture(fDef).setUserData("footInimigo");
-		
-		//Criando sensor da cabeça
-		shape.setAsBox(26/PPM, 6/PPM, new Vector2(0, 22/PPM), 0);
-		fDef.shape = shape;
-		fDef.filter.categoryBits = B2dVariaveis.BIT_INIMIGO1_HEAD;
-		fDef.filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_DOGGIE | B2dVariaveis.BIT_DOGGIE_PES;
-		fDef.isSensor = true;
-		body.createFixture(fDef).setUserData("headInimigo");
-
-		//Criando sensor de pés
-//		shape.setAsBox(10/PixelsPorMetro, 6/PixelsPorMetro, new Vector2(0, -10/PixelsPorMetro), 0);
-//		fDef.shape = shape;
-//		fDef.filter.categoryBits = b2dVariaveis.BIT_DOGGIE;
-//		fDef.filter.maskBits = b2dVariaveis.BIT_PLATAFORMA;
-//		fDef.isSensor = true;
-//		body.createFixture(fDef).setUserData("footDoggie");
-		
-
-		// Cria inimigo
-//		enemy1 = new Inimigos(body);
-//		body.setUserData(this);
-		
-		
-	}
+	protected abstract void criaInimigo(int x, int y);
 
 }

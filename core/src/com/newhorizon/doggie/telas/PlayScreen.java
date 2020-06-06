@@ -30,6 +30,7 @@ import com.newhorizon.doggie.GameClass;
 import com.newhorizon.doggie.sprites.Coleiras;
 import com.newhorizon.doggie.sprites.Doggie;
 import com.newhorizon.doggie.sprites.Doggie.Estado;
+import com.newhorizon.doggie.sprites.InimigoCachorro;
 import com.newhorizon.doggie.sprites.Inimigos;
 import com.newhorizon.doggie.threads.DoggieThread;
 import com.newhorizon.doggie.threads.InimigoThread;
@@ -114,9 +115,9 @@ public class PlayScreen implements Screen {
 		doggie = new Doggie(this, 80, 204);
 		doggieThread = new DoggieThread(doggie);
 		
-		inimigo = new Inimigos(this, 400, 200);
+		inimigo = new InimigoCachorro(this, 400, 200);
 		inimigo1Thread = new InimigoThread(inimigo);
-		inimigo2 = new Inimigos(this, 200, 200);
+		inimigo2 = new InimigoCachorro(this, 200, 200);
 		inimigo2Thread = new InimigoThread(inimigo2);
 		
 		
@@ -178,6 +179,7 @@ public class PlayScreen implements Screen {
 			coleiras.removeValue((Coleiras) b.getUserData(), true);
 			world.destroyBody(b);
 			doggie.collectColeiras();
+			
 		}
 
 		doggie.update(dt);
@@ -187,7 +189,6 @@ public class PlayScreen implements Screen {
 //		Gdx.app.log("log", "Estado atual: " + doggie.estadoAtual);
 
 		bodies.clear();
-
 		for (int i = 0; i < coleiras.size; i++) {
 			coleiras.get(i).update(dt);
 		}
@@ -314,7 +315,7 @@ public class PlayScreen implements Screen {
 				fDef.friction = 0;
 				fDef.shape = shape;
 				fDef.filter.categoryBits = bits;
-				fDef.filter.maskBits = B2dVariaveis.BIT_INIMIGO1 | B2dVariaveis.BIT_DOGGIE |B2dVariaveis.BIT_DOGGIE_PES;
+				fDef.filter.maskBits = B2dVariaveis.BIT_INIMIGO | B2dVariaveis.BIT_DOGGIE |B2dVariaveis.BIT_DOGGIE_PES;
 				fDef.isSensor = false;
 				world.createBody(bDef).createFixture(fDef);
 

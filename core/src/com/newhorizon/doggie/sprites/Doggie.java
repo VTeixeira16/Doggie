@@ -342,26 +342,26 @@ public class Doggie extends Sprite{
 //		shape.setAsBox(28/PPM , 28/PPM); // Controla tamanho da caixa de colusão.
 		fDef.shape = cShape;
 		fDef.filter.categoryBits = B2dVariaveis.BIT_DOGGIE;
-		fDef.filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_COLEIRAS | B2dVariaveis.BIT_INIMIGO1;
+		fDef.filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_COLEIRAS | B2dVariaveis.BIT_INIMIGO;
 		// Faz quicar/
 		fDef.restitution = 0.2f;
-		body.createFixture(fDef).setUserData("doggie");
+		body.createFixture(fDef).setUserData(this);
 
 		//Criando sensor de pés
 		shape.setAsBox(26/PPM, 6/PPM, new Vector2(0, -22/PPM), 0);
 		fDef.shape = shape;
 		fDef.filter.categoryBits = B2dVariaveis.BIT_DOGGIE_PES;
-		fDef.filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_INIMIGO1 | B2dVariaveis.BIT_INIMIGO1_HEAD;
+		fDef.filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_INIMIGO | B2dVariaveis.BIT_INIMIGO_HEAD;
 		fDef.isSensor = true;
-		body.createFixture(fDef).setUserData("footDoggie");
+		body.createFixture(fDef).setUserData(this);
 		
 		//Criando sensor da cabeça
 		shape.setAsBox(26/PPM, 6/PPM, new Vector2(0, 22/PPM), 0);
 		fDef.shape = shape;
 		fDef.filter.categoryBits = B2dVariaveis.BIT_DOGGIE_HEAD;
-		fDef.filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_INIMIGO1;
+		fDef.filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_INIMIGO;
 		fDef.isSensor = true;
-		body.createFixture(fDef).setUserData("headDoggie");
+//		body.createFixture(fDef).setUserData("headDoggie");
 		
 		body.createFixture(fDef).setUserData(this);
 		

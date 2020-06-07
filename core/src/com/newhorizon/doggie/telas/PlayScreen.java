@@ -36,6 +36,8 @@ import com.newhorizon.doggie.threads.DoggieThread;
 import com.newhorizon.doggie.threads.InimigoThread;
 import com.newhorizon.doggie.tools.B2dVariaveis;
 import com.newhorizon.doggie.tools.DetectorColisoes;
+import com.newhorizon.doggie.tools.ManagerCenas;
+import com.newhorizon.doggie.telas.GameOver;
 
 public class PlayScreen implements Screen {
 
@@ -73,6 +75,9 @@ public class PlayScreen implements Screen {
 	private Inimigos inimigo2;
 //    private Coleiras coleiras;
 //    private TiledMapManager tiledMapMan;
+	
+	public float posDoggieX;
+	public float posDoggieY;
 
 	public PlayScreen(GameClass game) {
 		this.game = game;
@@ -115,9 +120,9 @@ public class PlayScreen implements Screen {
 		doggie = new Doggie(this, 80, 204);
 		doggieThread = new DoggieThread(doggie);
 		
-		inimigo = new InimigoCachorro(this, 400, 200);
+		inimigo = new InimigoCachorro(this, 230, 200);
 		inimigo1Thread = new InimigoThread(inimigo);
-		inimigo2 = new InimigoCachorro(this, 200, 200);
+		inimigo2 = new InimigoCachorro(this, 400, 200);
 		inimigo2Thread = new InimigoThread(inimigo2);
 		
 		
@@ -185,6 +190,14 @@ public class PlayScreen implements Screen {
 		doggie.update(dt);
 		inimigo.update(dt);
 		inimigo2.update(dt);
+		
+		
+		
+		posDoggieX = doggie.getPosition().x * PPM;
+		posDoggieY = doggie.getPosition().y * PPM;
+		
+		
+		
 //        coleiras.update(dt);
 //		Gdx.app.log("log", "Estado atual: " + doggie.estadoAtual);
 
@@ -193,8 +206,9 @@ public class PlayScreen implements Screen {
 			coleiras.get(i).update(dt);
 		}
 		
+	
+//		ManagerCenas.setScreen(new GameOver(this), game);
 	}
-
 	@Override
 	public void render(float delta) {
 		// Separando a lógica do update do render.
@@ -282,6 +296,8 @@ public class PlayScreen implements Screen {
 		layer = (TiledMapTileLayer) tiledMap.getLayers().get("Muro");
 		createLayer(layer, B2dVariaveis.BIT_PLATAFORMA);
 
+		layer = (TiledMapTileLayer) tiledMap.getLayers().get("Obstaculos");
+		createLayer(layer, B2dVariaveis.BIT_OBJETOS);
 	}
 
 	private void createLayer(TiledMapTileLayer layer, short bits) {
@@ -311,12 +327,23 @@ public class PlayScreen implements Screen {
 					shape.setAsBox(32 / PPM, 16 / PPM, new Vector2(0, -16 /PPM), 0);
 				else if (layer == (TiledMapTileLayer) tiledMap.getLayers().get("Muro"))
 					shape.setAsBox(32 / PPM, 4 / PPM, new Vector2(0, 13 / PPM), 0);
+				else if (layer == (TiledMapTileLayer) tiledMap.getLayers().get("Obstaculos"))
+					shape.setAsBox(32 / PPM, 31 / PPM, new Vector2(0, 37 / PPM), 0);
 
 				fDef.friction = 0;
 				fDef.shape = shape;
 				fDef.filter.categoryBits = bits;
-				fDef.filter.maskBits = B2dVariaveis.BIT_INIMIGO | B2dVariaveis.BIT_DOGGIE |B2dVariaveis.BIT_DOGGIE_PES;
+				
+				if (layer != (TiledMapTileLayer) tiledMap.getLayers().get("Obstaculos"))
+					fDef.filter.maskBits = B2dVariaveis.BIT_INIMIGO | B2dVariaveis.BIT_INIMIGO_PES | B2dVariaveis.BIT_DOGGIE |B2dVariaveis.BIT_DOGGIE_PES;
+				else
+					fDef.filter.maskBits = B2dVariaveis.BIT_INIMIGO | B2dVariaveis.BIT_DOGGIE |B2dVariaveis.BIT_DOGGIE_PES;
+				
 				fDef.isSensor = false;
+				
+				
+				
+				
 				world.createBody(bDef).createFixture(fDef);
 
 			}

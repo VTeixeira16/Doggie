@@ -20,6 +20,9 @@ public abstract class Inimigos extends Sprite{
 	public EstadoInimigos estadoAtual;
 	public EstadoInimigos estadoAnterior;
 	
+	protected float stateTime;
+	
+	
 	protected boolean inimigoMorreu;
 	protected Body body;
 	
@@ -36,9 +39,13 @@ public abstract class Inimigos extends Sprite{
 	
 	protected PlayScreen screen;
 	protected World world;
-
+	
+	protected Vector2 velocidade;
 	
 	public Inimigos(PlayScreen screen, int x, int y) {
+		
+		stateTime = 0;
+		velocidade = new Vector2 (2,0);
 //		this.screen = screen;
 //		this.world = screen.getWorld();
 //		animation = new Animation();
@@ -58,6 +65,13 @@ public abstract class Inimigos extends Sprite{
     public abstract void hitOnHead(Doggie doggie);
     public abstract void hitByEnemy(Inimigos inimigos);
     
+    public void revVelocidade(boolean x, boolean y) {
+    	if(x)
+    		velocidade.x = - velocidade.x;
+		if(y)
+    		velocidade.y = - velocidade.y;
+    }
+    
 	public void setAnimation(TextureRegion[] reg, float delay) {
 		animation.setFrames(reg, delay);
 		width = reg[0].getRegionWidth();
@@ -73,11 +87,16 @@ public abstract class Inimigos extends Sprite{
 	}
 	
 	public void update (float dt) {
-		
+		stateTime += dt;
+//		System.out.println(stateTime);		
 		verificaEstado(dt);
+		
 		
 		animation.update(dt);
 		animationIdle.update(dt);
+		
+//			body.applyLinearImpulse(new Vector2(-1f, 0), body.getWorldCenter(), true);
+
 				
 //		animation.update(dt);
 //		

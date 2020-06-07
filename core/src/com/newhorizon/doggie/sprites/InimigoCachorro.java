@@ -32,6 +32,10 @@ public class InimigoCachorro extends Inimigos{
 		
 		setAnimation(spritesInimigo, 1 / 12f);	// Velocidade da troca de frame;
 		setAnimationIdle(spritesInimigo, 1 / 1f);
+		
+		velocidade = new Vector2 (2,0);
+		
+
 	}
 	
 	protected void criaInimigo(int x, int y)
@@ -45,17 +49,18 @@ public class InimigoCachorro extends Inimigos{
 		//Criando Inimigo. necessário reposicionar sempre que um novo for criado	
 		EnemybDef.position.set(x/PPM , y/PPM);
 		EnemybDef.type = BodyType.DynamicBody;
-				
+		
 		CircleShape cShape = new CircleShape();
 		cShape.setRadius(23 / PPM);
 		
 		body = world.createBody(EnemybDef);
+		body.setFixedRotation(true);
 		
 //		shape.setAsBox(28/PPM , 28/PPM); // Controla tamanho da caixa de colusão.
 		fDef.shape = cShape;
 		fDef.density = 1000.0f;
 		fDef.filter.categoryBits = B2dVariaveis.BIT_INIMIGO;
-		fDef.filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_DOGGIE;
+		fDef.filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_OBJETOS | B2dVariaveis.BIT_DOGGIE;
 		// Faz quicar/
 		fDef.restitution = 0.2f;
 		body.createFixture(fDef).setUserData(this);
@@ -64,12 +69,12 @@ public class InimigoCachorro extends Inimigos{
 		shape.setAsBox(26/PPM, 6/PPM, new Vector2(0, -22/PPM), 0);
 		fDef.shape = shape;
 		fDef.filter.categoryBits = B2dVariaveis.BIT_INIMIGO_PES;
-		fDef.filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_DOGGIE;
+		fDef.filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_OBJETOS | B2dVariaveis.BIT_DOGGIE;
 		fDef.isSensor = true;
 		body.createFixture(fDef).setUserData(this);
 		
 		//Criando sensor da cabeça
-		shape.setAsBox(18/PPM, 6/PPM, new Vector2(0, 22/PPM), 0);
+		shape.setAsBox(12/PPM, 6/PPM, new Vector2(0, 22/PPM), 0);
 		fDef.shape = shape;
 		fDef.filter.categoryBits = B2dVariaveis.BIT_INIMIGO_HEAD;
 		fDef.filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_DOGGIE | B2dVariaveis.BIT_DOGGIE_PES;
@@ -89,13 +94,42 @@ public class InimigoCachorro extends Inimigos{
 //		enemy1 = new Inimigos(body);
 //		body.setUserData(this);
 		
+	}
+	
+	public void update (float dt) {
+		stateTime += dt;
+		verificaEstado(dt);
+		
+		
+		animation.update(dt);
+		animationIdle.update(dt);
+		
+		body.setLinearVelocity(velocidade);
+		
+//			body.applyLinearImpulse(new Vector2(-1f, 0), body.getWorldCenter(), true);
+
+				
+//		animation.update(dt);
+//		
+//		setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeigth() / 2);
+//		animationIdle.update(dt);
+//		
+//		if(this.body.getLinearVelocity().x != 0)
+//			this.emMovimento = true;
+//		else
+//			this.emMovimento = false;
+//		
+//		if(this.body.getLinearVelocity().x < 0)
+//			this.flip = true;
+//		else if(this.body.getLinearVelocity().x > 0)
+//			this.flip = false;
 		
 	}
 
 	@Override
 	public void hitOnHead(Doggie doggie) {
 		// TODO Auto-generated method stub
-		System.out.println("Catapimbas");
+//		System.out.println("Catapimbas");
 		morreu();
 //		this.world.destroyBody(this.body);
 		

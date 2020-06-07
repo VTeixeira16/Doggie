@@ -54,7 +54,6 @@ public class Doggie extends Sprite{
 
 	private boolean flip;
 	
-	
 	public Doggie(PlayScreen screen, int x, int y) {
 		
 		this.screen = screen;
@@ -98,6 +97,9 @@ public class Doggie extends Sprite{
 	}
 	
 	public void update(float dt){
+		stateTimer += dt;
+		
+		Gdx.app.log("CIGARRO SOLTO", "TIMER: " + stateTimer);
 
 		
 		verificaEstado(dt);
@@ -119,7 +121,7 @@ public class Doggie extends Sprite{
 		if(this.getPosition().x < 60 / PPM)
 			body.setTransform(60 / PPM, body.getPosition().y, 0);
 		
-		if(this.getPosition().y < 0)
+		if(this.getPosition().y < 64/PPM )
 		{
 			RecebeDano();
 		}
@@ -134,14 +136,22 @@ public class Doggie extends Sprite{
 			morreu();
 			
 		}
+		
+		System.out.println("Executou morreu");
 		if(this.totalVidas > 0)
 		{
 			// Joga pra posição "inicial" caso tenha vidas
-			body.setTransform(50 / PPM, 204/ PPM, 0);
+//			body.setTransform(50 / PPM, 204/ PPM, 0);
+//			body.applyLinearImpulse(new Vector2(3f, 6f), body.getWorldCenter(), true);
+			body.getPosition().set(10/PPM , 10/PPM);
+			System.out.println("passou pelo body no if total vidas");
 		}
 		
+		if(stateTimer > 0.7f)
+		{
+		stateTimer = 0;
 		setTotalVidas(this.totalVidas -1);
-		
+		}
 		if (this.totalVidas < 0)
 			this.totalVidas = 0;
 
@@ -233,7 +243,7 @@ public class Doggie extends Sprite{
 //	                Gdx.app.log("log", "NENHUMESTADODETECTADO");
 	        }
 		  
-	        stateTimer = estadoAtual == estadoAnterior ? stateTimer + dt : 0;
+//	        stateTimer = estadoAtual == estadoAnterior ? stateTimer + dt : 0;
         
 	        return estadoAtual;
 	  }
@@ -342,7 +352,7 @@ public class Doggie extends Sprite{
 //		shape.setAsBox(28/PPM , 28/PPM); // Controla tamanho da caixa de colusão.
 		fDef.shape = cShape;
 		fDef.filter.categoryBits = B2dVariaveis.BIT_DOGGIE;
-		fDef.filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_COLEIRAS | B2dVariaveis.BIT_INIMIGO;
+		fDef.filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_OBJETOS | B2dVariaveis.BIT_COLEIRAS | B2dVariaveis.BIT_INIMIGO;
 		// Faz quicar/
 		fDef.restitution = 0.2f;
 		body.createFixture(fDef).setUserData(this);
@@ -351,7 +361,7 @@ public class Doggie extends Sprite{
 		shape.setAsBox(26/PPM, 6/PPM, new Vector2(0, -22/PPM), 0);
 		fDef.shape = shape;
 		fDef.filter.categoryBits = B2dVariaveis.BIT_DOGGIE_PES;
-		fDef.filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_INIMIGO | B2dVariaveis.BIT_INIMIGO_HEAD;
+		fDef.filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_OBJETOS | B2dVariaveis.BIT_INIMIGO | B2dVariaveis.BIT_INIMIGO_HEAD;
 		fDef.isSensor = true;
 		body.createFixture(fDef).setUserData(this);
 		

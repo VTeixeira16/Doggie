@@ -1,5 +1,6 @@
 package com.newhorizon.doggie.tools;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
@@ -42,6 +43,19 @@ public class DetectorColisoes implements ContactListener{
 	            else
                     ((Inimigos)fixtureB.getUserData()).hitOnHead((Doggie) fixtureA.getUserData());
 				break;	
+			case B2dVariaveis.BIT_INIMIGO | B2dVariaveis.BIT_OBJETOS:
+	            if(fixtureA.getFilterData().categoryBits == B2dVariaveis.BIT_INIMIGO)
+                    ((Inimigos)fixtureA.getUserData()).revVelocidade(true, false);
+	            else
+	            	((Inimigos)fixtureB.getUserData()).revVelocidade(true, false);
+				break;
+			case B2dVariaveis.BIT_DOGGIE | B2dVariaveis.BIT_INIMIGO:
+	            if(fixtureA.getFilterData().categoryBits == B2dVariaveis.BIT_DOGGIE)
+                    ((Doggie)fixtureA.getUserData()).RecebeDano();
+//	            else
+//	            	((Doggie)fixtureB.getUserData()).RecebeDano();
+				break;
+			
 				
 		}
 		

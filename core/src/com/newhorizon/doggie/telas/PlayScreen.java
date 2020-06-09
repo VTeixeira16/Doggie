@@ -36,8 +36,6 @@ import com.newhorizon.doggie.threads.DoggieThread;
 import com.newhorizon.doggie.threads.InimigoThread;
 import com.newhorizon.doggie.tools.B2dVariaveis;
 import com.newhorizon.doggie.tools.DetectorColisoes;
-import com.newhorizon.doggie.tools.ManagerCenas;
-import com.newhorizon.doggie.telas.GameOver;
 
 public class PlayScreen implements Screen {
 
@@ -117,7 +115,7 @@ public class PlayScreen implements Screen {
 
 		// Criando Sprites no mundo.
 		// ((this), Posição X, Posição Y)
-		doggie = new Doggie(this, 80, 204);
+		doggie = new Doggie(this, 30, 320);
 		doggieThread = new DoggieThread(doggie);
 		
 		inimigo = new InimigoCachorro(this, 230, 200);
@@ -168,6 +166,9 @@ public class PlayScreen implements Screen {
 	}
 
 	public void update(float dt) {
+		
+		if(doggie.getTotalVidas() == 0)
+			game.setScreen(new GameOver(game));
 
 		world.step(dt, 6, 2);
 		handleInput(dt);

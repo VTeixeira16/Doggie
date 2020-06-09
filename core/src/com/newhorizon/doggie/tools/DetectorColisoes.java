@@ -39,9 +39,15 @@ public class DetectorColisoes implements ContactListener{
 		switch(fixC) {
 			case B2dVariaveis.BIT_DOGGIE_PES | B2dVariaveis.BIT_INIMIGO_HEAD:	
 	            if(fixtureA.getFilterData().categoryBits == B2dVariaveis.BIT_INIMIGO_HEAD)
+	            {
                     ((Inimigos)fixtureA.getUserData()).hitOnHead((Doggie) fixtureB.getUserData());
+                    ((Doggie)fixtureB.getUserData()).jumpEnemy();
+	            }
 	            else
+	            {
                     ((Inimigos)fixtureB.getUserData()).hitOnHead((Doggie) fixtureA.getUserData());
+                    ((Doggie)fixtureA.getUserData()).jumpEnemy();
+	            }
 				break;	
 			case B2dVariaveis.BIT_INIMIGO | B2dVariaveis.BIT_OBJETOS:
 	            if(fixtureA.getFilterData().categoryBits == B2dVariaveis.BIT_INIMIGO)
@@ -51,9 +57,16 @@ public class DetectorColisoes implements ContactListener{
 				break;
 			case B2dVariaveis.BIT_DOGGIE | B2dVariaveis.BIT_INIMIGO:
 	            if(fixtureA.getFilterData().categoryBits == B2dVariaveis.BIT_DOGGIE)
+	            {
                     ((Doggie)fixtureA.getUserData()).RecebeDano();
-//	            else
-//	            	((Doggie)fixtureB.getUserData()).RecebeDano();
+                    ((Inimigos)fixtureB.getUserData()).revVelocidade(true, false);
+                    
+	            }
+                else
+                {
+	            	((Doggie)fixtureB.getUserData()).RecebeDano();
+                    ((Inimigos)fixtureA.getUserData()).revVelocidade(true, false);
+                }
 				break;
 			
 				

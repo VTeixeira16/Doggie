@@ -95,6 +95,12 @@ public abstract class Inimigos extends Sprite{
 		animation.update(dt);
 		animationIdle.update(dt);
 		
+		if(body.getPosition().x < 30 / PPM)
+		{
+			revVelocidade(true,false);
+			body.setTransform(31 / PPM, body.getPosition().y, 0);
+		}
+		
 //			body.applyLinearImpulse(new Vector2(-1f, 0), body.getWorldCenter(), true);
 
 				

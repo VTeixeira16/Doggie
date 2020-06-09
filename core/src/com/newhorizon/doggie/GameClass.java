@@ -3,14 +3,12 @@ package com.newhorizon.doggie;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.newhorizon.doggie.telas.GameOver;
 import com.newhorizon.doggie.telas.PlayScreen;
 import com.newhorizon.doggie.tools.Content;
-import com.newhorizon.doggie.tools.ManagerCenas;
 
 
 public class GameClass extends Game {
@@ -59,7 +57,8 @@ public class GameClass extends Game {
 		
 		
 		
-		ManagerCenas.setScreen(new PlayScreen(this), this);
+//		ManagerCenas.setScreen(new PlayScreen(this), this);
+		setScreen(new PlayScreen(this));
 		
 		
 		

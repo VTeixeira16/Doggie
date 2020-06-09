@@ -99,7 +99,7 @@ public class Doggie extends Sprite{
 	public void update(float dt){
 		stateTimer += dt;
 		
-		Gdx.app.log("CIGARRO SOLTO", "TIMER: " + stateTimer);
+//		Gdx.app.log("Doggie", "TIMER: " + stateTimer);
 
 		
 		verificaEstado(dt);
@@ -118,13 +118,26 @@ public class Doggie extends Sprite{
 		animationIdle.update(dt);
 		
 		// Evita que Doggie saia da tela 
-		if(this.getPosition().x < 60 / PPM)
-			body.setTransform(60 / PPM, body.getPosition().y, 0);
+		if(this.getPosition().x < 30 / PPM)
+			body.setTransform(30 / PPM, body.getPosition().y, 0);
 		
 		if(this.getPosition().y < 64/PPM )
 		{
+			body.setTransform(50 / PPM, 204/ PPM, 0);
 			RecebeDano();
 		}
+		
+		
+		
+		// A cada 100 coleiras, ganha 1 vida
+		if(this.getNumColeiras() == 100)
+		{
+			this.numColeiras = 0;
+			this.setTotalVidas(this.totalVidas + 1);
+			
+		}
+
+		
 		
 	}
 	
@@ -142,8 +155,7 @@ public class Doggie extends Sprite{
 		{
 			// Joga pra posição "inicial" caso tenha vidas
 //			body.setTransform(50 / PPM, 204/ PPM, 0);
-//			body.applyLinearImpulse(new Vector2(3f, 6f), body.getWorldCenter(), true);
-			body.getPosition().set(10/PPM , 10/PPM);
+			body.applyLinearImpulse(new Vector2(0f, 6f), body.getWorldCenter(), true);
 			System.out.println("passou pelo body no if total vidas");
 		}
 		
@@ -153,10 +165,7 @@ public class Doggie extends Sprite{
 		setTotalVidas(this.totalVidas -1);
 		}
 		if (this.totalVidas < 0)
-			this.totalVidas = 0;
-
-
-		
+			this.totalVidas = 0;		
 	}
 	
 	public void collectColeiras() {numColeiras++;}
@@ -280,6 +289,7 @@ public class Doggie extends Sprite{
 	            doggieMorreu = true;
 	            Filter filter = new Filter();
 	            filter.maskBits = B2dVariaveis.BIT_NADA;
+	            filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_OBJETOS;
 
 //	            for (Fixture fixture : body.getFixtureList()) {
 //	                fixture.setFilterData(filter);
@@ -296,6 +306,10 @@ public class Doggie extends Sprite{
 	    public float getStateTimer(){
 	        return stateTimer;
 	    }  
+	    
+	    public void jumpEnemy() {
+	    	body.applyLinearImpulse(new Vector2(0, 10f), body.getWorldCenter(), true);
+	    }
 	    
 	    public void jump(){
 	    	
@@ -354,7 +368,7 @@ public class Doggie extends Sprite{
 		fDef.filter.categoryBits = B2dVariaveis.BIT_DOGGIE;
 		fDef.filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_OBJETOS | B2dVariaveis.BIT_COLEIRAS | B2dVariaveis.BIT_INIMIGO;
 		// Faz quicar/
-		fDef.restitution = 0.2f;
+		fDef.restitution = 0f;
 		body.createFixture(fDef).setUserData(this);
 
 		//Criando sensor de pés
@@ -373,8 +387,7 @@ public class Doggie extends Sprite{
 		fDef.isSensor = true;
 //		body.createFixture(fDef).setUserData("headDoggie");
 		
-		body.createFixture(fDef).setUserData(this);
-		
+		body.createFixture(fDef).setUserData(this);		
 	}
 
 	public Body getBody() {return body;}

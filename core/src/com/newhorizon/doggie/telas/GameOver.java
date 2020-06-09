@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.newhorizon.doggie.GameClass;
-import com.newhorizon.doggie.tools.ManagerCenas;
 
 public class GameOver implements Screen{
 	
@@ -14,9 +13,9 @@ public class GameOver implements Screen{
 
 	// Classe deverá ser corrigida e adaptada para funcionar com o Manager Cenas
 
-	public GameOver(PlayScreen playScreen) {
-		this.screen = playScreen;
-		timer = 0;
+	public GameOver(GameClass game) {
+		this.game = game;
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -33,8 +32,9 @@ public class GameOver implements Screen{
 		Gdx.gl.glClearColor(1, 1, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		if(timer > 2)
-			ManagerCenas.setScreen(new PlayScreen(game), game);
+//		if(timer > 2)
+//			game = this.game;
+			game.setScreen(new PlayScreen(game));
 		
 	}
 

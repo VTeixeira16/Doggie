@@ -14,6 +14,7 @@ public class DesktopLauncher {
 		config.height = GameClass.V_HEIGHT;
 		config.resizable = false;
 		config.addIcon("OutGame/dogLogo.png", FileType.Internal);
+		config.fullscreen = false;
 		
 		// Aqui se controla qual classe é carregada primeiro
 		new LwjglApplication(new GameClass(), config); 

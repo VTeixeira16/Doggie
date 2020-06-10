@@ -6,9 +6,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.newhorizon.doggie.telas.GameOver;
+import com.newhorizon.doggie.telas.MenuScreen;
 import com.newhorizon.doggie.telas.PlayScreen;
 import com.newhorizon.doggie.tools.Content;
+
 
 
 public class GameClass extends Game {
@@ -40,7 +41,11 @@ public class GameClass extends Game {
 		res.loadTexture("images/crystal.png", "coleiras");
 //		res.loadTexture("images/osso4.png", "osso4");
 		res.loadTexture("images/ossinho.png", "ossinho");
+		res.loadTexture("images/DoggieCorrendo.png", "doggieCorrendo");
+//		res.loadTexture("images/DoggieAndando.png", "doggieAndando");
+		res.loadTexture("images/dogcerto100fundo.png", "doggieAndando");
 
+		
 		sb = new SpriteBatch();
 		
 		
@@ -57,9 +62,8 @@ public class GameClass extends Game {
 		
 		
 		
-//		ManagerCenas.setScreen(new PlayScreen(this), this);
-		setScreen(new PlayScreen(this));
-		
+//		setScreen(new PlayScreen(this));
+		setScreen(new MenuScreen(this));
 		
 		
 	}

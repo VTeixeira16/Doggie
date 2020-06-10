@@ -419,6 +419,9 @@ public class PlayScreen implements Screen {
 		tmr.dispose();
 		world.dispose();
 		b2dDR.dispose();
+		doggie.dispose();
+		inimigo.dispose();
+		inimigo2.dispose();
 //        hud.dispose();
 
 	}

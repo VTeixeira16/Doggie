@@ -1,27 +1,38 @@
 package com.newhorizon.doggie.telas;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.newhorizon.doggie.GameClass;
+import com.newhorizon.doggie.tools.MenuListener;
 
 public class MenuScreen implements Screen{
 	
-	private GameClass game;
+	public GameClass game;
+	private MenuListener menuLis;
 	
 	public MenuScreen (GameClass game) {
 		this.game = game;
-		
+		menuLis = new MenuListener();		
 	}
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
+		menuLis.create();
 		
 	}
 
 	@Override
 	public void render(float delta) {
-		// TODO Auto-generated method stub
+		menuLis.render();
 		
+		if(Gdx.input.isButtonJustPressed(menuLis.button4))
+		{
+			System.out.println("Botão pressionado");
+			game.setScreen(new PlayScreen(game));
+			
+//			Deverá ser aplicado no btn sair
+//			System.exit(0);		
+		}
 	}
 
 	@Override

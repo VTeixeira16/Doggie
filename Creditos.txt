@@ -13,6 +13,9 @@ https://opengameart.org/content/ocean-background
 Osso:
 https://opengameart.org/content/pixel-art-femur
 
-Cat and Dog:
+Cat and Dog: NÃO UTILIZADO
 https://www.gameart2d.com/cat-and-dog-free-sprites.html
+
+Skin:
+https://github.com/czyzby/gdx-skins
 

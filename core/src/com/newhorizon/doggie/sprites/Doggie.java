@@ -73,7 +73,7 @@ public class Doggie extends Sprite{
 		animation = new Animation();
 		animationIdle = new Animation();
 		
-		Texture tex = GameClass.res.getTexture("doggie");
+		Texture tex = GameClass.res.getTexture("doggieAndando");
 		TextureRegion[] spritesDoggie = TextureRegion.split(tex, 82, 60)[0];
 		
 		totalVidas = 3;
@@ -156,7 +156,6 @@ public class Doggie extends Sprite{
 			// Joga pra posição "inicial" caso tenha vidas
 //			body.setTransform(50 / PPM, 204/ PPM, 0);
 			body.applyLinearImpulse(new Vector2(0f, 6f), body.getWorldCenter(), true);
-			System.out.println("passou pelo body no if total vidas");
 		}
 		
 		if(stateTimer > 0.7f)
@@ -397,4 +396,8 @@ public class Doggie extends Sprite{
 	public float getWidth() { return width;}
 	public float getHeigth() {return height;}
 
+	public void dispose()
+	{
+		this.dispose();
+	}
 }

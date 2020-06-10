@@ -242,5 +242,8 @@ public abstract class Inimigos extends Sprite{
 	public float getHeigth() {return height;}
 	
 	protected abstract void criaInimigo(int x, int y);
-
+	
+	public void dispose() {
+		this.dispose();
+	}
 }

@@ -18,14 +18,7 @@ public class Hud{
 		// TODO Auto-generated constructor stub
 		
 		this.doggie = doggie;
-		
-		Texture tex = GameClass.res.getTexture("hud");
-		
-		blocks = new TextureRegion[2];
-		for(int i = 0; i < blocks.length; i++)
-		{
-			blocks [i] = new TextureRegion(tex, 32 + i * 16, 0, 16, 16);
-		}
+
 	}
 
 	public void render (SpriteBatch sb) {

@@ -14,7 +14,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Filter;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -25,38 +24,26 @@ import com.newhorizon.doggie.tools.B2dVariaveis;
 
 
 public class Doggie extends Sprite{
-	public enum Estado {CAINDO, PULANDO, PARADO, CORRENDO, ATACANDO, MORTO};
+	public enum Estado {CAINDO, PULANDO, PARADO, CORRENDO, ATACANDO, MORTO, GAMEOVER}; // NECESSÁRIO CRIAR UM ESTADO DE GAME OVER (PÓS MORTE)
 	public Estado estadoAtual;
 	public Estado estadoAnterior;
 	
 	public World world;
 	public Body body;
 	
+	
 	private int numColeiras;
 	private int totalColeiras;
 	private int numVidas;
 	private int totalVidas;
 	public boolean vivo;
-	private int flagVivo;
-	
-	
-	// Estrutrura será alterada completamente conforme for implementado os estados de forma correta
-	private TextureRegion doggieIdleTex;
-	private TextureRegion doggieRunTex;
-	private TextureRegion doggieMorreuTex;
-	private TextureRegion doggiePulandoTex;
-//	private Animation doggieIdleAnim;
-//	private Animation doggieRunAnim;
-//	private Animation doggieMorreuAnim;
-//	private Animation doggiePulandoAnim;
-	
+
 	private float stateTimer;
-	private boolean correndoDireita;
 	private boolean doggieMorreu;
 	
 	private PlayScreen screen;
 	
-	protected Animation animation;
+	public Animation animation;
 	protected float width;
 	protected float height;
 	
@@ -65,20 +52,20 @@ public class Doggie extends Sprite{
 	protected float widthIdle;
 	protected float heightIdle;
 
-	public boolean flip;
+	private boolean flip;
 	
-	
-	public Doggie(PlayScreen screen) {
+	public Doggie(PlayScreen screen, int x, int y) {
 		
 		this.screen = screen;
 		this.world = screen.getWorld();
+		
 
 		estadoAtual = Estado.PARADO;
 		estadoAnterior = Estado.PARADO;
 		stateTimer = 0;
-		correndoDireita = true;
+		flip = false;
 		
-		defineDoggie();
+		defineDoggie(x, y);
 //		setBounds(0,0, 16 / PPM, 16 / PPM);
 		
 		
@@ -86,7 +73,7 @@ public class Doggie extends Sprite{
 		animation = new Animation();
 		animationIdle = new Animation();
 		
-		Texture tex = GameClass.res.getTexture("doggie");
+		Texture tex = GameClass.res.getTexture("doggieAndando");
 		TextureRegion[] spritesDoggie = TextureRegion.split(tex, 82, 60)[0];
 		
 		totalVidas = 3;
@@ -110,6 +97,10 @@ public class Doggie extends Sprite{
 	}
 	
 	public void update(float dt){
+		stateTimer += dt;
+		
+//		Gdx.app.log("Doggie", "TIMER: " + stateTimer);
+
 		
 		verificaEstado(dt);
 
@@ -123,19 +114,30 @@ public class Doggie extends Sprite{
 		
 //		setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
 		
-// DESCOMENTAR ESSA PARTE ou usar estrutura antiga do projeto.
-//		setRegion(getFrame(dt));
-		
 		animation.update(dt);
 		animationIdle.update(dt);
 		
-		if(this.getPosition().x < 0)
-			body.setTransform(0, body.getPosition().y, 0);
+		// Evita que Doggie saia da tela 
+		if(this.getPosition().x < 30 / PPM)
+			body.setTransform(30 / PPM, body.getPosition().y, 0);
 		
-		if(this.getPosition().y < 0)
+		if(this.getPosition().y < 64/PPM )
 		{
+			body.setTransform(50 / PPM, 204/ PPM, 0);
 			RecebeDano();
 		}
+		
+		
+		
+		// A cada 100 coleiras, ganha 1 vida
+		if(this.getNumColeiras() == 100)
+		{
+			this.numColeiras = 0;
+			this.setTotalVidas(this.totalVidas + 1);
+			
+		}
+
+		
 		
 	}
 	
@@ -147,23 +149,26 @@ public class Doggie extends Sprite{
 			morreu();
 			
 		}
+		
+		System.out.println("Executou morreu");
 		if(this.totalVidas > 0)
 		{
 			// Joga pra posição "inicial" caso tenha vidas
-			body.setTransform(50 / PPM, 100 / PPM, 0);
+//			body.setTransform(50 / PPM, 204/ PPM, 0);
+			body.applyLinearImpulse(new Vector2(0f, 6f), body.getWorldCenter(), true);
 		}
 		
+		if(stateTimer > 0.7f)
+		{
+		stateTimer = 0;
 		setTotalVidas(this.totalVidas -1);
-		
+		}
 		if (this.totalVidas < 0)
-			this.totalVidas = 0;
-
-
-		
+			this.totalVidas = 0;		
 	}
 	
 	public void collectColeiras() {numColeiras++;}
-	public int getNumColeiras() {return numColeiras / 2;}
+	public int getNumColeiras() {return numColeiras;}
 	public void setTotalColeiras(int i) {totalColeiras = i; }
 	public int getTotalColeiras() {return totalColeiras;}
 	
@@ -232,18 +237,21 @@ public class Doggie extends Sprite{
 	            case PULANDO:
 	                jump();
 	                break;
-//	            case CORRENDO:
+	            case CORRENDO:
+	            	estadoAtual = Estado.CORRENDO;
 //	                correndo(); // Classe que será criada caso seja necessário
-//	                break;
+	                break;
 //	            case PARADO:
 //	                parado(); // Classe que será criada caso seja necessário	            	
 //	            	break;
+//	            case GAMEOVER:
+//	            	SERÁ CRIADO FUNÇÃO QUE DESTRÓI O OBJETO
 	            default:
 	                estadoAtual = Estado.PARADO;
 //	                Gdx.app.log("log", "NENHUMESTADODETECTADO");
 	        }
 		  
-	        stateTimer = estadoAtual == estadoAnterior ? stateTimer + dt : 0;
+//	        stateTimer = estadoAtual == estadoAnterior ? stateTimer + dt : 0;
         
 	        return estadoAtual;
 	  }
@@ -254,6 +262,8 @@ public class Doggie extends Sprite{
 	        	flip = true;
 	        else if (body.getLinearVelocity().x > 0)
 	        	flip = false;
+	        
+//	        Gdx.app.log("log", "velocidade:" + body.getLinearVelocity().x);
 	    	
 	        if(doggieMorreu)
 	            return Estado.MORTO;
@@ -278,12 +288,16 @@ public class Doggie extends Sprite{
 	            doggieMorreu = true;
 	            Filter filter = new Filter();
 	            filter.maskBits = B2dVariaveis.BIT_NADA;
+	            filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_OBJETOS;
 
 //	            for (Fixture fixture : body.getFixtureList()) {
 //	                fixture.setFilterData(filter);
 //	            }
 	            Gdx.app.log("log","Morreeeeeeu");
 //	            body.applyLinearImpulse(new Vector2(0, 4f), body.getWorldCenter(), true);
+	            
+//	            COLOCAR UM TIMER PARA TROCAR PARA O ESTADO DE GAME OVER APÓS O FIM DA ANIMAÇÃO.
+//	            IMPLEMENTAÇÃO DEVE ROLAR AQUI OU NA MÁQUINA DE ESTADOS.
 	            
 	        }
     	}
@@ -292,11 +306,15 @@ public class Doggie extends Sprite{
 	        return stateTimer;
 	    }  
 	    
+	    public void jumpEnemy() {
+	    	body.applyLinearImpulse(new Vector2(0, 10f), body.getWorldCenter(), true);
+	    }
+	    
 	    public void jump(){
 	    	
 	    	// Comentado provisoriamente enquanto os Estados não são atualizados.
 	        if ( estadoAtual != Estado.PULANDO ) {
-	            body.applyLinearImpulse(new Vector2(0, 5f), body.getWorldCenter(), true);
+	            body.applyLinearImpulse(new Vector2(0, 6f), body.getWorldCenter(), true);
 	            estadoAtual = Estado.PULANDO;
 	        }
 	    }
@@ -307,6 +325,9 @@ public class Doggie extends Sprite{
 	            estadoAtual = Estado.CAINDO;
 	        }
 	    }
+	    
+	    
+	    
 	    
 //	    public void hit(Enemy enemy){
 //	        if(enemy instanceof Turtle && ((Turtle) enemy).currentState == Turtle.State.STANDING_SHELL)
@@ -323,7 +344,7 @@ public class Doggie extends Sprite{
 //	        }
 //	    }
 	  
-private void defineDoggie() {
+	    private void defineDoggie(int x, int y) {
 		
 		//Cria Doggie
 		BodyDef DoggiebDef = new BodyDef();				
@@ -336,29 +357,36 @@ private void defineDoggie() {
 		cShape.setRadius(23 / PPM);
 		
 		//Criando Doggie		
-		DoggiebDef.position.set(50/PPM ,100/PPM);
+		DoggiebDef.position.set(x/PPM ,y/PPM);
 		DoggiebDef.type = BodyType.DynamicBody;
+		
 		body = world.createBody(DoggiebDef);
-		shape.setAsBox(28/PPM , 28/PPM); // Controla tamanho da caixa de colusão.
+
+//		shape.setAsBox(28/PPM , 28/PPM); // Controla tamanho da caixa de colusão.
 		fDef.shape = cShape;
 		fDef.filter.categoryBits = B2dVariaveis.BIT_DOGGIE;
-		fDef.filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_COLEIRAS | B2dVariaveis.BIT_INIMIGO1;
+		fDef.filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_OBJETOS | B2dVariaveis.BIT_COLEIRAS | B2dVariaveis.BIT_INIMIGO;
 		// Faz quicar/
-		fDef.restitution = 0.2f;
-		body.createFixture(fDef).setUserData("doggie");
+		fDef.restitution = 0f;
+		body.createFixture(fDef).setUserData(this);
 
 		//Criando sensor de pés
 		shape.setAsBox(26/PPM, 6/PPM, new Vector2(0, -22/PPM), 0);
 		fDef.shape = shape;
-		fDef.filter.categoryBits = B2dVariaveis.BIT_DOGGIE;
-		fDef.filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_INIMIGO1;
+		fDef.filter.categoryBits = B2dVariaveis.BIT_DOGGIE_PES;
+		fDef.filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_OBJETOS | B2dVariaveis.BIT_INIMIGO | B2dVariaveis.BIT_INIMIGO_HEAD;
 		fDef.isSensor = true;
-		body.createFixture(fDef).setUserData("footDoggie");
-		
-		// IMPLEMENTAR FUTURAMENTE O DOGGIEHEAD
-		
 		body.createFixture(fDef).setUserData(this);
 		
+		//Criando sensor da cabeça
+		shape.setAsBox(26/PPM, 6/PPM, new Vector2(0, 22/PPM), 0);
+		fDef.shape = shape;
+		fDef.filter.categoryBits = B2dVariaveis.BIT_DOGGIE_HEAD;
+		fDef.filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_INIMIGO;
+		fDef.isSensor = true;
+//		body.createFixture(fDef).setUserData("headDoggie");
+		
+		body.createFixture(fDef).setUserData(this);		
 	}
 
 	public Body getBody() {return body;}
@@ -368,4 +396,8 @@ private void defineDoggie() {
 	public float getWidth() { return width;}
 	public float getHeigth() {return height;}
 
+	public void dispose()
+	{
+		this.dispose();
+	}
 }

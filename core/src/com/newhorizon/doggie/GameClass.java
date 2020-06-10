@@ -3,12 +3,13 @@ package com.newhorizon.doggie;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.newhorizon.doggie.telas.MenuScreen;
 import com.newhorizon.doggie.telas.PlayScreen;
 import com.newhorizon.doggie.tools.Content;
+
 
 
 public class GameClass extends Game {
@@ -19,7 +20,7 @@ public class GameClass extends Game {
 	public static final int V_HEIGHT = 600;	
 	
 	
-	public SpriteBatch sb;
+	public static SpriteBatch sb;
 	
 	
 	// Fontes
@@ -36,9 +37,15 @@ public class GameClass extends Game {
 		res = new Content();
 		res.loadTexture("images/doggie.png", "doggie");
 		res.loadTexture("images/doggie.png", "doggieIdle");
-		res.loadTexture("images/bunny_idle.png", "dogIdle");
+		res.loadTexture("images/doggieBlack.png", "dogIdle");
 		res.loadTexture("images/crystal.png", "coleiras");
-		res.loadTexture("images/hud.png", "hud");
+//		res.loadTexture("images/osso4.png", "osso4");
+		res.loadTexture("images/ossinho.png", "ossinho");
+		res.loadTexture("images/DoggieCorrendo.png", "doggieCorrendo");
+//		res.loadTexture("images/DoggieAndando.png", "doggieAndando");
+		res.loadTexture("images/dogcerto100fundo.png", "doggieAndando");
+
+		
 		sb = new SpriteBatch();
 		
 		
@@ -46,7 +53,7 @@ public class GameClass extends Game {
 		fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Arial Black.ttf"));
 		fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		fontParameter.size = 18;
-		fontParameter.borderWidth = 1;
+		fontParameter.borderWidth = 2;
 		fontParameter.borderColor = Color.BLUE;
 		fontParameter.color = Color.WHITE;
 		font = fontGenerator.generateFont(fontParameter);
@@ -55,8 +62,8 @@ public class GameClass extends Game {
 		
 		
 		
-		setScreen(new PlayScreen(this));
-		
+//		setScreen(new PlayScreen(this));
+		setScreen(new MenuScreen(this));
 		
 		
 	}

@@ -11,10 +11,13 @@ public class Coleiras extends B2DSprites {
 		
 		super(body);
 		
-		Texture tex = GameClass.res.getTexture("coleiras");
-		TextureRegion[] sprites = TextureRegion.split(tex, 16, 16)[0];
+//		Texture tex = GameClass.res.getTexture("coleiras");
+//		TextureRegion[] sprites = TextureRegion.split(tex, 16, 16)[0];
 		
-		setAnimation(sprites, 1 / 12f );
+		Texture tex = GameClass.res.getTexture("ossinho");
+		TextureRegion[] sprites = TextureRegion.split(tex, 37, 24)[0];
+		
+		setAnimation(sprites, 1 / 16f );
 	}
 }
 

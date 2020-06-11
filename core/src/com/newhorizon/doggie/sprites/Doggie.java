@@ -54,6 +54,8 @@ public class Doggie extends Sprite{
 
 	private boolean flip;
 	
+	public float flagTimer;
+	
 	public Doggie(PlayScreen screen, int x, int y) {
 		
 		this.screen = screen;
@@ -74,7 +76,7 @@ public class Doggie extends Sprite{
 		animationIdle = new Animation();
 		
 		Texture tex = GameClass.res.getTexture("doggieAndando");
-		TextureRegion[] spritesDoggie = TextureRegion.split(tex, 82, 60)[0];
+		TextureRegion[] spritesDoggie = TextureRegion.split(tex, 80, 60)[0];
 		
 		totalVidas = 3;
 		
@@ -99,6 +101,11 @@ public class Doggie extends Sprite{
 	public void update(float dt){
 		stateTimer += dt;
 		
+		flagTimer += dt;
+//		
+//		if(flagTimer > 0.2)
+//			flagTimer = 0;
+	
 //		Gdx.app.log("Doggie", "TIMER: " + stateTimer);
 
 		
@@ -149,8 +156,6 @@ public class Doggie extends Sprite{
 			morreu();
 			
 		}
-		
-		System.out.println("Executou morreu");
 		if(this.totalVidas > 0)
 		{
 			// Joga pra posição "inicial" caso tenha vidas

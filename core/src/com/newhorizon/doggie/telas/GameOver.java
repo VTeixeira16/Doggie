@@ -32,9 +32,9 @@ public class GameOver implements Screen{
 		Gdx.gl.glClearColor(1, 1, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-//		if(timer > 2)
+		if(timer > 2)
 //			game = this.game;
-			game.setScreen(new PlayScreen(game));
+			game.setScreen(new MenuScreen(game));
 		
 	}
 

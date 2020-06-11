@@ -167,6 +167,8 @@ public class PlayScreen implements Screen {
 
 	public void update(float dt) {
 		
+		
+		
 		if(doggie.getTotalVidas() == 0)
 			game.setScreen(new GameOver(game));
 
@@ -232,9 +234,13 @@ public class PlayScreen implements Screen {
 		
 //		IMPLEMENTAÇÃO USADA APENAS ENQUANTO NÃO FOR RESOLVIDO O PROBLEMA DE MULTITHREADS
 		
-		doggieThread.run();
-		inimigo1Thread.run();
-		inimigo2Thread.run();
+//		doggieThread.run();
+//		inimigo1Thread.run();
+//		inimigo2Thread.run();
+		inimigo.render(game.sb);
+		inimigo2.render(game.sb);
+		
+		doggie.render(game.sb);
 
 		
 		

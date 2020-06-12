@@ -2,7 +2,6 @@ package com.newhorizon.doggie.sprites;
 
 import static com.newhorizon.doggie.tools.B2dVariaveis.PPM;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 //import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -32,8 +31,8 @@ public class Doggie extends Sprite{
 	public Body body;
 	
 	
-	private int numColeiras;
-	private int totalColeiras;
+	private int numOssos;
+	private int totalOssos;
 	private int numVidas;
 	private int totalVidas;
 	public boolean vivo;
@@ -136,10 +135,10 @@ public class Doggie extends Sprite{
 		
 		
 		
-		// A cada 100 coleiras, ganha 1 vida
-		if(this.getNumColeiras() == 100)
+		// A cada 100 ossos, ganha 1 vida
+		if(this.getNumOssos() == 100)
 		{
-			this.numColeiras = 0;
+			this.numOssos = 0;
 			this.setTotalVidas(this.totalVidas + 1);
 			
 		}
@@ -172,10 +171,10 @@ public class Doggie extends Sprite{
 			this.totalVidas = 0;		
 	}
 	
-	public void collectColeiras() {numColeiras++;}
-	public int getNumColeiras() {return numColeiras;}
-	public void setTotalColeiras(int i) {totalColeiras = i; }
-	public int getTotalColeiras() {return totalColeiras;}
+	public void collectOssos() {numOssos++;}
+	public int getNumOssos() {return numOssos;}
+	public void setTotalOsso(int i) {totalOssos = i; }
+	public int getTotalOssos() {return totalOssos;}
 	
 
 	public int getNumVidas() {return numVidas;}
@@ -369,7 +368,7 @@ public class Doggie extends Sprite{
 //		shape.setAsBox(28/PPM , 28/PPM); // Controla tamanho da caixa de colusão.
 		fDef.shape = cShape;
 		fDef.filter.categoryBits = B2dVariaveis.BIT_DOGGIE;
-		fDef.filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_OBJETOS | B2dVariaveis.BIT_COLEIRAS | B2dVariaveis.BIT_INIMIGO;
+		fDef.filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_OBJETOS | B2dVariaveis.BIT_OSSOS | B2dVariaveis.BIT_INIMIGO;
 		// Faz quicar/
 		fDef.restitution = 0f;
 		body.createFixture(fDef).setUserData(this);

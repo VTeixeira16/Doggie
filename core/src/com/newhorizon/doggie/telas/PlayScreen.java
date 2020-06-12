@@ -27,11 +27,11 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.newhorizon.doggie.GameClass;
-import com.newhorizon.doggie.sprites.Coleiras;
 import com.newhorizon.doggie.sprites.Doggie;
 import com.newhorizon.doggie.sprites.Doggie.Estado;
 import com.newhorizon.doggie.sprites.InimigoCachorro;
 import com.newhorizon.doggie.sprites.Inimigos;
+import com.newhorizon.doggie.sprites.Ossos;
 import com.newhorizon.doggie.threads.DoggieThread;
 import com.newhorizon.doggie.threads.InimigoThread;
 import com.newhorizon.doggie.tools.B2dVariaveis;
@@ -51,7 +51,7 @@ public class PlayScreen implements Screen {
 	private Viewport gamePort;
 	private Hud hud;
 
-	private Array<Coleiras> coleiras;
+	private Array<Ossos> ossos;
 
 	public DetectorColisoes cl;
 
@@ -138,7 +138,7 @@ public class PlayScreen implements Screen {
 
 		// Ambas as funções deverão ser transformadas em objetos no futuro.
 		createTiles();
-		createColeiras();
+		createOssos();
 	}
 
 	@Override
@@ -179,14 +179,14 @@ public class PlayScreen implements Screen {
 
 		
 
-		// Apagando coleiras
+		// Apagando Ossos
 		Array<Body> bodies = cl.getBodiesToRemove();
 		for (int i = 0; i < bodies.size; i++) {
 
 			Body b = bodies.get(i);
-			coleiras.removeValue((Coleiras) b.getUserData(), true);
+			ossos.removeValue((Ossos) b.getUserData(), true);
 			world.destroyBody(b);
-			doggie.collectColeiras();
+			doggie.collectOssos();
 			
 		}
 
@@ -201,12 +201,12 @@ public class PlayScreen implements Screen {
 		
 		
 		
-//        coleiras.update(dt);
+//        ossos.update(dt);
 //		Gdx.app.log("log", "Estado atual: " + doggie.estadoAtual);
 
 		bodies.clear();
-		for (int i = 0; i < coleiras.size; i++) {
-			coleiras.get(i).update(dt);
+		for (int i = 0; i < ossos.size; i++) {
+			ossos.get(i).update(dt);
 		}
 		
 	
@@ -245,7 +245,7 @@ public class PlayScreen implements Screen {
 		
 		
 //		inimigo.render(game.sb);	
-//        coleiras.render(game.sb);
+//        ossos.render(game.sb);
 		// Camadas são renderizadas depois em cima do Doggie e de inimigos.
 		tmr.getBatch().begin();
 		tmr.renderTileLayer((TiledMapTileLayer) tiledMap.getLayers().get("FrenteCenario"));
@@ -264,9 +264,9 @@ public class PlayScreen implements Screen {
 
 		game.sb.setProjectionMatrix(gamecam.combined);
 
-		// Desenha coleiras
-		for (int i = 0; i < coleiras.size; i++) {
-			coleiras.get(i).render(game.sb);
+		// Desenha ossos
+		for (int i = 0; i < ossos.size; i++) {
+			ossos.get(i).render(game.sb);
 		}
 
 		// Como o sb está sendo executado no game, verificar possibilidade de exclusão
@@ -359,11 +359,11 @@ public class PlayScreen implements Screen {
 
 	}
 
-	private void createColeiras() {
+	private void createOssos() {
 
-		coleiras = new Array<Coleiras>();
+		ossos = new Array<Ossos>();
 
-		MapLayer layer = tiledMap.getLayers().get("Coleiras");
+		MapLayer layer = tiledMap.getLayers().get("Ossos");
 
 		BodyDef bDef = new BodyDef();
 		FixtureDef fDef = new FixtureDef();
@@ -381,16 +381,18 @@ public class PlayScreen implements Screen {
 
 			fDef.shape = cShape;
 			fDef.isSensor = true;
-			fDef.filter.categoryBits = B2dVariaveis.BIT_COLEIRAS;
+			fDef.filter.categoryBits = B2dVariaveis.BIT_OSSOS;
 			fDef.filter.maskBits = B2dVariaveis.BIT_DOGGIE;
 
 			Body body = world.createBody(bDef);
-			body.createFixture(fDef).setUserData("coleiras");
+			body.createFixture(fDef).setUserData("ossos");
 
-			Coleiras c = new Coleiras(body);
-			coleiras.add(c);
+			Ossos c = new Ossos(body);
+			ossos.add(c);
 
 			body.setUserData(c);
+			
+			
 
 		}
 	}
@@ -412,7 +414,6 @@ public class PlayScreen implements Screen {
 
 	@Override
 	public void hide() {
-
 	}
 
 	public World getWorld() {

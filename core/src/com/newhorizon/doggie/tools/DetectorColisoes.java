@@ -1,6 +1,5 @@
 package com.newhorizon.doggie.tools;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
@@ -77,15 +76,15 @@ public class DetectorColisoes implements ContactListener{
 		
 //		ESTRUTURA ABAIXO DEVERÁ SER PORTADA PARA O CASE ACIMA
 		 			  
-		if(fixtureA.getUserData() != null && fixtureA.getUserData().equals("coleiras"))
+		if(fixtureA.getUserData() != null && fixtureA.getUserData().equals("ossos"))
 		{
-			//Remove coleira
+			//Remove Ossos
 			bodiesToRemove.add(fixtureA.getBody());
 
 		}
-		if(fixtureB.getUserData() != null && fixtureB.getUserData().equals("coleiras"))
+		if(fixtureB.getUserData() != null && fixtureB.getUserData().equals("ossos"))
 		{
-			//Remove coleira
+			//Remove Ossos
 			bodiesToRemove.add(fixtureB.getBody());	
 		}		
 	}

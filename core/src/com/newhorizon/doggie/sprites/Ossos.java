@@ -5,9 +5,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.newhorizon.doggie.GameClass;
 
-public class Coleiras extends B2DSprites {
+public class Ossos extends B2DSprites {
 
-	public Coleiras (Body body) {
+	public Ossos (Body body) {
 		
 		super(body);
 		

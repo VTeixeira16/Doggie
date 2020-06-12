@@ -10,6 +10,9 @@ public class GameOver implements Screen{
 	private GameClass game;
 	private Screen screen;
 	private float timer;
+	
+	private String texto1 = "Game Over";
+	private String texto2 = "Doggie não obteve sucesso em sua jornada.";
 
 	// Classe deverá ser corrigida e adaptada para funcionar com o Manager Cenas
 
@@ -29,11 +32,20 @@ public class GameOver implements Screen{
 		timer += delta;
 
 
-		Gdx.gl.glClearColor(1, 1, 0, 1);
+		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		if(timer > 2)
-//			game = this.game;
+		game.sb.begin();
+		
+		GameClass.fontGameOver.draw(game.sb, texto1, Gdx.graphics.getWidth() / 3,
+				Gdx.graphics.getHeight() /2 + 40);
+
+		GameClass.fontMenu.draw(game.sb, texto2, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 10);
+		
+		
+		game.sb.end();
+		
+		if(timer > 10)
 			game.setScreen(new MenuScreen(game));
 		
 	}

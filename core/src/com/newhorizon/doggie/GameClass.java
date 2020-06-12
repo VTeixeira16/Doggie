@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.newhorizon.doggie.telas.MenuScreen;
+import com.newhorizon.doggie.telas.PlayScreen;
 import com.newhorizon.doggie.tools.Content;
 
 
@@ -15,8 +15,8 @@ public class GameClass extends Game {
 
 	// Nome e tamanho do jogo
 	public static final String GAMENAME = "Doggie";
-	public static final int V_WIDTH = 800;
-	public static final int V_HEIGHT = 600;	
+	public static final int V_WIDTH = 1024;
+	public static final int V_HEIGHT = 768;	
 	
 	
 	public static SpriteBatch sb;
@@ -42,6 +42,10 @@ public class GameClass extends Game {
 	private FreeTypeFontGenerator fontIntroGenerator;
 	private FreeTypeFontGenerator.FreeTypeFontParameter fontIntroParameter;
 	public static BitmapFont fontIntro;
+	
+	private FreeTypeFontGenerator fontGameOverGenerator;
+	private FreeTypeFontGenerator.FreeTypeFontParameter fontGameOverParameter;
+	public static BitmapFont fontGameOver;
 
 	// Necessário implementar Manager Cenas
 	public static Content res;
@@ -108,12 +112,21 @@ public class GameClass extends Game {
 		fontIntroParameter.spaceX = 0;
 		fontIntro = fontGenerator.generateFont(fontIntroParameter);
 		
+		fontGameOverGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Arial Black.ttf"));
+		fontGameOverParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+		fontGameOverParameter.size = 72;
+		fontGameOverParameter.borderWidth = 0.5f;
+		fontGameOverParameter.borderColor = Color.BLUE;
+		fontGameOverParameter.color = Color.BLACK;
+		fontGameOverParameter.spaceX = 0;
+		fontGameOver = fontGenerator.generateFont(fontGameOverParameter);
 		
 		
 		
 		
-//		setScreen(new PlayScreen(this));
-		setScreen(new MenuScreen(this));
+		
+		setScreen(new PlayScreen(this));
+//		setScreen(new MenuScreen(this));
 		
 		
 	}

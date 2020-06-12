@@ -1,7 +1,6 @@
 package com.newhorizon.doggie.telas;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.newhorizon.doggie.GameClass;
@@ -27,7 +26,7 @@ public class Hud{
 						.getFilterData().maskBits;
 		sb.begin();
 		GameClass.font.draw(sb, "Vidas: " + doggie.getTotalVidas() , Gdx.graphics.getWidth() - 100, Gdx.graphics.getHeight() - 10);
-		GameClass.font.draw(sb, "Coleiras: " + doggie.getNumColeiras(), 5, Gdx.graphics.getHeight() - 10);
+		GameClass.font.draw(sb, "Ossos: " + doggie.getNumOssos(), 5, Gdx.graphics.getHeight() - 10);
 		
 		sb.end();
 			

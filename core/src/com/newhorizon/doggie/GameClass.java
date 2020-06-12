@@ -38,6 +38,10 @@ public class GameClass extends Game {
 	private FreeTypeFontGenerator fontMenuMGenerator;
 	private FreeTypeFontGenerator.FreeTypeFontParameter fontMenuMParameter;
 	public static BitmapFont fontMenuM;
+	
+	private FreeTypeFontGenerator fontIntroGenerator;
+	private FreeTypeFontGenerator.FreeTypeFontParameter fontIntroParameter;
+	public static BitmapFont fontIntro;
 
 	// Necessário implementar Manager Cenas
 	public static Content res;
@@ -94,6 +98,15 @@ public class GameClass extends Game {
 		fontMenuMParameter.color = Color.GOLDENROD;
 		fontMenuMParameter.spaceX = 0;
 		fontMenuM = fontGenerator.generateFont(fontMenuMParameter);
+		
+		fontIntroGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Arial Black.ttf"));
+		fontIntroParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+		fontIntroParameter.size = 22;
+		fontIntroParameter.borderWidth = 0f;
+		fontIntroParameter.borderColor = Color.BLUE;
+		fontIntroParameter.color = Color.WHITE;
+		fontIntroParameter.spaceX = 0;
+		fontIntro = fontGenerator.generateFont(fontIntroParameter);
 		
 		
 		

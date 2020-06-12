@@ -298,7 +298,6 @@ public class Doggie extends Sprite{
 //	            for (Fixture fixture : body.getFixtureList()) {
 //	                fixture.setFilterData(filter);
 //	            }
-	            Gdx.app.log("log","Morreeeeeeu");
 //	            body.applyLinearImpulse(new Vector2(0, 4f), body.getWorldCenter(), true);
 	            
 //	            COLOCAR UM TIMER PARA TROCAR PARA O ESTADO DE GAME OVER APÓS O FIM DA ANIMAÇÃO.

@@ -112,6 +112,9 @@ public class InimigoCachorro extends Inimigos{
 			body.setTransform(35 / PPM, body.getPosition().y, 0);
 		}
 		
+		if(body.getPosition().y > 180 /PPM)
+			body.setTransform(body.getPosition().x, 180/PPM, 0);
+		
 //			body.applyLinearImpulse(new Vector2(-1f, 0), body.getWorldCenter(), true);
 
 				

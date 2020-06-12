@@ -43,8 +43,11 @@ public class CreditosScreen extends ApplicationAdapter implements Screen {
 	String texto11 = "https://opengameart.org/content/ocean-background";
 	String texto12 = "Osso:";
 	String texto13 = "https://opengameart.org/content/pixel-art-femur";
-	String texto14 = "Skins:";
-	String texto15 = "https://github.com/czyzby/gdx-skins";
+	String texto14 = "Logo:";
+	String texto15 = "https://www.designevo.com/res/templates/thumb_small/brown-and-white-dog.png";
+	String texto16 = "Skins:";
+	String texto17 = "https://github.com/czyzby/gdx-skins";
+	
 	
 	public CreditosScreen (GameClass game) {
 		this.game = game;
@@ -86,11 +89,12 @@ public class CreditosScreen extends ApplicationAdapter implements Screen {
 		GameClass.fontMenuP.draw(game.sb, "Créditos", Gdx.graphics.getWidth() / 2 - Gdx.graphics.getWidth()/10 , Gdx.graphics.getHeight() - 40);
 		GameClass.fontMenu.draw(game.sb, texto1 , Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 120);
 		GameClass.fontMenu.draw(game.sb, texto2, Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 160);
-		GameClass.fontMenuM.draw(game.sb, texto3, Gdx.graphics.getWidth() / 2 - Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight() - 240);
+		GameClass.fontMenuM.draw(game.sb, texto3, Gdx.graphics.getWidth() / 2 - Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight() - 200);
 		
 		GameClass.fontMenu.draw(game.sb, texto4 + "\n" + texto5 + "\n" + texto6 + "\n" + texto7 + "\n" + texto8 + "\n" + texto9
-				+ "\n" + texto10 + "\n" + texto11 + "\n" + texto12 + "\n" + texto13 + "\n" + texto14 + "\n" + texto15, 
-				Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 280);
+				+ "\n" + texto10 + "\n" + texto11 + "\n" + texto12 + "\n" + texto13 + "\n" + texto14 
+				+ "\n" + texto15 + "\n" + texto16 + "\n" + texto17, 
+				Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 240);
 		
 		game.sb.end();
 		

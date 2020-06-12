@@ -118,9 +118,9 @@ public class PlayScreen implements Screen {
 		doggie = new Doggie(this, 30, 320);
 		doggieThread = new DoggieThread(doggie);
 		
-		inimigo = new InimigoCachorro(this, 230, 200);
+		inimigo = new InimigoCachorro(this, 230, 180);
 		inimigo1Thread = new InimigoThread(inimigo);
-		inimigo2 = new InimigoCachorro(this, 400, 200);
+		inimigo2 = new InimigoCachorro(this, 400, 180);
 		inimigo2Thread = new InimigoThread(inimigo2);
 		
 		

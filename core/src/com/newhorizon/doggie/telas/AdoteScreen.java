@@ -16,7 +16,7 @@ import static com.newhorizon.doggie.telas.MenuScreen.col_width;
 import static com.newhorizon.doggie.telas.MenuScreen.Help_Guides;
 import static com.newhorizon.doggie.telas.MenuScreen.row_height;
 
-public class AdoteScreen  extends ApplicationAdapter implements Screen {
+public class AdoteScreen extends ApplicationAdapter implements Screen {
 
 	public GameClass game;
 	public Screen screen;
@@ -30,20 +30,13 @@ public class AdoteScreen  extends ApplicationAdapter implements Screen {
     private String texto3 = "www.toca.gatinhos.nom.br/";
     private String texto4 = "www.patinhasunidas.com.br/adotar";
     private String texto5 = "www.clubedosviralatas.org.br/adote-a-alegria";
-    private String texto6 = "apaa.com.br/sample-page/";
+    private String texto6 = "www.apaa.com.br/sample-page/";
     private String texto7 = "www.adoteumfocinho.com.br";
-    private String texto8 = "ilm.org.br/";
-    private String texto9 = "ajudaanimal.wixsite.com/ajudaanimal";
+    private String texto8 = "www.ilm.org.br/";
+    private String texto9 = "www.ajudaanimal.wixsite.com/ajudaanimal";
     
     private String texto10 = "Adote um animalzinho, leve amor para sua casa e \n ganhe Doggie Coins para utilizar no jogo!!!";
 
-		
-	
-		
-		
-	
-		
-	
 	public AdoteScreen (GameClass game) {
 		this.game = game;
 	}

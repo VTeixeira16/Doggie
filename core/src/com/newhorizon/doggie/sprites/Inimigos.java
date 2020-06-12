@@ -212,7 +212,6 @@ public abstract class Inimigos extends Sprite{
     
     public void morreu()
     {
-//    	Gdx.app.log("log","Morreeeeeeu");
     	
         if (!inimigoMorreu) {
 
@@ -222,7 +221,6 @@ public abstract class Inimigos extends Sprite{
 //            Filter filter = new Filter();
 //            filter.maskBits = B2dVariaveis.BIT_NADA;
 
-            Gdx.app.log("log","Morreeeeeeu");
             
             Gdx.app.postRunnable(new Runnable(){
                 public void run(){

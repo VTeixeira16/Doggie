@@ -37,6 +37,7 @@ public class Doggie extends Sprite {
 	private int numVidas;
 	private int totalVidas;
 	public boolean vivo;
+	public boolean envenenado;
 
 	private float stateTimer;
 	private boolean doggieMorreu;
@@ -77,6 +78,7 @@ public class Doggie extends Sprite {
 		TextureRegion[] spritesDoggie = TextureRegion.split(tex, 80, 60)[0];
 
 		totalVidas = 3;
+		envenenado = false;
 
 		setAnimation(spritesDoggie, 1 / 16f);
 		setAnimationIdle(spritesDoggie, 1 / 16f);
@@ -124,6 +126,9 @@ public class Doggie extends Sprite {
 		// Evita que Doggie saia da tela
 		if (this.getPosition().x < 30 / PPM)
 			body.setTransform(30 / PPM, body.getPosition().y, 0);
+		
+		if (this.getPosition().y > 870 / PPM)
+			body.setTransform(body.getPosition().x, 868 / PPM, 0);
 
 		if (this.getPosition().y < 64 / PPM) {
 			body.setTransform(50 / PPM, 204 / PPM, 0);
@@ -138,6 +143,11 @@ public class Doggie extends Sprite {
 		}
 
 	}
+	
+	public void Envenenado() {
+		this.envenenado = true;
+		RecebeDano();
+	}
 
 	public void RecebeDano() {
 		if (this.totalVidas <= 0) {
@@ -145,18 +155,25 @@ public class Doggie extends Sprite {
 			morreu();
 
 		}
-		if (this.totalVidas > 0) {
+		if (this.totalVidas > 0 && this.envenenado == false) {
 			// Joga pra posição "inicial" caso tenha vidas
 //			body.setTransform(50 / PPM, 204/ PPM, 0);
 			body.applyLinearImpulse(new Vector2(0f, 6f), body.getWorldCenter(), true);
 		}
-
-		if (stateTimer > 0.7f) {
-			stateTimer = 0;
-			setTotalVidas(this.totalVidas - 1);
+		else if(this.totalVidas > 0 && envenenado == true)
+		{
+			body.applyLinearImpulse(new Vector2(0f, -3f), body.getWorldCenter(), true);
+			envenenado = false;
 		}
+
+//		if (stateTimer > 0.7f) {
+//			stateTimer = 0;
+			setTotalVidas(this.totalVidas - 1);
+//		}
 		if (this.totalVidas < 0)
 			this.totalVidas = 0;
+		
+		
 	}
 
 	public void collectOssos() {
@@ -356,7 +373,7 @@ public class Doggie extends Sprite {
 		fDef.shape = cShape;
 		fDef.filter.categoryBits = B2dVariaveis.BIT_DOGGIE;
 		fDef.filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_OBJETOS | B2dVariaveis.BIT_OSSOS
-				| B2dVariaveis.BIT_INIMIGO;
+				| B2dVariaveis.BIT_OSSOS_ENVENENADOS | B2dVariaveis.BIT_INIMIGO;
 		// Faz quicar/
 		fDef.restitution = 0f;
 		body.createFixture(fDef).setUserData(this);

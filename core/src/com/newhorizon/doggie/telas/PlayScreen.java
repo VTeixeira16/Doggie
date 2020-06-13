@@ -32,6 +32,7 @@ import com.newhorizon.doggie.sprites.Doggie.Estado;
 import com.newhorizon.doggie.sprites.InimigoCachorro;
 import com.newhorizon.doggie.sprites.Inimigos;
 import com.newhorizon.doggie.sprites.Ossos;
+import com.newhorizon.doggie.sprites.OssosVeneno;
 import com.newhorizon.doggie.threads.DoggieThread;
 import com.newhorizon.doggie.threads.InimigoThread;
 import com.newhorizon.doggie.tools.B2dVariaveis;
@@ -52,6 +53,7 @@ public class PlayScreen implements Screen {
 	private Hud hud;
 
 	private Array<Ossos> ossos;
+	private Array<OssosVeneno> ossosVeneno;
 
 	public DetectorColisoes cl;
 
@@ -139,6 +141,7 @@ public class PlayScreen implements Screen {
 		// Ambas as funções deverão ser transformadas em objetos no futuro.
 		createTiles();
 		createOssos();
+		createOssosVeneno();
 	}
 
 	@Override
@@ -169,7 +172,7 @@ public class PlayScreen implements Screen {
 		
 		
 		
-		if(doggie.getTotalVidas() == 0)
+		if(doggie.getTotalVidas() <= 0)
 			game.setScreen(new GameOver(game));
 
 		world.step(dt, 6, 2);
@@ -186,10 +189,20 @@ public class PlayScreen implements Screen {
 			Body b = bodies.get(i);
 			ossos.removeValue((Ossos) b.getUserData(), true);
 			world.destroyBody(b);
-			doggie.collectOssos();
-			
+			doggie.collectOssos();		
 		}
 
+		// Apagando Ossos
+		Array<Body> bodiesVeneno = cl.getBodiesVToRemove();
+		for (int i = 0; i < bodiesVeneno.size; i++) {
+
+			Body bV = bodiesVeneno.get(i);
+			ossosVeneno.removeValue((OssosVeneno) bV.getUserData(), true);
+			world.destroyBody(bV);
+			//Colocar função para remover vida do Doggie
+			doggie.Envenenado();
+		}
+		
 		doggie.update(dt);
 		inimigo.update(dt);
 		inimigo2.update(dt);
@@ -209,6 +222,10 @@ public class PlayScreen implements Screen {
 			ossos.get(i).update(dt);
 		}
 		
+		bodiesVeneno.clear();
+		for (int i = 0; i < ossosVeneno.size; i++) {
+			ossosVeneno.get(i).update(dt);
+		}
 	
 //		ManagerCenas.setScreen(new GameOver(this), game);
 	}
@@ -241,6 +258,7 @@ public class PlayScreen implements Screen {
 		inimigo2.render(game.sb);
 		
 		doggie.render(game.sb);
+		
 
 		
 		
@@ -263,10 +281,14 @@ public class PlayScreen implements Screen {
 		}
 
 		game.sb.setProjectionMatrix(gamecam.combined);
-
+		
 		// Desenha ossos
 		for (int i = 0; i < ossos.size; i++) {
 			ossos.get(i).render(game.sb);
+		}
+		
+		for (int i = 0; i < ossosVeneno.size; i++) {
+			ossosVeneno.get(i).render(game.sb);
 		}
 
 		// Como o sb está sendo executado no game, verificar possibilidade de exclusão
@@ -396,6 +418,45 @@ public class PlayScreen implements Screen {
 
 		}
 	}
+	
+	private void createOssosVeneno() {
+
+		ossosVeneno = new Array<OssosVeneno>();
+
+		MapLayer layer = tiledMap.getLayers().get("OssosVeneno");
+
+		BodyDef bDef = new BodyDef();
+		FixtureDef fDef = new FixtureDef();
+
+		for (MapObject mo : layer.getObjects()) {
+
+			bDef.type = BodyType.StaticBody;
+
+			float x = (float) mo.getProperties().get("x") / PPM;
+			float y = (float) mo.getProperties().get("y") / PPM;
+
+			bDef.position.set(x, y);
+			CircleShape cShape = new CircleShape();
+			cShape.setRadius(9 / PPM);
+
+			
+			fDef.shape = cShape;
+			fDef.isSensor = true;
+			fDef.filter.categoryBits = B2dVariaveis.BIT_OSSOS_ENVENENADOS;
+			fDef.filter.maskBits = B2dVariaveis.BIT_DOGGIE;
+
+			Body body = world.createBody(bDef);
+			body.createFixture(fDef).setUserData("ossosVeneno");
+
+			OssosVeneno c = new OssosVeneno(body);
+			ossosVeneno.add(c);
+
+			body.setUserData(c);
+			
+			
+
+		}
+	}
 
 	@Override
 	public void resize(int width, int height) {
@@ -414,6 +475,7 @@ public class PlayScreen implements Screen {
 
 	@Override
 	public void hide() {
+
 	}
 
 	public World getWorld() {

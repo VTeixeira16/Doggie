@@ -37,10 +37,10 @@ public class GameOver implements Screen{
 		
 		game.sb.begin();
 		
-		GameClass.fontGameOver.draw(game.sb, texto1, Gdx.graphics.getWidth() / 3,
+		GameClass.fontGameOver.draw(game.sb, texto1, 0,
 				Gdx.graphics.getHeight() /2 + 40);
 
-		GameClass.fontMenu.draw(game.sb, texto2, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 10);
+		GameClass.fontMenu.draw(game.sb, texto2, 0, Gdx.graphics.getHeight() / 10);
 		
 		
 		game.sb.end();
@@ -71,6 +71,8 @@ public class GameOver implements Screen{
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
+		GameClass.fontMenu.dispose();
+		GameClass.fontGameOver.dispose();
 		
 		
 	}

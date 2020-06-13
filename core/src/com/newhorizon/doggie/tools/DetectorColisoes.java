@@ -14,12 +14,13 @@ public class DetectorColisoes implements ContactListener{
 	
 	private int numDoggieGround;
 	private Array<Body> bodiesToRemove;
+	private Array<Body> bodiesVToRemove;
 	
 	public DetectorColisoes() 
 	{
 		super();
 		bodiesToRemove = new Array<Body>();
-		
+		bodiesVToRemove = new Array<Body>();
 	}
 	
 	//Chamado quando 2 fixtures colidem
@@ -87,6 +88,18 @@ public class DetectorColisoes implements ContactListener{
 			//Remove Ossos
 			bodiesToRemove.add(fixtureB.getBody());	
 		}		
+		
+		if(fixtureA.getUserData() != null && fixtureA.getUserData().equals("ossosVeneno"))
+		{
+			//Remove Ossos
+			bodiesVToRemove.add(fixtureA.getBody());
+
+		}
+		if(fixtureB.getUserData() != null && fixtureB.getUserData().equals("ossosVeneno"))
+		{
+			//Remove Ossos
+			bodiesVToRemove.add(fixtureB.getBody());	
+		}
 	}
 
 	//Chamado quando 2 fixtures deixam de colidir
@@ -107,6 +120,7 @@ public class DetectorColisoes implements ContactListener{
 	
 	public boolean isPlayerOnGround() {return numDoggieGround > 0;}
 	public Array<Body> getBodiesToRemove() { return bodiesToRemove;}
+	public Array<Body> getBodiesVToRemove() { return bodiesVToRemove;}
 	
 
 	public void preSolve(Contact contact, Manifold oldManifold) {}

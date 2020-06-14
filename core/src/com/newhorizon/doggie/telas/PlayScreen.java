@@ -118,7 +118,7 @@ public class PlayScreen implements Screen {
 
 		// Criando Sprites no mundo.
 		// ((this), Posição X, Posição Y)
-		doggie = new Doggie(this, 30, 320);
+		doggie = new Doggie(this, 9550, 400);
 		doggieThread = new DoggieThread(doggie);
 		
 		inimigo = new InimigoCachorro(this, 230, 180);

@@ -124,8 +124,10 @@ public class Doggie extends Sprite {
 		animationIdle.update(dt);
 
 		// Evita que Doggie saia da tela
-		if (this.getPosition().x < 30 / PPM)
-			body.setTransform(30 / PPM, body.getPosition().y, 0);
+		if (this.getPosition().x < 400 / PPM)
+			body.setTransform(402 / PPM, body.getPosition().y, 0);
+		if (this.getPosition().x > 9800 / PPM)
+			body.setTransform(9798 / PPM, body.getPosition().y, 0);
 		
 		if (this.getPosition().y > 870 / PPM)
 			body.setTransform(body.getPosition().x, 868 / PPM, 0);

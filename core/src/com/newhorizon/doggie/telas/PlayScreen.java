@@ -42,6 +42,7 @@ public class PlayScreen implements Screen {
 
 	// Se tiver em debug, o render mostrará os colisores
 	private boolean debug = true;
+//	private boolean debug = false;
 
 	private GameClass game;
 

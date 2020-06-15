@@ -29,6 +29,8 @@ public class Doggie extends Sprite {
 	public Estado estadoAtual;
 	public Estado estadoAnterior;
 
+	public boolean terminouFase;
+	
 	public World world;
 	public Body body;
 
@@ -44,11 +46,11 @@ public class Doggie extends Sprite {
 
 	private PlayScreen screen;
 
-	public Animation animation;
+	// Propriedades das animações
+	public Animation animationRun;
 	protected float width;
 	protected float height;
 
-	// Propriedades das animações
 	protected Animation animationIdle;
 	protected float widthIdle;
 	protected float heightIdle;
@@ -58,6 +60,8 @@ public class Doggie extends Sprite {
 	public float flagTimer;
 
 	public Doggie(PlayScreen screen, int x, int y) {
+		
+		terminouFase = false;
 
 		this.screen = screen;
 		this.world = screen.getWorld();
@@ -71,7 +75,7 @@ public class Doggie extends Sprite {
 //		setBounds(0,0, 16 / PPM, 16 / PPM);
 
 		// Animações do Doggie
-		animation = new Animation();
+		animationRun = new Animation();
 		animationIdle = new Animation();
 
 		Texture tex = GameClass.res.getTexture("doggieAndando");
@@ -80,12 +84,12 @@ public class Doggie extends Sprite {
 		totalVidas = 3;
 		envenenado = false;
 
-		setAnimation(spritesDoggie, 1 / 16f);
 		setAnimationIdle(spritesDoggie, 1 / 16f);
+		setAnimationRun(spritesDoggie, 1 / 16f);
 	}
 
-	public void setAnimation(TextureRegion[] reg, float delay) {
-		animation.setFrames(reg, delay);
+	public void setAnimationRun(TextureRegion[] reg, float delay) {
+		animationRun.setFrames(reg, delay);
 		width = reg[0].getRegionWidth();
 		height = reg[0].getRegionHeight();
 
@@ -120,14 +124,15 @@ public class Doggie extends Sprite {
 
 //		setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
 
-		animation.update(dt);
+		animationRun.update(dt);
 		animationIdle.update(dt);
 
 		// Evita que Doggie saia da tela
 		if (this.getPosition().x < 400 / PPM)
 			body.setTransform(402 / PPM, body.getPosition().y, 0);
 		if (this.getPosition().x > 9800 / PPM)
-			body.setTransform(9798 / PPM, body.getPosition().y, 0);
+			terminouFase = true;
+//			body.setTransform(9798 / PPM, body.getPosition().y, 0);
 		
 		if (this.getPosition().y > 870 / PPM)
 			body.setTransform(body.getPosition().x, 868 / PPM, 0);
@@ -211,10 +216,10 @@ public class Doggie extends Sprite {
 
 		// Ideal é aprimorar a máquina de estados do jogo.
 		if (flip && estadoAtual == Estado.CORRENDO) {
-			sb.draw(animation.getFrame(), body.getPosition().x * PPM + width / 2,
+			sb.draw(animationRun.getFrame(), body.getPosition().x * PPM + width / 2,
 					body.getPosition().y * PPM - height / 2, -width, height);
 		} else if (!flip && estadoAtual == Estado.CORRENDO) {
-			sb.draw(animation.getFrame(), body.getPosition().x * PPM - width / 2,
+			sb.draw(animationRun.getFrame(), body.getPosition().x * PPM - width / 2,
 					body.getPosition().y * PPM - height / 2);
 		} else if (flip && estadoAtual == Estado.PARADO) {
 			sb.draw(animationIdle.getFrame(), body.getPosition().x * PPM + widthIdle / 2,
@@ -222,7 +227,24 @@ public class Doggie extends Sprite {
 		} else if (!flip && estadoAtual == Estado.PARADO) {
 			sb.draw(animationIdle.getFrame(), body.getPosition().x * PPM - widthIdle / 2,
 					body.getPosition().y * PPM - heightIdle / 2);
+		}else if (flip && estadoAtual == Estado.PULANDO) {
+			sb.draw(animationRun.getFrame(), body.getPosition().x * PPM + width / 2,
+					body.getPosition().y * PPM - height / 2, -width, height);
+		} else if (!flip && estadoAtual == Estado.PULANDO) {
+			sb.draw(animationRun.getFrame(), body.getPosition().x * PPM - width / 2,
+					body.getPosition().y * PPM - height / 2);
 		}
+		else if (flip && estadoAtual == Estado.CAINDO) {
+			sb.draw(animationRun.getFrame(), body.getPosition().x * PPM + width / 2,
+					body.getPosition().y * PPM - height / 2, -width, height);
+		} else if (!flip && estadoAtual == Estado.CAINDO) {
+			sb.draw(animationRun.getFrame(), body.getPosition().x * PPM - width / 2,
+					body.getPosition().y * PPM - height / 2);
+		}
+		
+		
+		
+		
 
 		sb.end();
 	}

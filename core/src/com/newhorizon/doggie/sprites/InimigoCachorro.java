@@ -24,8 +24,8 @@ public class InimigoCachorro extends Inimigos{
 		animation = new Animation();
 		animationIdle = new Animation();
 		
-		Texture tex = GameClass.res.getTexture("dogIdle");
-		TextureRegion[] spritesInimigo = TextureRegion.split(tex, 82, 60)[0]; // Recorte do SpriteSheet
+		Texture tex = GameClass.res.getTexture("inimigoDoggie");
+		TextureRegion[] spritesInimigo = TextureRegion.split(tex, 79, 61)[0]; // Recorte do SpriteSheet
 		
 		criaInimigo(x,y);
 //		setBounds(0,0, 16 / PPM, 16 / PPM);

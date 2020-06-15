@@ -53,17 +53,15 @@ public class GameClass extends Game {
 	public void create() {
 		
 		res = new Content();
-		res.loadTexture("images/doggie.png", "doggie");
-		res.loadTexture("images/doggie.png", "doggieIdle");
-		res.loadTexture("images/doggieBlack.png", "dogIdle");
+
 		res.loadTexture("images/crystal.png", "coleiras");
-//		res.loadTexture("images/osso4.png", "osso4");
+
 		res.loadTexture("images/ossinho.png", "ossinho");
 		res.loadTexture("images/ossoVeneno.png", "ossoVeneno");
-		res.loadTexture("images/DoggieCorrendo.png", "doggieCorrendo");
-//		res.loadTexture("images/DoggieAndando.png", "doggieAndando");
-		res.loadTexture("images/DoggieSprites.png", "doggieAndando");
 
+		res.loadTexture("images/DoggieSprites.png", "doggieAndando");
+		res.loadTexture("images/inimigoDoggieRun.png", "inimigoDoggie");
+//		res.loadTexture("images/InimigoDoggie.png", "inimigoDoggie");
 		
 		sb = new SpriteBatch();
 		

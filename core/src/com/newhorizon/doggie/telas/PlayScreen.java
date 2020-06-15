@@ -82,6 +82,7 @@ public class PlayScreen implements Screen {
 
 	public PlayScreen(GameClass game) {
 		this.game = game;
+		
 
 		// Cria Camera para seguir o Doggie
 		gamecam = new OrthographicCamera();
@@ -118,8 +119,10 @@ public class PlayScreen implements Screen {
 
 		// Criando Sprites no mundo.
 		// ((this), Posição X, Posição Y)
-		doggie = new Doggie(this, 9550, 400);
+		doggie = new Doggie(this, 400, 400);
+//		doggie = new Doggie(this, 9650, 400);
 		doggieThread = new DoggieThread(doggie);
+		doggie.terminouFase = false;
 		
 		inimigo = new InimigoCachorro(this, 230, 180);
 		inimigo1Thread = new InimigoThread(inimigo);
@@ -175,6 +178,10 @@ public class PlayScreen implements Screen {
 		
 		if(doggie.getTotalVidas() <= 0)
 			game.setScreen(new GameOver(game));
+		
+		if(doggie.terminouFase)
+			game.setScreen(new MenuScreen(game));
+			
 
 		world.step(dt, 6, 2);
 		handleInput(dt);

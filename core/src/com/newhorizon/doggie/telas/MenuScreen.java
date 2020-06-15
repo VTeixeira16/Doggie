@@ -1,5 +1,9 @@
 package com.newhorizon.doggie.telas;
 
+import java.applet.Applet;
+import java.applet.AudioClip;
+import java.net.URL;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -15,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.newhorizon.doggie.GameClass;
+import com.newhorizon.doggie.threads.ThreadMusica;
 
 public class MenuScreen extends ApplicationAdapter implements Screen{
 	
@@ -29,18 +34,33 @@ public class MenuScreen extends ApplicationAdapter implements Screen{
     public int btnAdote;
     public int btnCreditos;
     public int btnSair;
+    
+    private ThreadMusica threadMusica;
 	
     public static final int Help_Guides = 12;
     public static final int row_height = Gdx.graphics.getHeight() / 12;
     public static final int col_width = Gdx.graphics.getWidth() / 12;
+    
 	
 	
 	public MenuScreen (GameClass game) {
 		this.game = game;
+		game.telaAtual = "Menu";
+		threadMusica = new ThreadMusica(this.game);
+//		threadMusica = new ThreadMenuMusica();
+		
+		
+		
 	}
 
 	@Override
 	public void show() {
+		URL som = game.getClass().getResource("bin/main/sons/menu/DoggieMusicaMenu.wav");		
+		AudioClip audio = Applet.newAudioClip(som);
+		audio.play();
+		
+		threadMusica.start();		
+		
 		stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         
@@ -56,6 +76,8 @@ public class MenuScreen extends ApplicationAdapter implements Screen{
         btnJogar.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+            	threadMusica.musica.stop();
+            	game.telaAtual = "Null";	
             	game.setScreen(new IntroGameScreen(game));
             }
             @Override
@@ -84,6 +106,7 @@ public class MenuScreen extends ApplicationAdapter implements Screen{
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
             	game.setScreen(new AdoteScreen(game));
+
             	
             }
             @Override

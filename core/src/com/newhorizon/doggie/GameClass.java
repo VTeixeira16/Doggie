@@ -2,11 +2,13 @@ package com.newhorizon.doggie;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.newhorizon.doggie.telas.PlayScreen;
+import com.newhorizon.doggie.telas.MenuScreen;
 import com.newhorizon.doggie.tools.Content;
 
 
@@ -47,21 +49,29 @@ public class GameClass extends Game {
 	private FreeTypeFontGenerator.FreeTypeFontParameter fontGameOverParameter;
 	public static BitmapFont fontGameOver;
 
-	// Necessário implementar Manager Cenas
 	public static Content res;
+	
+	public static AssetManager manager;
+	
+	public static String telaAtual;
 	  
 	public void create() {
 		
+		
+		//		ASSETS
 		res = new Content();
-
 		res.loadTexture("images/crystal.png", "coleiras");
-
 		res.loadTexture("images/ossinho.png", "ossinho");
 		res.loadTexture("images/ossoVeneno.png", "ossoVeneno");
-
 		res.loadTexture("images/DoggieSprites.png", "doggieAndando");
 		res.loadTexture("images/inimigoDoggieRun.png", "inimigoDoggie");
 //		res.loadTexture("images/InimigoDoggie.png", "inimigoDoggie");
+		
+		
+		// SONS
+		manager = new AssetManager();
+		manager.load("bin/main/sons/menu/DoggieMusicaMenu.wav", Music.class);
+		manager.finishLoading();
 		
 		sb = new SpriteBatch();
 		
@@ -124,8 +134,10 @@ public class GameClass extends Game {
 		
 		
 		
-		setScreen(new PlayScreen(this));
-//		setScreen(new MenuScreen(this));
+		
+		
+//		setScreen(new PlayScreen(this));
+		setScreen(new MenuScreen(this));
 		
 		
 	}

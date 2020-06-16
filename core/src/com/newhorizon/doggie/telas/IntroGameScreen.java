@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.newhorizon.doggie.GameClass;
+import com.newhorizon.doggie.threads.ThreadMusica;
 
 public class IntroGameScreen extends ApplicationAdapter implements Screen{
 
@@ -25,6 +26,8 @@ public class IntroGameScreen extends ApplicationAdapter implements Screen{
 	private String texto8 = "Mas para chegar neste local, Doggie precisará sobreviver...";
 	private String texto9 = "E é aqui que iniciamos a sua jornada.";
 	
+	
+	private ThreadMusica threadMusica;
 	
 //	
 	ArrayList<String> textos;
@@ -47,6 +50,8 @@ public class IntroGameScreen extends ApplicationAdapter implements Screen{
 		textos.add(texto8);
 		textos.add(texto9);
 		
+		game.telaAtual = "IntroGame";
+		threadMusica = new ThreadMusica(this.game);
 		
 		
 	}
@@ -54,6 +59,8 @@ public class IntroGameScreen extends ApplicationAdapter implements Screen{
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
+		threadMusica.start();
+		
 		
 	}
 	@Override
@@ -91,8 +98,11 @@ public class IntroGameScreen extends ApplicationAdapter implements Screen{
         game.sb.end();
 		
         if(introTimer > 28)
+        {
+        	threadMusica.musica.stop();
+        	game.telaAtual = "Null";	
         	game.setScreen(new PlayScreen(game));
-        
+        }
 	}
 	@Override
 	public void hide() {

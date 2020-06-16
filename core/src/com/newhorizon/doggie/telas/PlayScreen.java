@@ -35,6 +35,7 @@ import com.newhorizon.doggie.sprites.Ossos;
 import com.newhorizon.doggie.sprites.OssosVeneno;
 import com.newhorizon.doggie.threads.DoggieThread;
 import com.newhorizon.doggie.threads.InimigoThread;
+import com.newhorizon.doggie.threads.ThreadMusica;
 import com.newhorizon.doggie.tools.B2dVariaveis;
 import com.newhorizon.doggie.tools.DetectorColisoes;
 
@@ -79,9 +80,15 @@ public class PlayScreen implements Screen {
 	
 	public float posDoggieX;
 	public float posDoggieY;
+	
+	private ThreadMusica threadMusica;
 
-	public PlayScreen(GameClass game) {
+	public PlayScreen(GameClass game) {	
+
 		this.game = game;
+		
+		game.telaAtual = "Fase1";
+		threadMusica = new ThreadMusica(this.game);
 		
 
 		// Cria Camera para seguir o Doggie
@@ -130,9 +137,9 @@ public class PlayScreen implements Screen {
 		inimigo2Thread = new InimigoThread(inimigo2);
 		
 		
-		doggieThread.start();
-		inimigo1Thread.start();
-		inimigo2Thread.start();
+//		doggieThread.start();
+//		inimigo1Thread.start();
+//		inimigo2Thread.start();
 		
 		// coleiras = new Coleiras(this);
 
@@ -146,10 +153,13 @@ public class PlayScreen implements Screen {
 		createTiles();
 		createOssos();
 		createOssosVeneno();
+		
 	}
 
 	@Override
 	public void show() {
+		
+		threadMusica.start();
 
 	}
 
@@ -177,11 +187,18 @@ public class PlayScreen implements Screen {
 		
 		
 		if(doggie.getTotalVidas() <= 0)
+		{
+        	threadMusica.musica.stop();
+        	game.telaAtual = "Null";	
 			game.setScreen(new GameOver(game));
+		}
 		
 		if(doggie.terminouFase)
+		{
+        	threadMusica.musica.stop();
+        	game.telaAtual = "Null";	
 			game.setScreen(new MenuScreen(game));
-			
+		}
 
 		world.step(dt, 6, 2);
 		handleInput(dt);

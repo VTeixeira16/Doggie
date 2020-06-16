@@ -2,6 +2,7 @@ package com.newhorizon.doggie.telas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.newhorizon.doggie.GameClass;
 
@@ -11,6 +12,8 @@ public class GameOver implements Screen{
 	private Screen screen;
 	private float timer;
 	
+	private Sound som;
+	
 	private String texto1 = "Game Over";
 	private String texto2 = "Doggie não obteve sucesso em sua jornada.";
 
@@ -18,12 +21,15 @@ public class GameOver implements Screen{
 
 	public GameOver(GameClass game) {
 		this.game = game;
+		
+		som = GameClass.manager.get("bin/main/sons/GameOver/GameOver_noLoop.wav", Sound.class);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
+		som.play();
 		
 	}
 
@@ -45,7 +51,7 @@ public class GameOver implements Screen{
 		
 		game.sb.end();
 		
-		if(timer > 10)
+		if(timer > 5)
 			game.setScreen(new MenuScreen(game));
 		
 	}

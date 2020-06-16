@@ -3,17 +3,16 @@ package com.newhorizon.doggie.sprites;
 import static com.newhorizon.doggie.tools.B2dVariaveis.PPM;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.World;
+import com.newhorizon.doggie.GameClass;
 import com.newhorizon.doggie.telas.PlayScreen;
 import com.newhorizon.doggie.tools.Animation;
-import com.newhorizon.doggie.tools.B2dVariaveis;
-import com.newhorizon.doggie.sprites.Doggie;
 
 public abstract class Inimigos extends Sprite{
 	public enum EstadoInimigos {PARADO, CORRENDO, ATACANDO, FERIDO, MORTO, GAMEOVER}; 
@@ -22,6 +21,7 @@ public abstract class Inimigos extends Sprite{
 	
 	protected float stateTime;
 	
+	public Sound som;
 	
 	protected boolean inimigoMorreu;
 	protected Body body;
@@ -46,6 +46,9 @@ public abstract class Inimigos extends Sprite{
 		
 		stateTime = 0;
 		velocidade = new Vector2 (2,0);
+		
+		som = GameClass.manager.get("bin/main/sons/latido/rosnadoInimigo.wav", Sound.class);
+		
 //		this.screen = screen;
 //		this.world = screen.getWorld();
 //		animation = new Animation();
@@ -70,6 +73,11 @@ public abstract class Inimigos extends Sprite{
     		velocidade.x = - velocidade.x;
 		if(y)
     		velocidade.y = - velocidade.y;
+    }
+    
+    public void somRosnar()
+    {
+    	som.play();
     }
     
 	public void setAnimation(TextureRegion[] reg, float delay) {

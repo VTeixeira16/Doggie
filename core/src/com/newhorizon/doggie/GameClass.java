@@ -4,11 +4,12 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.newhorizon.doggie.telas.MenuScreen;
+import com.newhorizon.doggie.telas.PlayScreen;
 import com.newhorizon.doggie.tools.Content;
 
 
@@ -71,6 +72,16 @@ public class GameClass extends Game {
 		// SONS
 		manager = new AssetManager();
 		manager.load("bin/main/sons/menu/DoggieMusicaMenu.wav", Music.class);
+		manager.load("bin/main/sons/musicas/DoggieMusica01.wav", Music.class);
+		manager.load("bin/main/sons/musicas/DoggieMusica02.wav", Music.class);
+		manager.load("bin/main/sons/musicas/DoggieMusica03.wav", Music.class);
+		manager.load("bin/main/sons/musicas/DoggieMusica04.wav", Music.class);
+		manager.load("bin/main/sons/musicas/DoggieMusica05.wav", Music.class);
+		
+		manager.load("bin/main/sons/GameOver/GameOver_noLoop.wav", Sound.class);
+		manager.load("bin/main/sons/latido/latidodoggie.wav", Sound.class);
+		manager.load("bin/main/sons/latido/rosnadoInimigo.wav", Sound.class);
+		manager.load("bin/main/sons/menu/menuClick.wav", Sound.class);
 		manager.finishLoading();
 		
 		sb = new SpriteBatch();
@@ -136,8 +147,8 @@ public class GameClass extends Game {
 		
 		
 		
-//		setScreen(new PlayScreen(this));
-		setScreen(new MenuScreen(this));
+		setScreen(new PlayScreen(this));
+//		setScreen(new MenuScreen(this));
 		
 		
 	}

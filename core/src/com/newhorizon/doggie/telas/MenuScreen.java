@@ -1,12 +1,9 @@
 package com.newhorizon.doggie.telas;
 
-import java.applet.Applet;
-import java.applet.AudioClip;
-import java.net.URL;
-
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -36,6 +33,7 @@ public class MenuScreen extends ApplicationAdapter implements Screen{
     public int btnSair;
     
     private ThreadMusica threadMusica;
+    private Sound som;
 	
     public static final int Help_Guides = 12;
     public static final int row_height = Gdx.graphics.getHeight() / 12;
@@ -47,6 +45,7 @@ public class MenuScreen extends ApplicationAdapter implements Screen{
 		this.game = game;
 		game.telaAtual = "Menu";
 		threadMusica = new ThreadMusica(this.game);
+		som = GameClass.manager.get("bin/main/sons/menu/menuClick.wav", Sound.class);
 //		threadMusica = new ThreadMenuMusica();
 		
 		
@@ -55,9 +54,6 @@ public class MenuScreen extends ApplicationAdapter implements Screen{
 
 	@Override
 	public void show() {
-		URL som = game.getClass().getResource("bin/main/sons/menu/DoggieMusicaMenu.wav");		
-		AudioClip audio = Applet.newAudioClip(som);
-		audio.play();
 		
 		threadMusica.start();		
 		
@@ -76,9 +72,11 @@ public class MenuScreen extends ApplicationAdapter implements Screen{
         btnJogar.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+//            	som.play();
             	threadMusica.musica.stop();
             	game.telaAtual = "Null";	
             	game.setScreen(new IntroGameScreen(game));
+            	
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {return true;}
@@ -92,6 +90,7 @@ public class MenuScreen extends ApplicationAdapter implements Screen{
         btnCreditos.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+            	som.play();
             	game.setScreen(new CreditosScreen(game));
             }
             @Override
@@ -105,6 +104,7 @@ public class MenuScreen extends ApplicationAdapter implements Screen{
         btnAdote.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+            	som.play();
             	game.setScreen(new AdoteScreen(game));
 
             	

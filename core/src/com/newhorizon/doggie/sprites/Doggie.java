@@ -2,6 +2,7 @@ package com.newhorizon.doggie.sprites;
 
 import static com.newhorizon.doggie.tools.B2dVariaveis.PPM;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 //import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -58,6 +59,8 @@ public class Doggie extends Sprite {
 	private boolean flip;
 
 	public float flagTimer;
+	
+	public Sound som;
 
 	public Doggie(PlayScreen screen, int x, int y) {
 		
@@ -83,6 +86,8 @@ public class Doggie extends Sprite {
 
 		totalVidas = 3;
 		envenenado = false;
+		
+		som = GameClass.manager.get("bin/main/sons/latido/latidodoggie.wav", Sound.class);
 
 		setAnimationIdle(spritesDoggie, 1 / 16f);
 		setAnimationRun(spritesDoggie, 1 / 16f);
@@ -100,6 +105,10 @@ public class Doggie extends Sprite {
 		widthIdle = reg[0].getRegionWidth();
 		heightIdle = reg[0].getRegionHeight();
 
+	}
+	public void somLatido()
+	{
+		som.play();
 	}
 
 	public void update(float dt) {
@@ -129,7 +138,7 @@ public class Doggie extends Sprite {
 
 		// Evita que Doggie saia da tela
 		if (this.getPosition().x < 400 / PPM)
-			body.setTransform(402 / PPM, body.getPosition().y, 0);
+			body.setTransform(401 / PPM, body.getPosition().y, 0);
 		if (this.getPosition().x > 9800 / PPM)
 			terminouFase = true;
 //			body.setTransform(9798 / PPM, body.getPosition().y, 0);

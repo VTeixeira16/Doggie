@@ -29,9 +29,33 @@ public class ThreadMusica extends Thread{
 			{
 				musica = GameClass.manager.get("bin/main/sons/menu/DoggieMusicaMenu.wav", Music.class);
 				musica.play();
+				musica.setLooping(true);
 				
 				try {
-					Thread.sleep(10);
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			if(game.telaAtual == "IntroGame")
+			{
+				musica = GameClass.manager.get("bin/main/sons/musicas/DoggieMusica03.wav", Music.class);
+				musica.play();
+				
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			if(game.telaAtual == "Fase1")
+			{
+				musica = GameClass.manager.get("bin/main/sons/musicas/DoggieMusica01.wav", Music.class);
+				musica.play();
+				musica.setLooping(true);
+				
+				try {
+					Thread.sleep(100);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}

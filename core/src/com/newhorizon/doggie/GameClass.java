@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.newhorizon.doggie.telas.PlayScreen;
+import com.newhorizon.doggie.telas.MenuScreen;
 import com.newhorizon.doggie.tools.Content;
 
 
@@ -147,8 +147,8 @@ public class GameClass extends Game {
 		
 		
 		
-		setScreen(new PlayScreen(this));
-//		setScreen(new MenuScreen(this));
+//		setScreen(new PlayScreen(this));
+		setScreen(new MenuScreen(this));
 		
 		
 	}

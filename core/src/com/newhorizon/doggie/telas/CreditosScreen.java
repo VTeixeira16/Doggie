@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -29,6 +30,8 @@ public class CreditosScreen extends ApplicationAdapter implements Screen {
     private Label outputLabel;
     private Skin skin;
     
+    SpriteBatch sb;
+    
 	String texto1 = "Programação, Game Design, Roteiro e Level Design: Victor Teixeira.";
 	String texto2 = "Arte e sonoplastia: Gabriel Ventura.";
 	String texto3 = "Assets utilizados para conclusão do projeto:";
@@ -51,6 +54,7 @@ public class CreditosScreen extends ApplicationAdapter implements Screen {
 	
 	public CreditosScreen (GameClass game) {
 		this.game = game;
+		sb = new SpriteBatch();
 	}
 
 	@Override
@@ -84,25 +88,26 @@ public class CreditosScreen extends ApplicationAdapter implements Screen {
         stage.act();
         stage.draw();
         
-		game.sb.begin();
+		sb.begin();
 		
-		GameClass.fontMenuP.draw(game.sb, "Créditos", Gdx.graphics.getWidth() / 2 - Gdx.graphics.getWidth()/10 , Gdx.graphics.getHeight() - 40);
-		GameClass.fontMenu.draw(game.sb, texto1 , Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 120);
-		GameClass.fontMenu.draw(game.sb, texto2, Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 160);
-		GameClass.fontMenuM.draw(game.sb, texto3, Gdx.graphics.getWidth() / 2 - Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight() - 200);
+		GameClass.fontMenuP.draw(sb, "Créditos", Gdx.graphics.getWidth() / 2 - Gdx.graphics.getWidth()/10 , Gdx.graphics.getHeight() - 40);
+		GameClass.fontMenu.draw(sb, texto1 , Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 120);
+		GameClass.fontMenu.draw(sb, texto2, Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 160);
+		GameClass.fontMenuM.draw(sb, texto3, Gdx.graphics.getWidth() / 2 - Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight() - 200);
 		
-		GameClass.fontMenu.draw(game.sb, texto4 + "\n" + texto5 + "\n" + texto6 + "\n" + texto7 + "\n" + texto8 + "\n" + texto9
+		GameClass.fontMenu.draw(sb, texto4 + "\n" + texto5 + "\n" + texto6 + "\n" + texto7 + "\n" + texto8 + "\n" + texto9
 				+ "\n" + texto10 + "\n" + texto11 + "\n" + texto12 + "\n" + texto13 + "\n" + texto14 
 				+ "\n" + texto15 + "\n" + texto16 + "\n" + texto17, 
 				Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 240);
 		
-		game.sb.end();
+		sb.end();
 		
 	}
 
 	@Override
 	public void hide() {
 		stage.dispose();
+		sb.dispose();
 		
 	}
 }

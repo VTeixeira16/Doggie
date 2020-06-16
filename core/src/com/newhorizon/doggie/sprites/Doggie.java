@@ -84,7 +84,7 @@ public class Doggie extends Sprite {
 		Texture tex = GameClass.res.getTexture("doggieAndando");
 		TextureRegion[] spritesDoggie = TextureRegion.split(tex, 80, 60)[0];
 
-		totalVidas = 3;
+		totalVidas = 1;
 		envenenado = false;
 		
 		som = GameClass.manager.get("bin/main/sons/latido/latidodoggie.wav", Sound.class);

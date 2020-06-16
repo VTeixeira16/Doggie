@@ -28,6 +28,7 @@ public class ThreadMusica extends Thread{
 			if(game.telaAtual == "Menu")
 			{
 				musica = GameClass.manager.get("bin/main/sons/menu/DoggieMusicaMenu.wav", Music.class);
+				musica.setVolume(1);
 				musica.play();
 				musica.setLooping(true);
 				
@@ -40,6 +41,7 @@ public class ThreadMusica extends Thread{
 			if(game.telaAtual == "IntroGame")
 			{
 				musica = GameClass.manager.get("bin/main/sons/musicas/DoggieMusica03.wav", Music.class);
+				musica.setVolume(1);
 				musica.play();
 				
 				try {
@@ -51,6 +53,7 @@ public class ThreadMusica extends Thread{
 			if(game.telaAtual == "Fase1")
 			{
 				musica = GameClass.manager.get("bin/main/sons/musicas/DoggieMusica01.wav", Music.class);
+				musica.setVolume(0.05f);
 				musica.play();
 				musica.setLooping(true);
 				

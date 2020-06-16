@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -25,6 +26,8 @@ public class AdoteScreen extends ApplicationAdapter implements Screen {
     private Label outputLabel;
     private Skin skin;
     
+    SpriteBatch sb;
+    
     private String texto1 = "www.naturezaemforma.org.br/como-adotar/";
     private String texto2 = "www.adoteumgatinho.org.br/";
     private String texto3 = "www.toca.gatinhos.nom.br/";
@@ -39,6 +42,7 @@ public class AdoteScreen extends ApplicationAdapter implements Screen {
 
 	public AdoteScreen (GameClass game) {
 		this.game = game;
+		sb = new SpriteBatch();
 	}
     
 	@Override
@@ -72,25 +76,26 @@ public class AdoteScreen extends ApplicationAdapter implements Screen {
         stage.act();
         stage.draw();
         
-		game.sb.begin();
+		sb.begin();
 		
-		GameClass.fontMenuP.draw(game.sb, "Contatos para adoção", Gdx.graphics.getWidth() / 3 - Gdx.graphics.getWidth()/10 , Gdx.graphics.getHeight() - 40);
+		GameClass.fontMenuP.draw(sb, "Contatos para adoção", Gdx.graphics.getWidth() / 3 - Gdx.graphics.getWidth()/10 , Gdx.graphics.getHeight() - 40);
 		
-		GameClass.fontMenu.draw(game.sb, texto1 + "\n" + texto2 + "\n" + texto3 + "\n" + texto4 + "\n" + texto5 + "\n" + texto6 
+		GameClass.fontMenu.draw(sb, texto1 + "\n" + texto2 + "\n" + texto3 + "\n" + texto4 + "\n" + texto5 + "\n" + texto6 
 				+ "\n" + texto7 + "\n" + texto8 + "\n" + texto9 + "\n",
 				Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 140);
 		
-		GameClass.fontMenuM.draw(game.sb, texto10, Gdx.graphics.getWidth() / 2 - Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight() - 440);
+		GameClass.fontMenuM.draw(sb, texto10, Gdx.graphics.getWidth() / 2 - Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight() - 440);
 	
 //		GameClass.fontMenu.draw(game.sb, "Creditos", Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 40);
 		
-		game.sb.end();
+		sb.end();
 		
 	}
 
 	@Override
 	public void hide() {
 		stage.dispose();
+		sb.dispose();
 		
 	}
 

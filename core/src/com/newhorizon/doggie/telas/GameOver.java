@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.newhorizon.doggie.GameClass;
 
 public class GameOver implements Screen{
@@ -14,6 +15,8 @@ public class GameOver implements Screen{
 	
 	private Sound som;
 	
+	SpriteBatch sb;
+	
 	private String texto1 = "Game Over";
 	private String texto2 = "Doggie não obteve sucesso em sua jornada.";
 
@@ -21,6 +24,8 @@ public class GameOver implements Screen{
 
 	public GameOver(GameClass game) {
 		this.game = game;
+		
+		sb = new SpriteBatch();
 		
 		som = GameClass.manager.get("bin/main/sons/GameOver/GameOver_noLoop.wav", Sound.class);
 		// TODO Auto-generated constructor stub
@@ -37,19 +42,17 @@ public class GameOver implements Screen{
 	public void render(float delta) {
 		timer += delta;
 
-
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		game.sb.begin();
+		sb.begin();
 		
-		GameClass.fontGameOver.draw(game.sb, texto1, 0,
-				Gdx.graphics.getHeight() /2 + 40);
+		GameClass.fontGameOver.draw(sb, texto1, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 2);
 
-		GameClass.fontMenu.draw(game.sb, texto2, 0, Gdx.graphics.getHeight() / 10);
+		GameClass.fontMenu.draw(sb, texto2, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 4); //Gdx.graphics.getHeight() / 10);
 		
 		
-		game.sb.end();
+		sb.end();
 		
 		if(timer > 5)
 			game.setScreen(new MenuScreen(game));
@@ -86,6 +89,7 @@ public class GameOver implements Screen{
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
+		sb.dispose();
 		
 	}
 	

@@ -6,6 +6,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.newhorizon.doggie.GameClass;
 import com.newhorizon.doggie.threads.ThreadMusica;
 
@@ -13,6 +14,8 @@ public class IntroGameScreen extends ApplicationAdapter implements Screen{
 
 	public GameClass game;
 	public Screen screen;
+	
+	SpriteBatch sb;
 	
 	private float introTimer;
 	private String texto0 = "Ainda pequeno, Doggie foi abandonado na Rua.";
@@ -53,6 +56,8 @@ public class IntroGameScreen extends ApplicationAdapter implements Screen{
 		game.telaAtual = "IntroGame";
 		threadMusica = new ThreadMusica(this.game);
 		
+		sb = new SpriteBatch();
+		
 		
 	}
 	
@@ -71,31 +76,31 @@ public class IntroGameScreen extends ApplicationAdapter implements Screen{
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
-        game.sb.begin();
+        sb.begin();
 
         if(introTimer > 1 && introTimer < 18)
-    			GameClass.fontIntro.draw(game.sb, textos.get(0) , Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 40);
+    			GameClass.fontIntro.draw(sb, textos.get(0) , Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 40);
         if(introTimer > 3 && introTimer < 18)
-    			GameClass.fontIntro.draw(game.sb, textos.get(1) , Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 70);
+    			GameClass.fontIntro.draw(sb, textos.get(1) , Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 70);
         if(introTimer > 5 && introTimer < 18)
-        	GameClass.fontIntro.draw(game.sb, textos.get(2) , Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 100);
+        	GameClass.fontIntro.draw(sb, textos.get(2) , Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 100);
         if(introTimer > 7 && introTimer < 18)
-        	GameClass.fontIntro.draw(game.sb, textos.get(3) , Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 130);
+        	GameClass.fontIntro.draw(sb, textos.get(3) , Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 130);
         if(introTimer > 9 && introTimer < 18)
-        	GameClass.fontIntro.draw(game.sb, textos.get(4) , Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 180);
+        	GameClass.fontIntro.draw(sb, textos.get(4) , Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 180);
         if(introTimer > 11 && introTimer < 18)
-        	GameClass.fontIntro.draw(game.sb, textos.get(5) , Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 210);
+        	GameClass.fontIntro.draw(sb, textos.get(5) , Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 210);
         if(introTimer > 13 && introTimer < 18)
-        	GameClass.fontIntro.draw(game.sb, textos.get(6) , Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 240);
+        	GameClass.fontIntro.draw(sb, textos.get(6) , Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 240);
         if(introTimer > 19)
-        	GameClass.fontIntro.draw(game.sb, textos.get(7) , Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 270);
+        	GameClass.fontIntro.draw(sb, textos.get(7) , Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 270);
         if(introTimer > 22)
-        	GameClass.fontIntro.draw(game.sb, textos.get(8) , Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 300);
+        	GameClass.fontIntro.draw(sb, textos.get(8) , Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 300);
         if(introTimer > 25)
-        	GameClass.fontIntro.draw(game.sb, textos.get(9) , Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 330);
+        	GameClass.fontIntro.draw(sb, textos.get(9) , Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 330);
         	
 
-        game.sb.end();
+        sb.end();
 		
         if(introTimer > 28)
         {
@@ -108,5 +113,9 @@ public class IntroGameScreen extends ApplicationAdapter implements Screen{
 	public void hide() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void dispose() {
+		sb.dispose();
 	}
 }

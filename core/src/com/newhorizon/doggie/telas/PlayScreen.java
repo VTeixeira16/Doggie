@@ -132,9 +132,9 @@ public class PlayScreen implements Screen {
 		doggie.terminouFase = false;
 		
 		inimigo = new InimigoCachorro(this, 230, 180);
-		inimigo1Thread = new InimigoThread(inimigo);
+//		inimigo1Thread = new InimigoThread(inimigo);
 		inimigo2 = new InimigoCachorro(this, 400, 180);
-		inimigo2Thread = new InimigoThread(inimigo2);
+//		inimigo2Thread = new InimigoThread(inimigo2);
 		
 		
 //		doggieThread.start();

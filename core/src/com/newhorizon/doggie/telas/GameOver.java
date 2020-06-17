@@ -27,7 +27,7 @@ public class GameOver implements Screen{
 		
 		sb = new SpriteBatch();
 		
-		som = GameClass.manager.get("bin/main/sons/GameOver/GameOver_noLoop.wav", Sound.class);
+		som = GameClass.manager.get("sons/GameOver/GameOver_noLoop.wav", Sound.class);
 		// TODO Auto-generated constructor stub
 	}
 

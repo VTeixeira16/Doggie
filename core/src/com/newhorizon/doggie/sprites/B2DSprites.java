@@ -10,8 +10,8 @@ import com.newhorizon.doggie.telas.PlayScreen;
 import com.newhorizon.doggie.tools.Animation;
 
 public class B2DSprites {
-	// Classe será descontinuada, o ideal é migrar para cada inimigos e para objetos de acordo com as suas diferenças.
-	// Devido a dificuldades de implmentação, esta classe está sendo utilizada pelas coleiras.
+	// Classe sera descontinuada, o ideal e migrar para cada inimigos e para objetos de acordo com as suas diferencas.
+	// Devido a dificuldades de implmentacao, esta classe estï¿½a sendo utilizada pelos ossos.
 	protected Body body;
 	protected Animation animation;
 	protected float width;

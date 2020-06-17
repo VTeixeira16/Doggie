@@ -47,7 +47,7 @@ public abstract class Inimigos extends Sprite{
 		stateTime = 0;
 		velocidade = new Vector2 (2,0);
 		
-		som = GameClass.manager.get("bin/main/sons/latido/rosnadoInimigo.wav", Sound.class);
+		som = GameClass.manager.get("sons/latido/rosnadoinimigo.mp3", Sound.class);
 		
 //		this.screen = screen;
 //		this.world = screen.getWorld();

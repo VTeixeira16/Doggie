@@ -45,7 +45,7 @@ public class MenuScreen extends ApplicationAdapter implements Screen{
 		this.game = game;
 		game.telaAtual = "Menu";
 		threadMusica = new ThreadMusica(this.game);
-		som = GameClass.manager.get("bin/main/sons/menu/menuClick.wav", Sound.class);
+		som = GameClass.manager.get("sons/menu/menuClick.mp3", Sound.class);
 //		threadMusica = new ThreadMenuMusica();
 		
 		

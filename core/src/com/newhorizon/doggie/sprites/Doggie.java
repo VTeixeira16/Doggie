@@ -25,7 +25,7 @@ import com.newhorizon.doggie.tools.B2dVariaveis;
 public class Doggie extends Sprite {
 	public enum Estado {
 		CAINDO, PULANDO, PARADO, CORRENDO, ATACANDO, MORTO, GAMEOVER
-	}; // NECESSÁRIO CRIAR UM ESTADO DE GAME OVER (PÓS MORTE)
+	}; // NECESSARIO CRIAR UM ESTADO DE GAME OVER (POS MORTE)
 
 	public Estado estadoAtual;
 	public Estado estadoAnterior;
@@ -47,7 +47,7 @@ public class Doggie extends Sprite {
 
 	private PlayScreen screen;
 
-	// Propriedades das animações
+	// Propriedades das animacões
 	public Animation animationRun;
 	protected float width;
 	protected float height;
@@ -77,7 +77,7 @@ public class Doggie extends Sprite {
 		defineDoggie(x, y);
 //		setBounds(0,0, 16 / PPM, 16 / PPM);
 
-		// Animações do Doggie
+		// Animacoes do Doggie
 		animationRun = new Animation();
 		animationIdle = new Animation();
 
@@ -87,7 +87,7 @@ public class Doggie extends Sprite {
 		totalVidas = 1;
 		envenenado = false;
 		
-		som = GameClass.manager.get("bin/main/sons/latido/latidodoggie.wav", Sound.class);
+		som = GameClass.manager.get("sons/latido/latidodoggie.mp3", Sound.class);
 
 		setAnimationIdle(spritesDoggie, 1 / 16f);
 		setAnimationRun(spritesDoggie, 1 / 16f);
@@ -124,7 +124,7 @@ public class Doggie extends Sprite {
 		verificaEstado(dt);
 
 //		if(screen.cl.isPlayerOnGround())
-//			Gdx.app.log("log", "Doggie no chão");
+//			Gdx.app.log("log", "Doggie no chao");
 
 		// Mata Doggie caso o tempo acaba
 //        if (screen.getHud().isTimeUp() && !isDead()) {
@@ -172,7 +172,7 @@ public class Doggie extends Sprite {
 
 		}
 		if (this.totalVidas > 0 && this.envenenado == false) {
-			// Joga pra posição "inicial" caso tenha vidas
+			// Joga pra posicao "inicial" caso tenha vidas
 //			body.setTransform(50 / PPM, 204/ PPM, 0);
 			body.applyLinearImpulse(new Vector2(0f, 6f), body.getWorldCenter(), true);
 		}
@@ -223,7 +223,7 @@ public class Doggie extends Sprite {
 	public void render(SpriteBatch sb) {
 		sb.begin();
 
-		// Ideal é aprimorar a máquina de estados do jogo.
+		// Ideal e aprimorar a maquina de estados do jogo.
 		if (flip && estadoAtual == Estado.CORRENDO) {
 			sb.draw(animationRun.getFrame(), body.getPosition().x * PPM + width / 2,
 					body.getPosition().y * PPM - height / 2, -width, height);
@@ -265,7 +265,6 @@ public class Doggie extends Sprite {
 
 //		  TextureRegion region;
 
-		// depending on the state, get corresponding animation keyFrame.
 		switch (estadoAtual) {
 		case MORTO:
 			morreu();
@@ -278,17 +277,17 @@ public class Doggie extends Sprite {
 			break;
 		case CORRENDO:
 			estadoAtual = Estado.CORRENDO;
-//	                correndo(); // Classe que será criada caso seja necessário
+//	                correndo(); // Classe que sera criada caso seja necessario
 			break;
 //	            case PARADO:
-//	                parado(); // Classe que será criada caso seja necessário	            	
+//	                parado(); // Classe que sera criada caso seja necessario	            	
 //	            	break;
 //	            case GAMEOVER:
-//	            	SERÁ CRIADO FUNÇÃO QUE DESTRÓI O OBJETO
+//	            	SERA CRIADO FUNCAO QUE DESTROI O OBJETO
 		default:
 			estadoAtual = Estado.PARADO;
 //	                Gdx.app.log("log", "NENHUMESTADODETECTADO");
-		}
+		}// Propriedades das
 
 //	        stateTimer = estadoAtual == estadoAnterior ? stateTimer + dt : 0;
 
@@ -297,27 +296,21 @@ public class Doggie extends Sprite {
 
 	public Estado getState() {
 
-		// Não há else pois se a velocidade for 0, o ideal é que ele permaneça no flip
-		// atual
 		if (body.getLinearVelocity().x < 0)
 			flip = true;
 		else if (body.getLinearVelocity().x > 0)
 			flip = false;
 
-//	        Gdx.app.log("log", "velocidade:" + body.getLinearVelocity().x);
-
 		if (doggieMorreu)
 			return Estado.MORTO;
-		else if ((body.getLinearVelocity().y > 0 && estadoAtual == Estado.PULANDO)) // || (body.getLinearVelocity().y <
-																					// 0 && estadoAnterior ==
-																					// Estado.PULANDO))
+		else if ((body.getLinearVelocity().y > 0 && estadoAtual == Estado.PULANDO))
 			return Estado.PULANDO;
 		else if (body.getLinearVelocity().y < 0) // && estadoAtual == Estado.CAINDO)
 			return Estado.CAINDO;
-		// Se a velocidade for diferente de 0 significa que está em movimento
+		// Se a velocidade for diferente de 0 significa que esta em movimento
 		else if (body.getLinearVelocity().x != 0)
 			return Estado.CORRENDO;
-		// Cairá nessa função caso nenhuma condição anterior seja acionada. Vericar
+		// Caira nessa funcao caso nenhuma condicao anterior seja acionada. Vericar
 		// posssibilidade de criar ataques.
 		else
 			return Estado.PARADO;
@@ -326,7 +319,7 @@ public class Doggie extends Sprite {
 	public void morreu() {
 		if (!doggieMorreu) {
 
-			// Para música do jogo e toca som de morte.
+			// Para musica do jogo e toca som de morte.
 
 			doggieMorreu = true;
 			Filter filter = new Filter();
@@ -338,8 +331,8 @@ public class Doggie extends Sprite {
 //	            }
 //	            body.applyLinearImpulse(new Vector2(0, 4f), body.getWorldCenter(), true);
 
-//	            COLOCAR UM TIMER PARA TROCAR PARA O ESTADO DE GAME OVER APÓS O FIM DA ANIMAÇÃO.
-//	            IMPLEMENTAÇÃO DEVE ROLAR AQUI OU NA MÁQUINA DE ESTADOS.
+//	            COLOCAR UM TIMER PARA TROCAR PARA O ESTADO DE GAME OVER APOS O FIM DA ANIMACAO.
+//	            IMPLEMENTAcAO DEVE ACONTECER AQUI OU NA MAQUINA DE ESTADOS.
 
 		}
 	}
@@ -354,7 +347,7 @@ public class Doggie extends Sprite {
 
 	public void jump() {
 
-		// Comentado provisoriamente enquanto os Estados não são atualizados.
+		// Comentado provisoriamente enquanto os Estados nao sao atualizados.
 		if (estadoAtual != Estado.PULANDO) {
 			body.applyLinearImpulse(new Vector2(0, 6f), body.getWorldCenter(), true);
 			estadoAtual = Estado.PULANDO;
@@ -363,26 +356,11 @@ public class Doggie extends Sprite {
 
 	public void caindo() {
 
-		// Comentado provisoriamente enquanto os Estados não são atualizados.
+		// Comentado provisoriamente enquanto os Estados nao sao atualizados.
 		if (estadoAtual != Estado.CAINDO) {
 			estadoAtual = Estado.CAINDO;
 		}
 	}
-
-//	    public void hit(Enemy enemy){
-//	        if(enemy instanceof Turtle && ((Turtle) enemy).currentState == Turtle.State.STANDING_SHELL)
-//	            ((Turtle) enemy).kick(enemy.b2body.getPosition().x > b2body.getPosition().x ? Turtle.KICK_RIGHT : Turtle.KICK_LEFT);
-//	        else {
-//	            if (marioIsBig) {
-//	                marioIsBig = false;
-//	                timeToRedefineMario = true;
-//	                setBounds(getX(), getY(), getWidth(), getHeight() / 2);
-//	                MarioBros.manager.get("audio/sounds/powerdown.wav", Sound.class).play();
-//	            } else {
-//	                die();
-//	            }
-//	        }
-//	    }
 
 	private void defineDoggie(int x, int y) {
 
@@ -402,7 +380,7 @@ public class Doggie extends Sprite {
 
 		body = world.createBody(DoggiebDef);
 
-//		shape.setAsBox(28/PPM , 28/PPM); // Controla tamanho da caixa de colusão.
+//		shape.setAsBox(28/PPM , 28/PPM); // Controla tamanho da caixa de colusao.
 		fDef.shape = cShape;
 		fDef.filter.categoryBits = B2dVariaveis.BIT_DOGGIE;
 		fDef.filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_OBJETOS | B2dVariaveis.BIT_OSSOS
@@ -411,7 +389,7 @@ public class Doggie extends Sprite {
 		fDef.restitution = 0f;
 		body.createFixture(fDef).setUserData(this);
 
-		// Criando sensor de pés
+		// Criando sensor de pes
 		shape.setAsBox(26 / PPM, 6 / PPM, new Vector2(0, -22 / PPM), 0);
 		fDef.shape = shape;
 		fDef.filter.categoryBits = B2dVariaveis.BIT_DOGGIE_PES;
@@ -420,7 +398,7 @@ public class Doggie extends Sprite {
 		fDef.isSensor = true;
 		body.createFixture(fDef).setUserData(this);
 
-		// Criando sensor da cabeça
+		// Criando sensor da cabeca
 		shape.setAsBox(26 / PPM, 6 / PPM, new Vector2(0, 22 / PPM), 0);
 		fDef.shape = shape;
 		fDef.filter.categoryBits = B2dVariaveis.BIT_DOGGIE_HEAD;
@@ -439,7 +417,7 @@ public class Doggie extends Sprite {
 		return body.getPosition();
 	}
 
-//	A princípio estas funções não são necessários para o funcionamento de animações
+
 	public float getWidth() {
 		return width;
 	}

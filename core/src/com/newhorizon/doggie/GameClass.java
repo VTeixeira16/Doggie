@@ -61,7 +61,6 @@ public class GameClass extends Game {
 		
 		//		ASSETS
 		res = new Content();
-		res.loadTexture("images/crystal.png", "coleiras");
 		res.loadTexture("images/ossinho.png", "ossinho");
 		res.loadTexture("images/ossoVeneno.png", "ossoVeneno");
 		res.loadTexture("images/DoggieSprites.png", "doggieAndando");
@@ -71,23 +70,23 @@ public class GameClass extends Game {
 		
 		// SONS
 		manager = new AssetManager();
-		manager.load("bin/main/sons/menu/DoggieMusicaMenu.wav", Music.class);
-		manager.load("bin/main/sons/musicas/DoggieMusica01.wav", Music.class);
-		manager.load("bin/main/sons/musicas/DoggieMusica02.wav", Music.class);
-		manager.load("bin/main/sons/musicas/DoggieMusica03.wav", Music.class);
-		manager.load("bin/main/sons/musicas/DoggieMusica04.wav", Music.class);
-		manager.load("bin/main/sons/musicas/DoggieMusica05.wav", Music.class);
+		manager.load("sons/menu/DoggieMusicaMenu.mp3", Music.class);
+		manager.load("sons/musicas/DoggieMusica01.mp3", Music.class);
+		manager.load("sons/musicas/DoggieMusica02.mp3", Music.class);
+		manager.load("sons/musicas/DoggieMusica03.mp3", Music.class);
+		manager.load("sons/musicas/DoggieMusica04.mp3", Music.class);
+		manager.load("sons/musicas/DoggieMusica05.mp3", Music.class);
 		
-		manager.load("bin/main/sons/GameOver/GameOver_noLoop.wav", Sound.class);
-		manager.load("bin/main/sons/latido/latidodoggie.wav", Sound.class);
-		manager.load("bin/main/sons/latido/rosnadoInimigo.wav", Sound.class);
-		manager.load("bin/main/sons/menu/menuClick.wav", Sound.class);
+		manager.load("sons/GameOver/GameOver_noLoop.wav", Sound.class);
+		manager.load("sons/latido/latidodoggie.mp3", Sound.class);
+		manager.load("sons/latido/rosnadoinimigo.mp3", Sound.class);
+		manager.load("sons/menu/menuClick.mp3", Sound.class);
 		manager.finishLoading();
 		
 		sb = new SpriteBatch();
 		
 		
-		// Maneira complexa que permite utilização de fontes externas.
+		// Maneira complexa que permite utilizacao de fontes externas.
 		fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Arial Black.ttf"));
 		fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		fontParameter.size = 18;

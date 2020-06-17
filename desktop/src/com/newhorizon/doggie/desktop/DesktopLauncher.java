@@ -13,7 +13,7 @@ public class DesktopLauncher {
 		config.width = GameClass.V_WIDTH;
 		config.height = GameClass.V_HEIGHT;
 		config.resizable = false;
-		config.addIcon("OutGame/dogLogo.png", FileType.Internal);
+//		config.addIcon("OutGame/dogLogo.png", FileType.Internal);
 		config.fullscreen = false;
 		
 		// Aqui se controla qual classe é carregada primeiro

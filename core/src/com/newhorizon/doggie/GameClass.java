@@ -162,7 +162,6 @@ public class GameClass extends Game {
 		
 		
 //		setScreen(new PlayScreen(this));
-//		threadMusica.start();
 		setScreen(new MenuScreen(this));
 		
 		

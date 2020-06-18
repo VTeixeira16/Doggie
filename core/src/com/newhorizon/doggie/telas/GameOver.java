@@ -17,8 +17,8 @@ public class GameOver implements Screen{
 	
 	SpriteBatch sb;
 	
-	private String texto1 = "Game Over";
-	private String texto2 = "Doggie não obteve sucesso em sua jornada.";
+	private String texto1;
+	private String texto2;
 
 	// Classe deverá ser corrigida e adaptada para funcionar com o Manager Cenas
 
@@ -26,6 +26,17 @@ public class GameOver implements Screen{
 		this.game = game;
 		
 		sb = new SpriteBatch();
+		
+		if(game.Language == "Portugues")
+		{	
+			texto1 = "Fim de jogo";
+			texto2 = "Doggie não obteve sucesso em sua jornada.";		
+		}
+		else if(game.Language == "Ingles")
+		{
+			texto1 = "Game Over";
+			texto2 = "Doggie was unsuccessful on his journey.";		
+		}
 		
 		som = GameClass.manager.get("sons/GameOver/GameOver_noLoop.wav", Sound.class);
 		// TODO Auto-generated constructor stub

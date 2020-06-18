@@ -12,11 +12,25 @@ public class Hud{
 	
 	private TextureRegion[] blocks;
 	
+	private String vidas;
+	private String ossos;
 	
-	public Hud(Doggie doggie) {
+	
+	public Hud(Doggie doggie, GameClass game) {
 		// TODO Auto-generated constructor stub
 		
 		this.doggie = doggie;
+		
+		if(game.Language == "Portugues")
+		{	
+			vidas = "Vidas: ";
+			ossos = "Ossos: ";			
+		}
+		else if(game.Language == "Ingles")
+		{
+			vidas = "Lives: ";
+			ossos = "Bones: ";			
+		}
 
 	}
 
@@ -25,8 +39,8 @@ public class Hud{
 		short bits = doggie.getBody().getFixtureList().first()
 						.getFilterData().maskBits;
 		sb.begin();
-		GameClass.font.draw(sb, "Vidas: " + doggie.getTotalVidas() , Gdx.graphics.getWidth() - 100, Gdx.graphics.getHeight() - 10);
-		GameClass.font.draw(sb, "Ossos: " + doggie.getNumOssos(), 5, Gdx.graphics.getHeight() - 10);
+		GameClass.font.draw(sb, vidas + doggie.getTotalVidas() , Gdx.graphics.getWidth() - 100, Gdx.graphics.getHeight() - 10);
+		GameClass.font.draw(sb, ossos + doggie.getNumOssos(), 5, Gdx.graphics.getHeight() - 10);
 		
 		sb.end();
 			

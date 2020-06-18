@@ -10,17 +10,20 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.newhorizon.doggie.telas.MenuScreen;
+import com.newhorizon.doggie.threads.ThreadMusica;
 import com.newhorizon.doggie.tools.Content;
 
 
 
 public class GameClass extends Game {
 
+	public String Language;
 	// Nome e tamanho do jogo
 	public static final String GAMENAME = "Doggie";
 	public static final int V_WIDTH = 800;
 	public static final int V_HEIGHT = 600;	
 	
+	public ThreadMusica threadMusica;
 	
 	public static SpriteBatch sb;
 	
@@ -57,6 +60,8 @@ public class GameClass extends Game {
 	public static String telaAtual;
 	  
 	public void create() {
+		
+		Language = "Ingles";
 		
 		
 		//		ASSETS
@@ -139,6 +144,12 @@ public class GameClass extends Game {
 		fontGameOverParameter.color = Color.BLACK;
 		fontGameOverParameter.spaceX = 0;
 		fontGameOver = fontGenerator.generateFont(fontGameOverParameter);
+		
+		threadMusica = new ThreadMusica(this);
+		
+		threadMusica.start();
+		
+		
 		
 		
 		

@@ -46,6 +46,8 @@ public class PlayScreen implements Screen {
 //	private boolean debug = false;
 
 	private GameClass game;
+	
+	private float playTimer;
 
 	// basic playscreen variables
 	private OrthographicCamera gamecam;
@@ -81,14 +83,11 @@ public class PlayScreen implements Screen {
 	public float posDoggieX;
 	public float posDoggieY;
 	
-	private ThreadMusica threadMusica;
-
 	public PlayScreen(GameClass game) {	
 
 		this.game = game;
 		
-		game.telaAtual = "Fase1";
-		threadMusica = new ThreadMusica(this.game);
+		game.telaAtual = "Null";
 		
 
 		// Cria Camera para seguir o Doggie
@@ -145,7 +144,7 @@ public class PlayScreen implements Screen {
 
 		// Cria HUD, onde valores e textos serão exibidos na tela. Na prática é uma
 		// câmera com mesmos valores da gamecam.
-		hud = new Hud(doggie);
+		hud = new Hud(doggie, this.game);
 		cameraHUD = new OrthographicCamera();
 		cameraHUD.setToOrtho(false, GameClass.V_WIDTH, GameClass.V_HEIGHT);
 
@@ -159,7 +158,6 @@ public class PlayScreen implements Screen {
 	@Override
 	public void show() {
 		
-		threadMusica.start();
 
 	}
 
@@ -183,19 +181,21 @@ public class PlayScreen implements Screen {
 	}
 
 	public void update(float dt) {
+		playTimer += dt;
+		
+		if(playTimer > 0.1f)
+        	game.telaAtual = "Fase1";
 		
 		
 		
 		if(doggie.getTotalVidas() <= 0)
 		{
-        	threadMusica.musica.stop();
         	game.telaAtual = "Null";	
 			game.setScreen(new GameOver(game));
 		}
 		
 		if(doggie.terminouFase)
 		{
-        	threadMusica.musica.stop();
         	game.telaAtual = "Null";	
 			game.setScreen(new MenuScreen(game));
 		}

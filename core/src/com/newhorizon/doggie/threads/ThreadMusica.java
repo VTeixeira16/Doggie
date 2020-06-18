@@ -23,8 +23,16 @@ public class ThreadMusica extends Thread{
 	}
 	
 	public void run() {
+		
 		while(true)
 		{
+			System.out.println(game.telaAtual);
+			if(game.telaAtual == "Null")
+			{
+				musica.stop();
+			}	
+			
+			
 			if(game.telaAtual == "Menu")
 			{
 				musica = GameClass.manager.get("sons/menu/DoggieMusicaMenu.mp3", Music.class);
@@ -38,7 +46,7 @@ public class ThreadMusica extends Thread{
 					e.printStackTrace();
 				}
 			}
-			if(game.telaAtual == "IntroGame")
+			else if(game.telaAtual == "IntroGame")
 			{
 				musica = GameClass.manager.get("sons/musicas/DoggieMusica03.mp3", Music.class);
 				musica.setVolume(1);
@@ -50,7 +58,7 @@ public class ThreadMusica extends Thread{
 					e.printStackTrace();
 				}
 			}
-			if(game.telaAtual == "Fase1")
+			else if(game.telaAtual == "Fase1")
 			{
 				musica = GameClass.manager.get("sons/musicas/DoggieMusica01.mp3", Music.class);
 				musica.setVolume(0.05f);

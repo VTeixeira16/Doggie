@@ -16,7 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.newhorizon.doggie.GameClass;
-import com.newhorizon.doggie.threads.ThreadMusica;
 
 public class MenuScreen extends ApplicationAdapter implements Screen{
 	
@@ -27,43 +26,57 @@ public class MenuScreen extends ApplicationAdapter implements Screen{
     private Label outputLabel;
     private Skin skin;
     
-    public int btnJogar;
-    public int btnAdote;
-    public int btnCreditos;
-    public int btnSair;
+    private int btnJogar;
+    private int btnAdote;
+    private int btnCreditos;
+    private int btnSair;
     
-    private ThreadMusica threadMusica;
+    private String txtJogar;
+    private String txtAdote;
+    private String txtCreditos;
+    private String txtSair;
+
     private Sound som;
 	
     public static final int Help_Guides = 12;
     public static final int row_height = Gdx.graphics.getHeight() / 12;
     public static final int col_width = Gdx.graphics.getWidth() / 12;
     
+    private float menuTimer;
 	
 	
 	public MenuScreen (GameClass game) {
 		this.game = game;
-		game.telaAtual = "Menu";
-		threadMusica = new ThreadMusica(this.game);
 		som = GameClass.manager.get("sons/menu/menuClick.mp3", Sound.class);
-//		threadMusica = new ThreadMenuMusica();
 		
-		
+		if(game.Language == "Portugues")
+		{
+			txtJogar = "Jogar";
+			txtAdote = "Quero adotar";
+			txtCreditos = "Créditos";
+			txtSair = "Exit";
+		}
+		else if(game.Language == "Ingles")
+		{
+			txtJogar = "Play";
+			txtAdote = "Adopt a pet";
+			txtCreditos = "Credits";
+			txtSair = "Exit";
+		}
 		
 	}
 
 	@Override
 	public void show() {
-		
-		threadMusica.start();		
-		
+			
 		stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         
         skin = new Skin(Gdx.files.internal("skins/plain-james/skin/plain-james-ui.json"));
+        
 
         //ImageTextButton
-        ImageTextButton btnJogar = new ImageTextButton("Jogar", skin);
+        ImageTextButton btnJogar = new ImageTextButton(txtJogar, skin);
         btnJogar.setSize(col_width*3,(float)(row_height));
         // Pode ser útil para adicionar um logo do cachorro ao lado do botão jogar
         btnJogar.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("OutGame/dogLogo.png"))));
@@ -72,8 +85,6 @@ public class MenuScreen extends ApplicationAdapter implements Screen{
         btnJogar.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-//            	som.play();
-            	threadMusica.musica.stop();
             	game.telaAtual = "Null";	
             	game.setScreen(new IntroGameScreen(game));
             	
@@ -83,7 +94,7 @@ public class MenuScreen extends ApplicationAdapter implements Screen{
         });
         stage.addActor(btnJogar);
         
-        ImageTextButton btnCreditos = new ImageTextButton("Creditos", skin);
+        ImageTextButton btnCreditos = new ImageTextButton(txtCreditos ,skin);
         btnCreditos.setSize(col_width*3,(float)(row_height));
         // Pode ser útil para adicionar um logo do cachorro ao lado do botão jogar
         btnCreditos.setPosition(Gdx.graphics.getWidth() / 2 - (col_width * 1.5f),Gdx.graphics.getHeight()-row_height*5);
@@ -98,7 +109,7 @@ public class MenuScreen extends ApplicationAdapter implements Screen{
         });
         stage.addActor(btnCreditos);
         
-        ImageTextButton btnAdote = new ImageTextButton("Quero Adotar!", skin);
+        ImageTextButton btnAdote = new ImageTextButton(txtAdote , skin);
         btnAdote.setSize(col_width*3,(float)(row_height));
         btnAdote.setPosition(Gdx.graphics.getWidth() / 2 - (col_width * 1.5f),Gdx.graphics.getHeight()-row_height*7);
         btnAdote.addListener(new InputListener(){
@@ -115,7 +126,7 @@ public class MenuScreen extends ApplicationAdapter implements Screen{
         stage.addActor(btnAdote);
         
         //ImageTextButton
-        ImageTextButton btnSair = new ImageTextButton("Sair", skin);
+        ImageTextButton btnSair = new ImageTextButton(txtSair , skin);
         btnSair.setSize(col_width*3,(float)(row_height));
         btnSair.setPosition(Gdx.graphics.getWidth() / 2 - (col_width * 1.5f),Gdx.graphics.getHeight()-row_height*9);
         btnSair.addListener(new InputListener(){
@@ -134,6 +145,11 @@ public class MenuScreen extends ApplicationAdapter implements Screen{
 
 	@Override
 	public void render(float delta) {
+		
+		menuTimer += delta;	
+		
+		if(menuTimer > 0.1f)
+			game.telaAtual = "Menu";
 		
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

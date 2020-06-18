@@ -1,16 +1,12 @@
 package com.newhorizon.doggie.telas;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.newhorizon.doggie.GameClass;
-import com.newhorizon.doggie.threads.ThreadMusica;
 
 public class IntroGameScreen extends ApplicationAdapter implements Screen{
 
@@ -20,22 +16,18 @@ public class IntroGameScreen extends ApplicationAdapter implements Screen{
 	SpriteBatch sb;
 	
 	private float introTimer;
-	private String texto0 = "Ainda pequeno, Doggie foi abandonado na Rua.";
-	private String texto1 = "Teve que enfrentar a fome, a solidão, o frio,";
-	private String texto2 = "brigar com outros animais abandonados...";
-	private String texto3 = "... E lidar com a maldade humana.";
-	private String texto4 = "Um dia, seus amigos lhe contaram uma história que mudou";
-	private String texto5 = "a sua vida, uma lenda sobre um local onde animal nenhum";
-	private String texto6 = "passaria fome ou teria qualquer sofrimento...";
-	private String texto7 = "Este local seria 'A Terra Sem Males'.";
-	private String texto8 = "Mas para chegar neste local, Doggie precisará sobreviver...";
-	private String texto9 = "E é aqui que iniciamos a sua jornada.";
+	private String texto0;
+	private String texto1;
+	private String texto2;
+	private String texto3;
+	private String texto4;
+	private String texto5;
+	private String texto6;
+	private String texto7;
+	private String texto8;
+	private String texto9;
 	
 	
-	private ThreadMusica threadMusica;
-	
-//	
-//	List<String> textos;
 	
 			
 	
@@ -43,20 +35,36 @@ public class IntroGameScreen extends ApplicationAdapter implements Screen{
 		this.game = game;
 		introTimer = 0;
 		
-//		textos = new ArrayList();
-//		textos.add(texto0);
-//		textos.add(texto1);
-//		textos.add(texto2);
-//		textos.add(texto3);
-//		textos.add(texto4);
-//		textos.add(texto5);
-//		textos.add(texto6);
-//		textos.add(texto7);
-//		textos.add(texto8);
-//		textos.add(texto9);
+//		game.Language = "Portugues";
 		
-		game.telaAtual = "IntroGame";
-		threadMusica = new ThreadMusica(this.game);
+		if(game.Language == "Portugues")
+		{
+		texto0 = "Ainda pequeno, Doggie foi abandonado na Rua.";
+		texto1 = "Teve que enfrentar a fome, a solidão, o frio,";
+		texto2 = "brigar com outros animais abandonados...";
+		texto3 = "... E lidar com a maldade humana.";
+		texto4 = "Um dia, seus amigos lhe contaram uma história que mudou";
+		texto5 = "a sua vida, uma lenda sobre um local onde animal nenhum";
+		texto6 = "passaria fome ou teria qualquer sofrimento...";
+		texto7 = "Este local seria 'A Terra Sem Males'.";
+		texto8 = "Mas para chegar neste local, Doggie precisa sobreviver...";
+		texto9 = "E é aqui que iniciamos a sua jornada.";
+		}
+		else if(game.Language == "Ingles")
+		{
+		texto0 = "Still small, Doggie was abandoned on the Street.";
+		texto1 = "He had to face hunger, loneliness, cold,";
+		texto2 = "fight with other abandoned animals...";
+		texto3 = "... and deal with human evil.";
+		texto4 = "One day, his friends told him a story that changed";
+		texto5 = "his life, a legend about a place where no animal";
+		texto6 = "would go hungry or suffer any suffering ...";
+		texto7 = "This place would be 'The Land Without Evil'.";
+		texto8 = "But to reach this place, Doggie must survive ...";
+		texto9 = "And this is where we begin your journey.";
+		}
+		game.telaAtual = "Null";	
+		
 		
 		sb = new SpriteBatch();
 		
@@ -66,7 +74,8 @@ public class IntroGameScreen extends ApplicationAdapter implements Screen{
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
-		threadMusica.start();
+		
+		
 		
 		
 	}
@@ -77,6 +86,8 @@ public class IntroGameScreen extends ApplicationAdapter implements Screen{
 		
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        if(introTimer > 0.1f)
+        	game.telaAtual = "IntroGame";
         
         sb.begin();
 
@@ -106,7 +117,6 @@ public class IntroGameScreen extends ApplicationAdapter implements Screen{
 		
         if(introTimer > 28)
         {
-        	threadMusica.musica.stop();
         	game.telaAtual = "Null";	
         	game.setScreen(new PlayScreen(game));
         }

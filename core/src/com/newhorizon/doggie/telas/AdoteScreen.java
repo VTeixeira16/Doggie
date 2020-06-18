@@ -97,13 +97,13 @@ public class AdoteScreen extends ApplicationAdapter implements Screen {
         
 		sb.begin();
 		
-		GameClass.fontMenuP.draw(sb, txtContatos, Gdx.graphics.getWidth() / 3 - Gdx.graphics.getWidth()/10 , Gdx.graphics.getHeight() - 40);
+		GameClass.fontMenuP.draw(sb, txtContatos, Gdx.graphics.getWidth() / 3  , Gdx.graphics.getHeight() - 40);
 		
 		GameClass.fontMenu.draw(sb, texto1 + "\n" + texto2 + "\n" + texto3 + "\n" + texto4 + "\n" + texto5 + "\n" + texto6 
 				+ "\n" + texto7 + "\n" + texto8 + "\n" + texto9 + "\n",
 				Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 140);
 		
-		GameClass.fontMenuM.draw(sb, texto10, Gdx.graphics.getWidth() / 2 - Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight() - 440);
+		GameClass.fontMenuM.draw(sb, texto10, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() - 440);
 	
 //		GameClass.fontMenu.draw(game.sb, "Creditos", Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 40);
 		

@@ -64,7 +64,7 @@ public class CreditosScreen extends ApplicationAdapter implements Screen {
 			texto1 = "Programming, Game Design, Screenplay and Level Design: Victor Teixeira.";
 			texto2 = "Art and sound design: Gabriel Ventura.";
 			texto3 = "Assets used in the project:";
-			textoDuque = "Support for the development of graphic art:Narriman Duque";	
+			textoDuque = "Support for the development of graphic art: Narriman Duque";	
 			txtCreditos = "Credits";
 		}
 	}
@@ -103,14 +103,16 @@ public class CreditosScreen extends ApplicationAdapter implements Screen {
 		sb.begin();
 		
 		GameClass.fontMenuP.draw(sb, txtCreditos , Gdx.graphics.getWidth() / 2 - Gdx.graphics.getWidth()/10 , Gdx.graphics.getHeight() - 40);
-		GameClass.fontMenu.draw(sb, texto1 , Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 120);
-		GameClass.fontMenu.draw(sb, texto2, Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 145);
-		GameClass.fontMenu.draw(sb, textoDuque, Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 170);
-		GameClass.fontMenuM.draw(sb, texto3, Gdx.graphics.getWidth() / 2 - Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight() - 210);
+		
+		GameClass.fontMenu.draw(sb, texto1 , Gdx.graphics.getWidth() / 24, Gdx.graphics.getHeight() - 120);
+		GameClass.fontMenu.draw(sb, texto2, Gdx.graphics.getWidth() / 24, Gdx.graphics.getHeight() - 145);
+		GameClass.fontMenu.draw(sb, textoDuque, Gdx.graphics.getWidth() / 24, Gdx.graphics.getHeight() - 170);
+		
+		GameClass.fontMenuM.draw(sb, texto3, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() - 210);
 		
 		GameClass.fontMenu.draw(sb, texto4 + "\n" + texto5 + "\n" + texto6 + "\n" + texto7 + "\n" + texto8 + "\n" + texto9
 				+ "\n" + texto10 ,
-				Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 250);
+				Gdx.graphics.getWidth() / 24, Gdx.graphics.getHeight() - 250);
 		
 		sb.end();
 		

@@ -20,8 +20,8 @@ public class GameClass extends Game {
 	public String Language;
 	// Nome e tamanho do jogo
 	public static final String GAMENAME = "Doggie";
-	public static final int V_WIDTH = 800;
-	public static final int V_HEIGHT = 600;	
+	public static final int V_WIDTH = 1024;
+	public static final int V_HEIGHT = 768;	
 	
 	public ThreadMusica threadMusica;
 	
@@ -74,6 +74,9 @@ public class GameClass extends Game {
 //		res.loadTexture("images/InimigoDoggie.png", "inimigoDoggie");
 		
 		
+		res.loadTexture("OutGame/dogLogo.png", "dogLogo");
+		
+		
 		// SONS
 		manager = new AssetManager();
 		manager.load("sons/menu/DoggieMusicaMenu.mp3", Music.class);
@@ -103,7 +106,7 @@ public class GameClass extends Game {
 		
 		fontMenuGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Arial Black.ttf"));
 		fontMenuParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-		fontMenuParameter.size = 16;
+		fontMenuParameter.size = 18;
 		fontMenuParameter.borderWidth = 0.1f;
 		fontMenuParameter.borderColor = Color.RED;
 		fontMenuParameter.color = Color.BLACK;

@@ -1,5 +1,15 @@
 package com.newhorizon.doggie.telas;
 
+import java.awt.Cursor;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.image.BufferedImage;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -30,11 +40,13 @@ public class MenuScreen extends ApplicationAdapter implements Screen{
     private int btnAdote;
     private int btnCreditos;
     private int btnSair;
+    private int btnIdioma;
     
     private String txtJogar;
     private String txtAdote;
     private String txtCreditos;
     private String txtSair;
+    private String txtIdioma;
 
     private Sound som;
 	
@@ -46,6 +58,7 @@ public class MenuScreen extends ApplicationAdapter implements Screen{
 	
 	
 	public MenuScreen (GameClass game) {
+
 		this.game = game;
 		som = GameClass.manager.get("sons/menu/menuClick.mp3", Sound.class);
 		
@@ -54,7 +67,8 @@ public class MenuScreen extends ApplicationAdapter implements Screen{
 			txtJogar = "Jogar";
 			txtAdote = "Quero adotar";
 			txtCreditos = "Créditos";
-			txtSair = "Exit";
+			txtSair = "Sair";
+			txtIdioma = "Idioma";
 		}
 		else if(game.Language == "Ingles")
 		{
@@ -62,6 +76,7 @@ public class MenuScreen extends ApplicationAdapter implements Screen{
 			txtAdote = "Adopt a pet";
 			txtCreditos = "Credits";
 			txtSair = "Exit";
+			txtIdioma = "Language";
 		}
 		
 	}
@@ -72,9 +87,8 @@ public class MenuScreen extends ApplicationAdapter implements Screen{
 		stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         
-        skin = new Skin(Gdx.files.internal("skins/plain-james/skin/plain-james-ui.json"));
+        skin = new Skin(Gdx.files.internal("skins/plain-james/skin/plain-james-ui.json"));    
         
-
         //ImageTextButton
         ImageTextButton btnJogar = new ImageTextButton(txtJogar, skin);
         btnJogar.setSize(col_width*3,(float)(row_height));
@@ -96,7 +110,6 @@ public class MenuScreen extends ApplicationAdapter implements Screen{
         
         ImageTextButton btnCreditos = new ImageTextButton(txtCreditos ,skin);
         btnCreditos.setSize(col_width*3,(float)(row_height));
-        // Pode ser útil para adicionar um logo do cachorro ao lado do botão jogar
         btnCreditos.setPosition(Gdx.graphics.getWidth() / 2 - (col_width * 1.5f),Gdx.graphics.getHeight()-row_height*5);
         btnCreditos.addListener(new InputListener(){
             @Override
@@ -138,6 +151,25 @@ public class MenuScreen extends ApplicationAdapter implements Screen{
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {return true;}
         });
         stage.addActor(btnSair);
+        
+        ImageTextButton btnIdioma = new ImageTextButton(txtIdioma , skin);
+        btnIdioma.setSize(col_width*1.5f,(float)(row_height));
+        btnIdioma.setPosition(Gdx.graphics.getWidth() - 150, Gdx.graphics.getHeight() - 100);
+        btnIdioma.addListener(new InputListener(){
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+            	if(game.Language == "Portugues")
+            		game.Language = "Ingles";
+            	else if(game.Language == "Ingles")
+            		game.Language = "Portugues";
+            	
+            	game.setScreen(new MenuScreen(game));
+            	System.out.println(game.Language);
+            }
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {return true;}
+        });
+        stage.addActor(btnIdioma);
         
 	
 		

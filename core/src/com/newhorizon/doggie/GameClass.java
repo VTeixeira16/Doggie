@@ -70,6 +70,7 @@ public class GameClass extends Game {
 		res.loadTexture("images/ossoVeneno.png", "ossoVeneno");
 		res.loadTexture("images/DoggieSprites.png", "doggieAndando");
 		res.loadTexture("images/inimigoDoggieRun.png", "inimigoDoggie");
+		res.loadTexture("images/inimigoDoggie2.png", "inimigoDoggie2");
 //		res.loadTexture("images/InimigoDoggie.png", "inimigoDoggie");
 		
 		
@@ -158,6 +159,7 @@ public class GameClass extends Game {
 		
 		
 //		setScreen(new PlayScreen(this));
+//		threadMusica.start();
 		setScreen(new MenuScreen(this));
 		
 		

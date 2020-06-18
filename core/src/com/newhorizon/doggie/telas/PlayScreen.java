@@ -130,9 +130,9 @@ public class PlayScreen implements Screen {
 		doggieThread = new DoggieThread(doggie);
 		doggie.terminouFase = false;
 		
-		inimigo = new InimigoCachorro(this, 230, 180);
+		inimigo = new InimigoCachorro(this, 230, 180, 0);
 //		inimigo1Thread = new InimigoThread(inimigo);
-		inimigo2 = new InimigoCachorro(this, 400, 180);
+		inimigo2 = new InimigoCachorro(this, 400, 180, 1);
 //		inimigo2Thread = new InimigoThread(inimigo2);
 		
 		
@@ -151,8 +151,7 @@ public class PlayScreen implements Screen {
 		// Ambas as funções deverão ser transformadas em objetos no futuro.
 		createTiles();
 		createOssos();
-		createOssosVeneno();
-		
+		createOssosVeneno();		
 	}
 
 	@Override

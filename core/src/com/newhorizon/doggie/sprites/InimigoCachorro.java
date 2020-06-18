@@ -16,15 +16,26 @@ import com.newhorizon.doggie.tools.Animation;
 import com.newhorizon.doggie.tools.B2dVariaveis;
 
 public class InimigoCachorro extends Inimigos{
+	
+	Texture tex;
 
-	public InimigoCachorro(PlayScreen screen, int x, int y) {
+	public InimigoCachorro(PlayScreen screen, int x, int y, int skin) {
 		super(screen, x, y);
 		this.screen = screen;
 		this.world = screen.getWorld();
 		animation = new Animation();
 		animationIdle = new Animation();
 		
-		Texture tex = GameClass.res.getTexture("inimigoDoggie");
+		switch(skin) {
+		case 0:
+			tex = GameClass.res.getTexture("inimigoDoggie");
+			break;
+		case 1 :
+			tex = GameClass.res.getTexture("inimigoDoggie2");
+			break;
+		}
+		
+		
 		TextureRegion[] spritesInimigo = TextureRegion.split(tex, 79, 61)[0]; // Recorte do SpriteSheet
 		
 		criaInimigo(x,y);

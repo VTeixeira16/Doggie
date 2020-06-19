@@ -20,8 +20,8 @@ public class GameClass extends Game {
 	public String Language;
 	// Nome e tamanho do jogo
 	public static final String GAMENAME = "Doggie";
-	public static final int V_WIDTH = 1024;
-	public static final int V_HEIGHT = 768;	
+	public static final int V_WIDTH = 800;
+	public static final int V_HEIGHT = 600;	
 	
 	public ThreadMusica threadMusica;
 	
@@ -86,7 +86,7 @@ public class GameClass extends Game {
 		manager.load("sons/musicas/DoggieMusica04.mp3", Music.class);
 		manager.load("sons/musicas/DoggieMusica05.mp3", Music.class);
 		
-		manager.load("sons/GameOver/GameOver_noLoop.wav", Sound.class);
+		manager.load("sons/GameOver/GameOver_noLoop.mp3", Sound.class);
 		manager.load("sons/latido/latidodoggie.mp3", Sound.class);
 		manager.load("sons/latido/rosnadoinimigo.mp3", Sound.class);
 		manager.load("sons/menu/menuClick.mp3", Sound.class);

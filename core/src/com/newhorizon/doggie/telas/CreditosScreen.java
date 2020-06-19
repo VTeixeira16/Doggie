@@ -36,12 +36,12 @@ public class CreditosScreen extends ApplicationAdapter implements Screen {
 	String txtVoltar;
 	String txtCreditos;
 	
-	String texto4 = "https://www.gameart2d.com/free-platformer-game-tileset.html";
-	String texto5 = "https://opengameart.org/content/bricks-tiled-texture-64x64";
-	String texto6 = "https://craftpix.net/file-licenses/";
-	String texto7 = "https://opengameart.org/content/ocean-background";
-	String texto8 = "https://opengameart.org/content/pixel-art-femur";
-	String texto9 = "https://www.designevo.com/res/templates/thumb_small/brown-and-white-dog.png";
+	String texto4 = "www.gameart2d.com/free-platformer-game-tileset.html";
+	String texto5 = "www.opengameart.org/content/bricks-tiled-texture-64x64";
+	String texto6 = "www.craftpix.net/file-licenses/";
+	String texto7 = "www.opengameart.org/content/ocean-background";
+	String texto8 = "www.opengameart.org/content/pixel-art-femur";
+	String texto9 = "www.designevo.com/res/templates/thumb_small/brown-and-white-dog.png";
 	String texto10 = "https://github.com/czyzby/gdx-skins";
 	
 	
@@ -54,7 +54,7 @@ public class CreditosScreen extends ApplicationAdapter implements Screen {
 			txtVoltar = "Voltar";
 			texto1 = "Programação, Game Design, Roteiro e Level Design: Victor Teixeira.";
 			texto2 = "Arte e Sound Desing: Gabriel Ventura.";
-			texto3 = "Assets utilizados para conclusão do projeto:";
+			texto3 = "Assets utilizados no projeto:";
 			textoDuque = "Apoio ao desenvolvimento da arte grafica: Narriman Duque";
 			txtCreditos = "Créditos";
 		}

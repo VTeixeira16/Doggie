@@ -38,7 +38,7 @@ public class GameOver implements Screen{
 			texto2 = "Doggie was unsuccessful on his journey.";		
 		}
 		
-		som = GameClass.manager.get("sons/GameOver/GameOver_noLoop.wav", Sound.class);
+		som = GameClass.manager.get("sons/GameOver/GameOver_noLoop.mp3", Sound.class);
 		// TODO Auto-generated constructor stub
 	}
 

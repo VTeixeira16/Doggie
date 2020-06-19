@@ -189,7 +189,7 @@ public class MenuScreen extends ApplicationAdapter implements Screen{
         stage.addActor(btnSair);
         
         ImageTextButton btnIdioma = new ImageTextButton(txtIdioma , skin);
-        btnIdioma.setSize(col_width*1.5f,(float)(row_height));
+        btnIdioma.setSize(col_width * 2f,(float)(row_height));
         btnIdioma.setPosition(Gdx.graphics.getWidth() - 150, Gdx.graphics.getHeight() - 100);
         btnIdioma.addListener(new InputListener(){
             @Override

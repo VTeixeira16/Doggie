@@ -42,24 +42,25 @@ public class SobreJogo extends ApplicationAdapter implements Screen {
 		if(game.Language == "Portugues")
 		{	
 			txtCreditos = "Sobre o jogo";
-			texto1 = "Jogo desenvolvido por Victor Teixeira e Gabriel Ventura, estudantes de Jogos Digitais na Fatec \n "
-					+ "Carapicuíba. O jogo possui o objetivo de divertir trazendo uma reflexão sobre as dificuldades \n"
-					+ "enfrentadas por animais abandonados.";
+			texto1 = "Jogo desenvolvido por Victor Teixeira e Gabriel Ventura, estudantes de \n"
+					+ "Jogos Digitais na Fatec Carapicuíba. O jogo possui o objetivo de divertir \n"
+					+ "trazendo uma reflexão sobre as dificuldades enfrentadas por animais \n "
+					+ "abandonados.";
 			
-			texto2 = "Projeto desenvolvido como Trabalho de conclusão do 3º semestre. Desenvolvido em Java \n"
-					+ "utilizando a biblioteca Libgdx.";
+			texto2 = "Projeto desenvolvido como Trabalho de conclusão do 3º semestre. \n"
+					+ "Desenvolvido em Java utilizando a biblioteca Libgdx.";
 
 			txtVoltar = "Voltar";
 		}
 		else if(game.Language == "Ingles")
 		{
 			txtCreditos = "About the Game";
-			texto1 = "Game developed by Victor Teixeira and Gabriel Ventura, students of Digital Games at Fatec  \n"
-					+ "Carapicuíba. The game aims to have fun bringing a reflection on the difficulties faced by  \n"
-					+ "abandoned animals.";
+			texto1 = "Game developed by Victor Teixeira and Gabriel Ventura, students of Digital \n"
+					+ "Games at Fatec Carapicuíba. The game aims to have fun bringing a \n"
+					+ "reflection on the difficulties faced by abandoned animals.";
 			
-			texto2 = "Project developed as work to conclude the 3rd semester. Developed in Java using the \n"
-					+ "Libgdx library";
+			texto2 = "Project developed as work to conclude the 3rd semester. Developed in \n"
+					+ "Java using the Libgdx library.";
 			
 			txtVoltar = "Return";
 		}

@@ -43,14 +43,16 @@ public class ComoJogar extends ApplicationAdapter implements Screen {
 		if(game.Language == "Portugues")
 		{	
 			txtCreditos = "Como Jogar";
-			texto1 = "Movimentação: Utilize as SETAS do mouse para movimentação e ESPAÇO para pular. \n \n"
+			texto1 = "Movimentação: Utilize as SETAS do mouse para movimentação e ESPAÇO \n"
+					+ "para pular. \n \n"
 					+ "O personagem tem como objetivo alcançar o fim de cada fase. \n"
 					+ "Para derrotar um inimigo, é necessário pular em cima da cabeça.";
 			
-			texto2 = "O Doggie perde uma vida cada vez que toca no corpo de um inimigo ou come um osso \n"
-					+ "envenenado (levemente esverdeado).";
+			texto2 = "O Doggie perde uma vida cada vez que toca no corpo de um inimigo ou \n"
+					+ "come um osso envenenado (levemente esverdeado).";
 			
-			texto3 = "O jogo se inicia com 3 vidas e se encerra quando o jogador possui suas vidas zeradas.";
+			texto3 = "O jogo se inicia com 3 vidas e se encerra quando o jogador possui suas \n"
+					+ "vidas zeradas.";
 
 			txtVoltar = "Voltar";
 		}
@@ -61,10 +63,11 @@ public class ComoJogar extends ApplicationAdapter implements Screen {
 					+ "The character aims to reach the end of each stage. \n"
 					+ "To defeat an enemy, it is necessary to jump over the head.";
 			
-			texto2 = "Doggie loses a life each time he touches an enemy's body or eats a bone poisoned \n"
-					+ " (slightly greenish).";
+			texto2 = "Doggie loses a life each time he touches an enemy's body or eats a bone \n"
+					+ "poisoned (slightly greenish).";
 			
-			texto3 = "The game starts with 3 lives and ends when the player has their lives zeroed.";
+			texto3 = "The game starts with 3 lives and ends when the player has their lives \n"
+					+ "zeroed.";
 			
 			txtVoltar = "Return";
 		}
@@ -102,8 +105,16 @@ public class ComoJogar extends ApplicationAdapter implements Screen {
         stage.draw();
         
 		sb.begin();
-		
-		GameClass.fontMenuP.draw(sb, txtCreditos , Gdx.graphics.getWidth() / 2 - Gdx.graphics.getWidth()/10 , Gdx.graphics.getHeight() - 40);
+		if(game.Language == "Portugues")
+		{	
+			GameClass.fontMenuP.draw(sb, txtCreditos , Gdx.graphics.getWidth() / 2 - Gdx.graphics.getWidth()/10 , Gdx.graphics.getHeight() - 40);
+
+		}
+		else if(game.Language == "Ingles")
+		{
+			GameClass.fontMenuP.draw(sb, txtCreditos , Gdx.graphics.getWidth() / 2.5f - Gdx.graphics.getWidth()/10 , Gdx.graphics.getHeight() - 40);
+
+		}
 		
 		GameClass.fontMenu.draw(sb, texto1 + "\n \n" + texto2 + "\n \n" + texto3, Gdx.graphics.getWidth() / 24, Gdx.graphics.getHeight() - 120);
 

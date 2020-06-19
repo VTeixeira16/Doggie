@@ -61,7 +61,7 @@ public class ThreadMusica extends Thread{
 			else if(game.telaAtual == "Fase1")
 			{
 				musica = GameClass.manager.get("sons/musicas/DoggieMusica01.mp3", Music.class);
-				musica.setVolume(0.05f);
+				musica.setVolume(0.5f);
 				musica.play();
 				musica.setLooping(true);
 				

@@ -31,6 +31,7 @@ public class ComoJogar extends ApplicationAdapter implements Screen {
 	String texto1;
 	String texto2;
 	String texto3;
+	String texto4;
 	
 	String txtVoltar;
 	String txtCreditos;
@@ -53,6 +54,8 @@ public class ComoJogar extends ApplicationAdapter implements Screen {
 			
 			texto3 = "O jogo se inicia com 3 vidas e se encerra quando o jogador possui suas \n"
 					+ "vidas zeradas.";
+			
+			texto4 = " O jogador ganha uma nova vida a cada 10 ossos coletados.";
 
 			txtVoltar = "Voltar";
 		}
@@ -68,6 +71,8 @@ public class ComoJogar extends ApplicationAdapter implements Screen {
 			
 			texto3 = "The game starts with 3 lives and ends when the player has their lives \n"
 					+ "zeroed.";
+			
+			texto4 = " The player gains a new life for every 10 bones collected.";
 			
 			txtVoltar = "Return";
 		}
@@ -116,7 +121,7 @@ public class ComoJogar extends ApplicationAdapter implements Screen {
 
 		}
 		
-		GameClass.fontMenu.draw(sb, texto1 + "\n \n" + texto2 + "\n \n" + texto3, Gdx.graphics.getWidth() / 24, Gdx.graphics.getHeight() - 120);
+		GameClass.fontMenu.draw(sb, texto1 + "\n \n" + texto2 + "\n \n" + texto3 + texto4, Gdx.graphics.getWidth() / 24, Gdx.graphics.getHeight() - 120);
 
 		
 		sb.end();

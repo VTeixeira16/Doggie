@@ -39,7 +39,7 @@ public class Hud{
 		short bits = doggie.getBody().getFixtureList().first()
 						.getFilterData().maskBits;
 		sb.begin();
-		GameClass.font.draw(sb, vidas + doggie.getTotalVidas() , Gdx.graphics.getWidth() - 100, Gdx.graphics.getHeight() - 10);
+		GameClass.font.draw(sb, vidas + doggie.getTotalVidas() , Gdx.graphics.getWidth() - 110, Gdx.graphics.getHeight() - 10);
 		GameClass.font.draw(sb, ossos + doggie.getNumOssos(), 5, Gdx.graphics.getHeight() - 10);
 		
 		sb.end();

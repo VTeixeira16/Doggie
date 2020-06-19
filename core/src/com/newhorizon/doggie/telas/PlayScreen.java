@@ -42,7 +42,7 @@ import com.newhorizon.doggie.tools.DetectorColisoes;
 public class PlayScreen implements Screen {
 
 	// Se tiver em debug, o render mostrará os colisores
-	private boolean debug = true;
+	public boolean debug = false;
 //	private boolean debug = false;
 
 	private GameClass game;
@@ -73,10 +73,23 @@ public class PlayScreen implements Screen {
 	// sprites
 	private Doggie doggie;
 	private DoggieThread doggieThread;
-	private InimigoThread inimigo1Thread;
 	private Inimigos inimigo;
-	private InimigoThread inimigo2Thread;
 	private Inimigos inimigo2;
+	private Inimigos inimigo3;
+	private Inimigos inimigo4;
+	private Inimigos inimigo5;
+	private Inimigos inimigo6;
+	private Inimigos inimigo7;
+	private Inimigos inimigo8;
+	private Inimigos inimigo9;
+	private Inimigos inimigo10;
+	private Inimigos inimigo11;
+	private Inimigos inimigo12;
+	private Inimigos inimigo13;
+	private Inimigos inimigo14;
+	private Inimigos inimigo15;
+	private InimigoThread inimigo1Thread;
+	private InimigoThread inimigo2Thread;
 //    private Coleiras coleiras;
 //    private TiledMapManager tiledMapMan;
 	
@@ -131,8 +144,22 @@ public class PlayScreen implements Screen {
 		doggie.terminouFase = false;
 		
 		inimigo = new InimigoCachorro(this, 230, 180, 0);
+		inimigo2 = new InimigoCachorro(this, 400, 180, 0);
+		inimigo3 = new InimigoCachorro(this, 1000, 180, 0);
+		inimigo4 = new InimigoCachorro(this, 1300, 180, 0);
+		inimigo5 = new InimigoCachorro(this, 1700, 180, 0);
+		inimigo6 = new InimigoCachorro(this, 2400, 180, 1);
+		inimigo7 = new InimigoCachorro(this, 3000, 180, 0);
+		inimigo8 = new InimigoCachorro(this, 4000, 180, 0);
+		inimigo9 = new InimigoCachorro(this, 4500, 180, 1);
+		inimigo10 = new InimigoCachorro(this, 5000, 180, 1);
+		inimigo11= new InimigoCachorro(this, 6000, 180, 1);
+		inimigo12 = new InimigoCachorro(this, 6500, 180, 0);
+		inimigo13 = new InimigoCachorro(this, 7000, 180, 1);
+		inimigo14 = new InimigoCachorro(this, 8000, 180, 0);
+		inimigo15 = new InimigoCachorro(this, 9000, 180, 1);
+		
 //		inimigo1Thread = new InimigoThread(inimigo);
-		inimigo2 = new InimigoCachorro(this, 400, 180, 1);
 //		inimigo2Thread = new InimigoThread(inimigo2);
 		
 		
@@ -230,9 +257,20 @@ public class PlayScreen implements Screen {
 		doggie.update(dt);
 		inimigo.update(dt);
 		inimigo2.update(dt);
-		
-		
-		
+		inimigo3.update(dt);
+		inimigo4.update(dt);
+		inimigo5.update(dt);
+		inimigo6.update(dt);
+		inimigo7.update(dt);
+		inimigo8.update(dt);
+		inimigo9.update(dt);
+		inimigo10.update(dt);
+		inimigo11.update(dt);
+		inimigo12.update(dt);
+		inimigo13.update(dt);
+		inimigo14.update(dt);
+		inimigo15.update(dt);
+	
 		posDoggieX = doggie.getPosition().x * PPM;
 		posDoggieY = doggie.getPosition().y * PPM;
 		
@@ -280,6 +318,19 @@ public class PlayScreen implements Screen {
 //		inimigo2Thread.run();
 		inimigo.render(game.sb);
 		inimigo2.render(game.sb);
+		inimigo3.render(game.sb);
+		inimigo4.render(game.sb);
+		inimigo5.render(game.sb);
+		inimigo6.render(game.sb);
+		inimigo7.render(game.sb);
+		inimigo8.render(game.sb);
+		inimigo9.render(game.sb);
+		inimigo10.render(game.sb);
+		inimigo11.render(game.sb);
+		inimigo12.render(game.sb);
+		inimigo13.render(game.sb);
+		inimigo14.render(game.sb);
+		inimigo15.render(game.sb);
 		
 		doggie.render(game.sb);
 		
@@ -515,6 +566,19 @@ public class PlayScreen implements Screen {
 		doggie.dispose();
 		inimigo.dispose();
 		inimigo2.dispose();
+		inimigo3.dispose();
+		inimigo4.dispose();
+		inimigo5.dispose();
+		inimigo6.dispose();
+		inimigo7.dispose();
+		inimigo8.dispose();
+		inimigo9.dispose();
+		inimigo10.dispose();
+		inimigo11.dispose();
+		inimigo12.dispose();
+		inimigo13.dispose();
+		inimigo14.dispose();
+		inimigo15.dispose();
 //        hud.dispose();
 
 	}

@@ -29,9 +29,11 @@ public class InimigoCachorro extends Inimigos{
 		switch(skin) {
 		case 0:
 			tex = GameClass.res.getTexture("inimigoDoggie");
+			velocidade = new Vector2 (2,0);
 			break;
 		case 1 :
 			tex = GameClass.res.getTexture("inimigoDoggie2");
+			velocidade = new Vector2 (-3,0);
 			break;
 		}
 		
@@ -43,8 +45,6 @@ public class InimigoCachorro extends Inimigos{
 		
 		setAnimation(spritesInimigo, 1 / 12f);	// Velocidade da troca de frame;
 		setAnimationIdle(spritesInimigo, 1 / 1f);
-		
-		velocidade = new Vector2 (2,0);
 		
 
 	}

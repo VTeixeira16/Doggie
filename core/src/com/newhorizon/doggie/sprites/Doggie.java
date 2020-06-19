@@ -84,7 +84,11 @@ public class Doggie extends Sprite {
 		Texture tex = GameClass.res.getTexture("doggieAndando");
 		TextureRegion[] spritesDoggie = TextureRegion.split(tex, 80, 60)[0];
 
-		totalVidas = 1;
+		totalVidas = 100;
+		
+		if(screen.debug == false)
+			totalVidas = 3;
+		
 		envenenado = false;
 		
 		som = GameClass.manager.get("sons/latido/latidodoggie.mp3", Sound.class);
@@ -144,7 +148,11 @@ public class Doggie extends Sprite {
 //			body.setTransform(9798 / PPM, body.getPosition().y, 0);
 		
 		if (this.getPosition().y > 870 / PPM)
+		{
 			body.setTransform(body.getPosition().x, 868 / PPM, 0);
+			body.applyLinearImpulse(new Vector2(0f, -3f), body.getWorldCenter(), true);
+			
+		}
 
 		if (this.getPosition().y < 64 / PPM) {
 			body.setTransform(50 / PPM, 204 / PPM, 0);

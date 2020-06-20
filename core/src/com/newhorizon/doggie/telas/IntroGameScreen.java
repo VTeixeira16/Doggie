@@ -46,7 +46,7 @@ public class IntroGameScreen extends ApplicationAdapter implements Screen{
 		texto4 = "Um dia, seus amigos lhe contaram uma história que mudou";
 		texto5 = "a sua vida, uma lenda sobre um local onde animal nenhum";
 		texto6 = "passaria fome ou teria qualquer sofrimento...";
-		texto7 = "Este local seria 'A Terra Sem Males'.";
+		texto7 = "Este local seria \"A Terra Sem Males\".";
 		texto8 = "Mas para chegar neste local, Doggie precisa sobreviver...";
 		texto9 = "E é aqui que iniciamos a sua jornada.";
 		}
@@ -59,7 +59,7 @@ public class IntroGameScreen extends ApplicationAdapter implements Screen{
 		texto4 = "One day, his friends told him a story that changed";
 		texto5 = "his life, a legend about a place where no animal";
 		texto6 = "would go hungry or suffer any suffering ...";
-		texto7 = "This place would be 'The Land Without Evil'.";
+		texto7 = "This place would be \"The Land Without Evil\".";
 		texto8 = "But to reach this place, Doggie must survive ...";
 		texto9 = "And this is where we begin your journey.";
 		}
@@ -86,7 +86,7 @@ public class IntroGameScreen extends ApplicationAdapter implements Screen{
 		
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        if(introTimer > 0.1f)
+        if(introTimer > 0.2f)
         	game.telaAtual = "IntroGame";
         
         sb.begin();
@@ -111,13 +111,15 @@ public class IntroGameScreen extends ApplicationAdapter implements Screen{
         	GameClass.fontIntro.draw(sb, texto8 , Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 300);
         if(introTimer > 25)
         	GameClass.fontIntro.draw(sb, texto9 , Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 330);
+        if(introTimer > 27.5f)
+        	game.telaAtual = "Null";
         	
 
         sb.end();
 		
         if(introTimer > 28)
         {
-        	game.telaAtual = "Null";	
+        	game.faseAtual = 1;
         	game.setScreen(new PlayScreen(game));
         }
 	}

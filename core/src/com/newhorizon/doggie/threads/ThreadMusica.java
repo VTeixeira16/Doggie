@@ -26,12 +26,21 @@ public class ThreadMusica extends Thread{
 		
 		while(true)
 		{
-			System.out.println(game.telaAtual);
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			if(game.telaAtual == "Null")
 			{
 				musica.stop();
 			}	
 			
+			if(game.telaAtual == "Splash")
+			{
+			}	
+			
+//			System.out.println(game.telaAtual);
 			
 			if(game.telaAtual == "Menu")
 			{
@@ -40,11 +49,6 @@ public class ThreadMusica extends Thread{
 				musica.play();
 				musica.setLooping(true);
 				
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
 			}
 			else if(game.telaAtual == "IntroGame")
 			{
@@ -52,24 +56,32 @@ public class ThreadMusica extends Thread{
 				musica.setVolume(1);
 				musica.play();
 				
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+			}
+			else if(game.telaAtual == "PosGame1")
+			{
+				musica = GameClass.manager.get("sons/musicas/DoggieMusica04.mp3", Music.class);
+				musica.setVolume(1);
+				musica.play();
+			}
+			else if(game.telaAtual == "PosGame2")
+			{
+				musica = GameClass.manager.get("sons/musicas/DoggieMusica05.mp3", Music.class);
+				musica.setVolume(1);
+				musica.play();
 			}
 			else if(game.telaAtual == "Fase1")
 			{
 				musica = GameClass.manager.get("sons/musicas/DoggieMusica01.mp3", Music.class);
 				musica.setVolume(0.5f);
 				musica.play();
-				musica.setLooping(true);
-				
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+				musica.setLooping(true);				
+			}
+			else if(game.telaAtual == "Fase2")
+			{
+				musica = GameClass.manager.get("sons/musicas/DoggieMusica02.mp3", Music.class);
+				musica.setVolume(0.5f);
+				musica.play();
+				musica.setLooping(true);				
 			}
 		
 			

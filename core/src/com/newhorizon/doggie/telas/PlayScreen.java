@@ -35,15 +35,15 @@ import com.newhorizon.doggie.sprites.Ossos;
 import com.newhorizon.doggie.sprites.OssosVeneno;
 import com.newhorizon.doggie.threads.DoggieThread;
 import com.newhorizon.doggie.threads.InimigoThread;
-import com.newhorizon.doggie.threads.ThreadMusica;
 import com.newhorizon.doggie.tools.B2dVariaveis;
 import com.newhorizon.doggie.tools.DetectorColisoes;
 
 public class PlayScreen implements Screen {
 
 	// Se tiver em debug, o render mostrará os colisores
-	public boolean debug = false;
+
 //	private boolean debug = false;
+	
 
 	private GameClass game;
 	
@@ -95,12 +95,24 @@ public class PlayScreen implements Screen {
 	
 	public float posDoggieX;
 	public float posDoggieY;
+	public boolean debug;
 	
 	public PlayScreen(GameClass game) {	
 
 		this.game = game;
 		
-		game.telaAtual = "Null";
+		debug = game.debug;
+		
+		if(game.faseAtual == 1)
+		{
+			
+		}
+		else if(game.faseAtual == 2)
+		{
+			
+		}
+		
+		
 		
 
 		// Cria Camera para seguir o Doggie
@@ -120,8 +132,6 @@ public class PlayScreen implements Screen {
 //        tiledMapMan.createTiles();
 
 		maploader = new TmxMapLoader();
-		tiledMap = maploader.load("Tiled/mapa1.tmx");
-		tmr = new OrthogonalTiledMapRenderer(tiledMap);
 
 		// Configuração de posições das câmeras
 		gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
@@ -183,7 +193,6 @@ public class PlayScreen implements Screen {
 
 	@Override
 	public void show() {
-		
 
 	}
 
@@ -210,9 +219,16 @@ public class PlayScreen implements Screen {
 		playTimer += dt;
 		
 		if(playTimer > 0.1f)
-        	game.telaAtual = "Fase1";
-		
-		
+		{
+			if(game.faseAtual == 1)
+				game.telaAtual = "Fase1";
+			else if(game.faseAtual == 2)
+				game.telaAtual = "Fase2";
+			
+		}
+        			
+//		if(playTimer > 3 && game.debug)
+//			doggie.terminouFase = true;
 		
 		if(doggie.getTotalVidas() <= 0)
 		{
@@ -223,7 +239,7 @@ public class PlayScreen implements Screen {
 		if(doggie.terminouFase)
 		{
         	game.telaAtual = "Null";	
-			game.setScreen(new MenuScreen(game));
+			game.setScreen(new PosGameScreen(game));
 		}
 
 		world.step(dt, 6, 2);
@@ -348,7 +364,7 @@ public class PlayScreen implements Screen {
 
 		
 		// Renderiza a câmera do Box2D
-		if (debug) {
+		if (game.debug) {
 			b2dDR.render(world, b2dCamera.combined);
 			b2dCamera.position.set(doggie.body.getPosition().x, doggie.body.getPosition().y + 1f, 0);
 			b2dCamera.update();
@@ -389,7 +405,13 @@ public class PlayScreen implements Screen {
 	private void createTiles() {
 
 		// Carregando mapa
-		tiledMap = new TmxMapLoader().load("Tiled/mapa1.tmx");
+	if(game.faseAtual == 1)
+		tiledMap = new TmxMapLoader().load("Tiled/mapa1.tmx");			
+	else if(game.faseAtual == 2)
+		tiledMap = new TmxMapLoader().load("Tiled/mapa2.tmx");
+	
+//	tiledMap = new TmxMapLoader().load("Tiled/mapa1.tmx");
+	
 		tmr = new OrthogonalTiledMapRenderer(tiledMap);
 		tileSize = (int) tiledMap.getProperties().get("tilewidth");
 

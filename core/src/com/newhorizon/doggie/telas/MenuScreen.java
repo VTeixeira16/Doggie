@@ -72,7 +72,7 @@ public class MenuScreen extends ApplicationAdapter implements Screen{
 			txtSobreJogo = "Sobre o Jogo";
 			txtComoJogar = "Como Jogar";
 			txtAdote = "Quero adotar";
-			txtCreditos = "Créditos";
+			txtCreditos = "Creditos";
 			txtSair = "Sair";
 			txtIdioma = "Idioma";
 		}
@@ -100,7 +100,7 @@ public class MenuScreen extends ApplicationAdapter implements Screen{
         //ImageTextButton
         ImageTextButton btnJogar = new ImageTextButton(txtJogar, skin);
         btnJogar.setSize(col_width*3,(float)(row_height));
-        // Pode ser útil para adicionar um logo do cachorro ao lado do botão jogar
+        // Pode ser ï¿½til para adicionar um logo do cachorro ao lado do botï¿½o jogar
         btnJogar.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("OutGame/dogLogo.png"))));
         btnJogar.getStyle().imageDown = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("OutGame/dogLogo.png"))));
         btnJogar.setPosition(Gdx.graphics.getWidth() / 2 - (col_width * 1.5f),Gdx.graphics.getHeight()-row_height*2.5f);

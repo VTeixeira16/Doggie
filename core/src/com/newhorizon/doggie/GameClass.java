@@ -9,7 +9,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.newhorizon.doggie.telas.MenuScreen;
+import com.newhorizon.doggie.telas.PlayScreen;
+import com.newhorizon.doggie.telas.SplashScreen;
 import com.newhorizon.doggie.threads.ThreadMusica;
 import com.newhorizon.doggie.tools.Content;
 
@@ -18,12 +19,11 @@ import com.newhorizon.doggie.tools.Content;
 public class GameClass extends Game {
 
 	public String Language;
+	public boolean debug;
 	// Nome e tamanho do jogo
 	public static final String GAMENAME = "Doggie";
 	public static final int V_WIDTH = 800;
 	public static final int V_HEIGHT = 600;	
-	
-	public ThreadMusica threadMusica;
 	
 	public static SpriteBatch sb;
 	
@@ -52,16 +52,24 @@ public class GameClass extends Game {
 	private FreeTypeFontGenerator fontGameOverGenerator;
 	private FreeTypeFontGenerator.FreeTypeFontParameter fontGameOverParameter;
 	public static BitmapFont fontGameOver;
+	
+	private FreeTypeFontGenerator fontSplashScreenGenerator;
+	private FreeTypeFontGenerator.FreeTypeFontParameter fontSplashScreenParameter;
+	public static BitmapFont fontSplashScreen;
 
 	public static Content res;
 	
 	public static AssetManager manager;
 	
+	public ThreadMusica threadMusica;
+	public static int faseAtual;
 	public static String telaAtual;
 	  
 	public void create() {
 		
-		Language = "Ingles";
+		debug = false;
+		
+		
 		
 		
 		//		ASSETS
@@ -71,11 +79,12 @@ public class GameClass extends Game {
 		res.loadTexture("images/DoggieSprites.png", "doggieAndando");
 		res.loadTexture("images/inimigoDoggieRun.png", "inimigoDoggie");
 		res.loadTexture("images/inimigoDoggie2.png", "inimigoDoggie2");
-//		res.loadTexture("images/InimigoDoggie.png", "inimigoDoggie");
-		
 		
 		res.loadTexture("OutGame/dogLogo.png", "dogLogo");
-		
+		res.loadTexture("OutGame/DoggieLogo.png", "doggieLogo");
+		res.loadTexture("OutGame/fatecLogo.png", "fatecLogo");
+		res.loadTexture("OutGame/libLogo.png", "libLogo");
+		res.loadTexture("OutGame/newHorizonLogo.png", "nhLogo");
 		
 		// SONS
 		manager = new AssetManager();
@@ -148,7 +157,7 @@ public class GameClass extends Game {
 		fontGameOverParameter.color = Color.BLACK;
 		fontGameOverParameter.spaceX = 0;
 		fontGameOver = fontGenerator.generateFont(fontGameOverParameter);
-		
+				
 		threadMusica = new ThreadMusica(this);
 		
 		threadMusica.start();
@@ -156,13 +165,19 @@ public class GameClass extends Game {
 		
 		
 		
+		faseAtual = 2; // Serve apenas para testes na playscreen. Valor é alterado na IntroGameScreen
+//		Language = "Portugues";
+		Language = "Ingles";
 		
+		setScreen(new PlayScreen(this));
+
+		if(!debug)
+		{			
+			Language = "Portugues";
+			setScreen(new SplashScreen(this));
+		}
+
 		
-		
-		
-		
-//		setScreen(new PlayScreen(this));
-		setScreen(new MenuScreen(this));
 		
 		
 	}

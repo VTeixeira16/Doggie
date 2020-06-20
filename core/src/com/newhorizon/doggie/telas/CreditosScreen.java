@@ -43,6 +43,8 @@ public class CreditosScreen extends ApplicationAdapter implements Screen {
 	String texto8 = "www.opengameart.org/content/pixel-art-femur";
 	String texto9 = "www.designevo.com/res/templates/thumb_small/brown-and-white-dog.png";
 	String texto10 = "https://github.com/czyzby/gdx-skins";
+	String texto11 = "https://fontmeme.com/fonts/kong-quest-font/";
+
 	
 	
 	public CreditosScreen (GameClass game) {
@@ -111,7 +113,7 @@ public class CreditosScreen extends ApplicationAdapter implements Screen {
 		GameClass.fontMenuM.draw(sb, texto3, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() - 210);
 		
 		GameClass.fontMenu.draw(sb, texto4 + "\n" + texto5 + "\n" + texto6 + "\n" + texto7 + "\n" + texto8 + "\n" + texto9
-				+ "\n" + texto10 ,
+				+ "\n" + texto10 + "\n" + texto11,
 				Gdx.graphics.getWidth() / 24, Gdx.graphics.getHeight() - 250);
 		
 		sb.end();

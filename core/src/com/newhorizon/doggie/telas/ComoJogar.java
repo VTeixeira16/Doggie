@@ -44,10 +44,10 @@ public class ComoJogar extends ApplicationAdapter implements Screen {
 		if(game.Language == "Portugues")
 		{	
 			txtCreditos = "Como Jogar";
-			texto1 = "Movimentação: Utilize as SETAS do mouse para movimentação e ESPAÇO \n"
+			texto1 = "MovimentaÃ§Ã£o: Utilize as SETAS do mouse para movimentaÃ§Ã£o e ESPAÃ‡O \n"
 					+ "para pular. \n \n"
-					+ "O personagem tem como objetivo alcançar o fim de cada fase. \n"
-					+ "Para derrotar um inimigo, é necessário pular em cima da cabeça.";
+					+ "O personagem tem como objetivo alcanÃ§ar o fim de cada fase. \n"
+					+ "Para derrotar um inimigo, Ã© necessÃ¡rio pular na cabeÃ§a.";
 			
 			texto2 = "O Doggie perde uma vida cada vez que toca no corpo de um inimigo ou \n"
 					+ "come um osso envenenado (levemente esverdeado).";

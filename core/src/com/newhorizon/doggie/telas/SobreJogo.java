@@ -43,11 +43,11 @@ public class SobreJogo extends ApplicationAdapter implements Screen {
 		{	
 			txtCreditos = "Sobre o jogo";
 			texto1 = "Jogo desenvolvido por Victor Teixeira e Gabriel Ventura, estudantes de \n"
-					+ "Jogos Digitais na Fatec Carapicuíba. O jogo possui o objetivo de divertir \n"
-					+ "trazendo uma reflexão sobre as dificuldades enfrentadas por animais \n "
+					+ "Jogos Digitais na Fatec CarapicuÃ­ba. O jogo possui o objetivo de divertir \n"
+					+ "trazendo uma reflexï¿½o sobre as dificuldades enfrentadas por animais \n "
 					+ "abandonados.";
 			
-			texto2 = "Projeto desenvolvido como Trabalho de conclusão do 3º semestre. \n"
+			texto2 = "Projeto desenvolvido como Trabalho de conclusÃ£o do 3Â° semestre. \n"
 					+ "Desenvolvido em Java utilizando a biblioteca Libgdx.";
 
 			txtVoltar = "Voltar";
@@ -56,7 +56,7 @@ public class SobreJogo extends ApplicationAdapter implements Screen {
 		{
 			txtCreditos = "About the Game";
 			texto1 = "Game developed by Victor Teixeira and Gabriel Ventura, students of Digital \n"
-					+ "Games at Fatec Carapicuíba. The game aims to have fun bringing a \n"
+					+ "Games at Fatec Carapicuï¿½ba. The game aims to have fun bringing a \n"
 					+ "reflection on the difficulties faced by abandoned animals.";
 			
 			texto2 = "Project developed as work to conclude the 3rd semester. Developed in \n"

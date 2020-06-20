@@ -20,7 +20,7 @@ public class GameOver implements Screen{
 	private String texto1;
 	private String texto2;
 
-	// Classe deverá ser corrigida e adaptada para funcionar com o Manager Cenas
+	// Classe deverï¿½ ser corrigida e adaptada para funcionar com o Manager Cenas
 
 	public GameOver(GameClass game) {
 		this.game = game;
@@ -30,7 +30,7 @@ public class GameOver implements Screen{
 		if(game.Language == "Portugues")
 		{	
 			texto1 = "Fim de jogo";
-			texto2 = "Doggie não obteve sucesso em sua jornada.";		
+			texto2 = "Doggie nÃ£o obteve sucesso em sua jornada.";		
 		}
 		else if(game.Language == "Ingles")
 		{

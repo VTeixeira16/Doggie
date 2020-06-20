@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.newhorizon.doggie.telas.PlayScreen;
+import com.newhorizon.doggie.telas.MenuScreen;
 import com.newhorizon.doggie.telas.SplashScreen;
 import com.newhorizon.doggie.threads.ThreadMusica;
 import com.newhorizon.doggie.tools.Content;
@@ -67,7 +67,7 @@ public class GameClass extends Game {
 	  
 	public void create() {
 		
-		debug = false;
+		debug = true;
 		
 		
 		
@@ -83,7 +83,7 @@ public class GameClass extends Game {
 		res.loadTexture("OutGame/dogLogo.png", "dogLogo");
 		res.loadTexture("OutGame/DoggieLogo.png", "doggieLogo");
 		res.loadTexture("OutGame/fatecLogo.png", "fatecLogo");
-		res.loadTexture("OutGame/libLogo.png", "libLogo");
+		res.loadTexture("OutGame/liblogo.png", "libLogo");
 		res.loadTexture("OutGame/newHorizonLogo.png", "nhLogo");
 		
 		// SONS
@@ -166,10 +166,10 @@ public class GameClass extends Game {
 		
 		
 		faseAtual = 2; // Serve apenas para testes na playscreen. Valor é alterado na IntroGameScreen
-//		Language = "Portugues";
-		Language = "Ingles";
+		Language = "Portugues";
+//		Language = "Ingles";
 		
-		setScreen(new PlayScreen(this));
+		setScreen(new MenuScreen(this));
 
 		if(!debug)
 		{			

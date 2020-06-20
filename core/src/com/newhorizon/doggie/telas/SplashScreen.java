@@ -103,16 +103,16 @@ public class SplashScreen extends ApplicationAdapter implements Screen{
 		{
 			logoTimer -= delta * 500; 
 		}
-		if(splashTimer >4f)	
+		if(splashTimer >3.5f)	
 		{
 			alphaTimer += delta * 150;	
 		}		
-		if(splashTimer >= 6.5f)
+		if(splashTimer >= 7.5f)
 		{
 			alphaTimer -= delta * 300; 
 		}
 		
-		if(splashTimer > 8.5f)
+		if(splashTimer > 9.5f)
 			game.setScreen(new MenuScreen(game));
 		
 		if(alphaTimer > 254)

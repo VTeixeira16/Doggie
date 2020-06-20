@@ -39,9 +39,9 @@ public class PosGameScreen extends ApplicationAdapter implements Screen{
 			texto4 = "Mesmo com tudo isso, Doggie levantou o focinho e decidiu";
 			texto5 = "seguir em frente!";
 			
-			texto6 = "Carregando prÛxima fase.";
-			texto7 = "Carregando prÛxima fase..";
-			texto8 = "Carregando prÛxima fase...";
+			texto6 = "Carregando pr√≥xima fase.";
+			texto7 = "Carregando pr√≥xima fase..";
+			texto8 = "Carregando pr√≥xima fase...";
 		}
 		else if(game.faseAtual == 1 && game.Language == "Ingles")
 		{
@@ -58,12 +58,12 @@ public class PosGameScreen extends ApplicationAdapter implements Screen{
 		}
 		else if(game.faseAtual == 2 && game.Language == "Portugues")
 		{
-			texto0 = "Naquela noite, Doggie continuou sua jornada. ApÛs";
+			texto0 = "Naquela noite, Doggie continuou sua jornada. Ap√≥s";
 			texto1 = "enfrentar tantas dificuldades, ele estava muito orgulhoso";
 			texto2 = "de si mesmo. Mas para chegar na \"Terra sem Males\"";
 			texto3 = "era preciso muito mais que apenas sair de sua cidade...";			
 			
-			texto4 = "... PorÈm, isto ficar· para uma prÛxima histÛria!";
+			texto4 = "... Por√©m, isto ficar√° para uma pr√≥xima hist√≥ria!";
 			texto5 = "Muito obrigado, por jogar o nosso jogo.";
 			
 			texto6 = "Redirecionando ao menu principal em: ";

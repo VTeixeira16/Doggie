@@ -38,7 +38,7 @@ public class AdoteScreen extends ApplicationAdapter implements Screen {
     private String texto8 = "www.ilm.org.br/";
     private String texto9 = "www.ajudaanimal.wixsite.com/ajudaanimal";
     
-    private String texto10 = "Adote um animalzinho, leve amor para sua casa e \n ganhe Doggie Coins para utilizar no jogo!!!";
+    private String texto10;
     
     private String txtVoltar;
     private String txtContatos;
@@ -49,7 +49,7 @@ public class AdoteScreen extends ApplicationAdapter implements Screen {
 		
 		if(game.Language == "Portugues")
 		{	
-			txtContatos = "Contatos para adoção";
+			txtContatos = "Contatos para adoÃ§Ã£o";
 			texto10 = "Adote um animalzinho, leve amor para sua casa e \n ganhe Doggie Coins para utilizar no jogo!!!";
 			txtVoltar = "Voltar";
 

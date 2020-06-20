@@ -40,15 +40,15 @@ public class IntroGameScreen extends ApplicationAdapter implements Screen{
 		if(game.Language == "Portugues")
 		{
 		texto0 = "Ainda pequeno, Doggie foi abandonado na Rua.";
-		texto1 = "Teve que enfrentar a fome, a solid„o, o frio,";
+		texto1 = "Teve que enfrentar a fome, a solid√£o, o frio,";
 		texto2 = "brigar com outros animais abandonados...";
 		texto3 = "... E lidar com a maldade humana.";
-		texto4 = "Um dia, seus amigos lhe contaram uma histÛria que mudou";
+		texto4 = "Um dia, seus amigos lhe contaram uma hist√≥ria que mudou";
 		texto5 = "a sua vida, uma lenda sobre um local onde animal nenhum";
 		texto6 = "passaria fome ou teria qualquer sofrimento...";
 		texto7 = "Este local seria \"A Terra Sem Males\".";
 		texto8 = "Mas para chegar neste local, Doggie precisa sobreviver...";
-		texto9 = "E È aqui que iniciamos a sua jornada.";
+		texto9 = "E √© aqui que iniciamos a sua jornada.";
 		}
 		else if(game.Language == "Ingles")
 		{

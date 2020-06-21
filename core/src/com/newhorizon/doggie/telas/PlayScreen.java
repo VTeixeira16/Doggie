@@ -40,7 +40,7 @@ import com.newhorizon.doggie.tools.DetectorColisoes;
 
 public class PlayScreen implements Screen {
 
-	// Se tiver em debug, o render mostrará os colisores
+	// Se tiver em debug, o render mostrarï¿½ os colisores
 
 //	private boolean debug = false;
 	
@@ -119,25 +119,25 @@ public class PlayScreen implements Screen {
 		gamecam = new OrthographicCamera();
 		gamecam.setToOrtho(false, GameClass.V_WIDTH, GameClass.V_HEIGHT);
 
-		// Câmera dos colisores, deve funcionar apenas em modo Debug
+		// Cï¿½mera dos colisores, deve funcionar apenas em modo Debug
 		b2dCamera = new OrthographicCamera();
 		b2dCamera.setToOrtho(false, GameClass.V_WIDTH / PPM, GameClass.V_HEIGHT / PPM);
 
 		// Cria um ViewPort para ter controle do jogo em diferentes tamanhos de janela.
 		gamePort = new FitViewport(GameClass.V_WIDTH / PPM, GameClass.V_HEIGHT / PPM, gamecam);
 
-		// Carrega o mapa e configura --- DESATIVADO, ATUALMENTE ESTÁ SENDO EXECUTADO
-		// ATRAVÉS DA FUNÇÃO createTiles();
+		// Carrega o mapa e configura --- DESATIVADO, ATUALMENTE ESTï¿½ SENDO EXECUTADO
+		// ATRAVï¿½S DA FUNï¿½ï¿½O createTiles();
 //        tiledMapMan = new TiledMapManager(this);
 //        tiledMapMan.createTiles();
 
 		maploader = new TmxMapLoader();
 
-		// Configuração de posições das câmeras
+		// Configuraï¿½ï¿½o de posiï¿½ï¿½es das cï¿½meras
 		gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 		b2dCamera.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 
-		// Cria o mundo Box2D, onde o primeiro valor é a gravidade horizontal e o
+		// Cria o mundo Box2D, onde o primeiro valor ï¿½ a gravidade horizontal e o
 		// segundo vertical.
 		world = new World(new Vector2(0, -10), true);
 		cl = new DetectorColisoes();
@@ -147,7 +147,7 @@ public class PlayScreen implements Screen {
 		b2dDR = new Box2DDebugRenderer();
 
 		// Criando Sprites no mundo.
-		// ((this), Posição X, Posição Y)
+		// ((this), Posiï¿½ï¿½o X, Posiï¿½ï¿½o Y)
 		doggie = new Doggie(this, 400, 400);
 //		doggie = new Doggie(this, 9650, 400);
 		doggieThread = new DoggieThread(doggie);
@@ -179,13 +179,13 @@ public class PlayScreen implements Screen {
 		
 		// coleiras = new Coleiras(this);
 
-		// Cria HUD, onde valores e textos serão exibidos na tela. Na prática é uma
-		// câmera com mesmos valores da gamecam.
+		// Cria HUD, onde valores e textos serï¿½o exibidos na tela. Na prï¿½tica ï¿½ uma
+		// cï¿½mera com mesmos valores da gamecam.
 		hud = new Hud(doggie, this.game);
 		cameraHUD = new OrthographicCamera();
 		cameraHUD.setToOrtho(false, GameClass.V_WIDTH, GameClass.V_HEIGHT);
 
-		// Ambas as funções deverão ser transformadas em objetos no futuro.
+		// Ambas as funï¿½ï¿½es deverï¿½o ser transformadas em objetos no futuro.
 		createTiles();
 		createOssos();
 		createOssosVeneno();		
@@ -200,7 +200,7 @@ public class PlayScreen implements Screen {
 
 		// Controle do Doggie usando impulsos
 		if (doggie.estadoAtual != Estado.MORTO) {
-			if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && cl.isPlayerOnGround())
+			if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) && cl.isPlayerOnGround())
 				doggie.jump();
 
 			if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && doggie.body.getLinearVelocity().x <= 2)
@@ -227,10 +227,10 @@ public class PlayScreen implements Screen {
 			
 		}
         			
-//		if(playTimer > 3 && game.debug)
-//			doggie.terminouFase = true;
-		
-		if(doggie.getTotalVidas() <= 0)
+		if((Gdx.input.isKeyJustPressed(Input.Keys.P)) && game.debug)
+			doggie.terminouFase = true;
+			
+		if((doggie.getTotalVidas() <= 0 || ((Gdx.input.isKeyJustPressed(Input.Keys.O)) && game.debug)))
 		{
         	game.telaAtual = "Null";	
 			game.setScreen(new GameOver(game));
@@ -266,7 +266,7 @@ public class PlayScreen implements Screen {
 			Body bV = bodiesVeneno.get(i);
 			ossosVeneno.removeValue((OssosVeneno) bV.getUserData(), true);
 			world.destroyBody(bV);
-			//Colocar função para remover vida do Doggie
+			//Colocar funï¿½ï¿½o para remover vida do Doggie
 			doggie.Envenenado();
 		}
 		
@@ -309,14 +309,14 @@ public class PlayScreen implements Screen {
 	}
 	@Override
 	public void render(float delta) {
-		// Separando a lógica do update do render.
+		// Separando a lï¿½gica do update do render.
 		update(delta);
 
 		// Limpa o fundo do jogo com o RGB escolhido.
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		// Trava a câmera na posição do Doggie
+		// Trava a cï¿½mera na posiï¿½ï¿½o do Doggie
 		gamecam.position.set(doggie.body.getPosition().x * PPM, doggie.body.getPosition().y * PPM + 100, 0);
 		gamecam.update();
 
@@ -327,7 +327,7 @@ public class PlayScreen implements Screen {
 		// Migrado para DoggieThread
 //		doggie.render(game.sb);
 		
-//		IMPLEMENTAÇÃO USADA APENAS ENQUANTO NÃO FOR RESOLVIDO O PROBLEMA DE MULTITHREADS
+//		IMPLEMENTAï¿½ï¿½O USADA APENAS ENQUANTO Nï¿½O FOR RESOLVIDO O PROBLEMA DE MULTITHREADS
 		
 //		doggieThread.run();
 //		inimigo1Thread.run();
@@ -355,7 +355,7 @@ public class PlayScreen implements Screen {
 		
 //		inimigo.render(game.sb);	
 //        ossos.render(game.sb);
-		// Camadas são renderizadas depois em cima do Doggie e de inimigos.
+		// Camadas sï¿½o renderizadas depois em cima do Doggie e de inimigos.
 		tmr.getBatch().begin();
 		tmr.renderTileLayer((TiledMapTileLayer) tiledMap.getLayers().get("FrenteCenario"));
 		tmr.getBatch().end();
@@ -363,7 +363,7 @@ public class PlayScreen implements Screen {
 		hud.render(game.sb);
 
 		
-		// Renderiza a câmera do Box2D
+		// Renderiza a cï¿½mera do Box2D
 		if (game.debug) {
 			b2dDR.render(world, b2dCamera.combined);
 			b2dCamera.position.set(doggie.body.getPosition().x, doggie.body.getPosition().y + 1f, 0);
@@ -382,12 +382,12 @@ public class PlayScreen implements Screen {
 			ossosVeneno.get(i).render(game.sb);
 		}
 
-		// Como o sb está sendo executado no game, verificar possibilidade de exclusão
-		// dessas funções.
+		// Como o sb estï¿½ sendo executado no game, verificar possibilidade de exclusï¿½o
+		// dessas funï¿½ï¿½es.
 //        game.sb.begin();      
 //        game.sb.end();
 
-		// Troca de tela em caso de Game Over (Não implementado)
+		// Troca de tela em caso de Game Over (Nï¿½o implementado)
 //        if(gameOver()){
 //            game.setScreen(new GameOverScreen(game));
 //            dispose();
@@ -436,10 +436,10 @@ public class PlayScreen implements Screen {
 		for (int linha = 0; linha < layer.getHeight(); linha++) {
 			for (int col = 0; col < layer.getWidth(); col++) {
 
-				// Pegando a célula
+				// Pegando a cï¿½lula
 				Cell cell = layer.getCell(col, linha);
 
-				// Checa se célula existe
+				// Checa se cï¿½lula existe
 				if (cell == null)
 					continue;
 				if (cell.getTile() == null)

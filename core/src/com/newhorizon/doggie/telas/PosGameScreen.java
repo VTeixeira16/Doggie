@@ -3,6 +3,7 @@ package com.newhorizon.doggie.telas;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -162,13 +163,13 @@ public class PosGameScreen extends ApplicationAdapter implements Screen{
 
         sb.end();
 		
-        if(posGameTimer > 14.5f && game.faseAtual == 1)
+        if((posGameTimer > 14.5f || (Gdx.input.isKeyJustPressed(Input.Keys.SPACE))) && game.faseAtual == 1)
         {
         	game.telaAtual = "Null";
         	game.faseAtual = 2;
         	game.setScreen(new PlayScreen(game));
         }
-        else if (posGameTimer > 16 && game.faseAtual == 2)
+        else if ((posGameTimer > 16 || (Gdx.input.isKeyJustPressed(Input.Keys.SPACE))) && game.faseAtual == 2)
         {
         	game.telaAtual = "Null";
         	game.setScreen(new MenuScreen(game));

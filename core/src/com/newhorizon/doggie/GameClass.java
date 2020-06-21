@@ -116,7 +116,7 @@ public class GameClass extends Game {
 		fontMenuGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Arial Black.ttf"));
 		fontMenuParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		fontMenuParameter.size = 18;
-		fontMenuParameter.borderWidth = 0.1f;
+		fontMenuParameter.borderWidth = 0f;
 		fontMenuParameter.borderColor = Color.RED;
 		fontMenuParameter.color = Color.BLACK;
 		fontMenuParameter.spaceX = 0;
@@ -152,7 +152,7 @@ public class GameClass extends Game {
 		fontGameOverGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Arial Black.ttf"));
 		fontGameOverParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		fontGameOverParameter.size = 72;
-		fontGameOverParameter.borderWidth = 0.5f;
+		fontGameOverParameter.borderWidth = 0f;
 		fontGameOverParameter.borderColor = Color.BLUE;
 		fontGameOverParameter.color = Color.BLACK;
 		fontGameOverParameter.spaceX = 0;

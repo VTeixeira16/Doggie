@@ -44,7 +44,7 @@ public class SobreJogo extends ApplicationAdapter implements Screen {
 			txtCreditos = "Sobre o jogo";
 			texto1 = "Jogo desenvolvido por Victor Teixeira e Gabriel Ventura, estudantes de \n"
 					+ "Jogos Digitais na Fatec Carapicuíba. O jogo possui o objetivo de divertir \n"
-					+ "trazendo uma reflex�o sobre as dificuldades enfrentadas por animais \n "
+					+ "trazendo uma reflexão sobre as dificuldades enfrentadas por animais \n "
 					+ "abandonados.";
 			
 			texto2 = "Projeto desenvolvido como Trabalho de conclusão do 3° semestre. \n"

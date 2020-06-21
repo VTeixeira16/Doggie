@@ -88,6 +88,23 @@ public class PlayScreen implements Screen {
 	private Inimigos inimigo13;
 	private Inimigos inimigo14;
 	private Inimigos inimigo15;
+	//Especificos para fase 2
+	private Inimigos inimigo16;
+	private Inimigos inimigo17;
+	private Inimigos inimigo18;
+	private Inimigos inimigo19;
+	private Inimigos inimigo20;
+	private Inimigos inimigo21;
+	private Inimigos inimigo22;
+	private Inimigos inimigo23;
+	private Inimigos inimigo24;
+	private Inimigos inimigo25;
+	private Inimigos inimigo26;
+	private Inimigos inimigo27;
+	private Inimigos inimigo28;
+	private Inimigos inimigo29;
+	private Inimigos inimigo30;
+	
 	private InimigoThread inimigo1Thread;
 	private InimigoThread inimigo2Thread;
 //    private Coleiras coleiras;
@@ -169,6 +186,25 @@ public class PlayScreen implements Screen {
 		inimigo14 = new InimigoCachorro(this, 8000, 180, 0);
 		inimigo15 = new InimigoCachorro(this, 9000, 180, 1);
 		
+		if(game.faseAtual == 2)
+		{
+			inimigo16 = new InimigoCachorro(this, 800, 180, 1);
+			inimigo17 = new InimigoCachorro(this, 3500, 180, 1);
+			inimigo18 = new InimigoCachorro(this, 2700, 180, 1);
+			inimigo19 = new InimigoCachorro(this, 3800, 180, 1);
+			inimigo20 = new InimigoCachorro(this, 5100, 180, 0);
+			inimigo21 = new InimigoCachorro(this, 6200, 180, 0);
+			inimigo22 = new InimigoCachorro(this, 6700, 180, 1);
+			inimigo23 = new InimigoCachorro(this, 8500, 180, 0);
+			inimigo24 = new InimigoCachorro(this, 8600, 180, 1);
+			inimigo25 = new InimigoCachorro(this, 7250, 180, 1);
+			inimigo26 = new InimigoCachorro(this, 7500, 180, 1);
+			inimigo27 = new InimigoCachorro(this, 6250, 180, 1);
+			inimigo28 = new InimigoCachorro(this, 3200, 180, 1);
+			inimigo29 = new InimigoCachorro(this, 2000, 180, 1);
+			inimigo30 = new InimigoCachorro(this, 3300, 180, 0);
+		}
+		
 //		inimigo1Thread = new InimigoThread(inimigo);
 //		inimigo2Thread = new InimigoThread(inimigo2);
 		
@@ -200,7 +236,7 @@ public class PlayScreen implements Screen {
 
 		// Controle do Doggie usando impulsos
 		if (doggie.estadoAtual != Estado.MORTO) {
-			if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) && cl.isPlayerOnGround())
+			if ((Gdx.input.isKeyJustPressed(Input.Keys.UP) || (Gdx.input.isKeyJustPressed(Input.Keys.SPACE))) && cl.isPlayerOnGround())
 				doggie.jump();
 
 			if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && doggie.body.getLinearVelocity().x <= 2)
@@ -286,6 +322,24 @@ public class PlayScreen implements Screen {
 		inimigo13.update(dt);
 		inimigo14.update(dt);
 		inimigo15.update(dt);
+		if(game.faseAtual == 2)
+		{
+			inimigo16.update(dt); 	
+			inimigo17.update(dt); 	
+			inimigo18.update(dt); 	
+			inimigo19.update(dt); 	
+			inimigo20.update(dt); 	
+			inimigo21.update(dt); 	
+			inimigo22.update(dt); 	
+			inimigo23.update(dt); 	
+			inimigo24.update(dt); 		
+			inimigo25.update(dt); 		
+			inimigo26.update(dt); 		
+			inimigo27.update(dt); 		
+			inimigo28.update(dt); 		
+			inimigo29.update(dt); 		
+			inimigo30.update(dt); 		
+		}
 	
 		posDoggieX = doggie.getPosition().x * PPM;
 		posDoggieY = doggie.getPosition().y * PPM;
@@ -347,6 +401,25 @@ public class PlayScreen implements Screen {
 		inimigo13.render(game.sb);
 		inimigo14.render(game.sb);
 		inimigo15.render(game.sb);
+		if(game.faseAtual == 2)
+		{
+			inimigo16.render(game.sb);
+			inimigo17.render(game.sb);
+			inimigo18.render(game.sb);
+			inimigo19.render(game.sb);
+			inimigo20.render(game.sb);
+			inimigo21.render(game.sb);
+			inimigo22.render(game.sb);
+			inimigo23.render(game.sb);
+			inimigo24.render(game.sb);
+			inimigo25.render(game.sb);
+			inimigo26.render(game.sb);
+			inimigo27.render(game.sb);
+			inimigo28.render(game.sb);
+			inimigo29.render(game.sb);
+			inimigo30.render(game.sb);
+
+		}
 		
 		doggie.render(game.sb);
 		
@@ -403,6 +476,7 @@ public class PlayScreen implements Screen {
 //    }
 
 	private void createTiles() {
+		
 
 		// Carregando mapa
 	if(game.faseAtual == 1)

@@ -55,7 +55,7 @@ public class CreditosScreen extends ApplicationAdapter implements Screen {
 		{	
 			txtVoltar = "Voltar";
 			texto1 = "Programação, Game Design, Roteiro e Level Design: Victor Teixeira.";
-			texto2 = "Arte e Sound Desing: Gabriel Ventura.";
+			texto2 = "Arte e Sound Design: Gabriel Ventura.";
 			texto3 = "Assets utilizados no projeto:";
 			textoDuque = "Apoio ao desenvolvimento da arte grafica: Narriman Duque";
 			txtCreditos = "Créditos";

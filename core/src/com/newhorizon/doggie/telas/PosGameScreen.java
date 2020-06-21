@@ -104,11 +104,11 @@ public class PosGameScreen extends ApplicationAdapter implements Screen{
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         	
         
-        if(game.faseAtual == 1 && posGameTimer > 0.1f)
+        if(game.faseAtual == 1 && posGameTimer > 0.2f)
 		{
         	game.telaAtual = "PosGame1";
 		}
-		else if(game.faseAtual == 2 && posGameTimer > 0.1f)
+		else if(game.faseAtual == 2 && posGameTimer > 0.2f)
 		{
 			game.telaAtual = "PosGame2";
 		}
@@ -163,13 +163,13 @@ public class PosGameScreen extends ApplicationAdapter implements Screen{
 
         sb.end();
 		
-        if((posGameTimer > 14.5f || (Gdx.input.isKeyJustPressed(Input.Keys.SPACE))) && game.faseAtual == 1)
+        if((posGameTimer > 14.5f || (Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY))) && game.faseAtual == 1)
         {
         	game.telaAtual = "Null";
         	game.faseAtual = 2;
         	game.setScreen(new PlayScreen(game));
         }
-        else if ((posGameTimer > 16 || (Gdx.input.isKeyJustPressed(Input.Keys.SPACE))) && game.faseAtual == 2)
+        else if ((posGameTimer > 16 || (Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY))) && game.faseAtual == 2)
         {
         	game.telaAtual = "Null";
         	game.setScreen(new MenuScreen(game));

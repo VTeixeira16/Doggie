@@ -11,9 +11,6 @@ public class OssosVeneno extends B2DSprites {
 		
 		super(body);
 		
-//		Texture tex = GameClass.res.getTexture("coleiras");
-//		TextureRegion[] sprites = TextureRegion.split(tex, 16, 16)[0];
-		
 		Texture tex = GameClass.res.getTexture("ossoVeneno");
 		TextureRegion[] sprites = TextureRegion.split(tex, 37, 24)[0];
 		

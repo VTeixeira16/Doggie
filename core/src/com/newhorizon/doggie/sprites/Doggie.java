@@ -25,7 +25,7 @@ import com.newhorizon.doggie.tools.B2dVariaveis;
 public class Doggie extends Sprite {
 	public enum Estado {
 		CAINDO, PULANDO, PARADO, CORRENDO, ATACANDO, MORTO, GAMEOVER
-	}; // NECESSARIO CRIAR UM ESTADO DE GAME OVER (POS MORTE)
+	};
 
 	public Estado estadoAtual;
 	public Estado estadoAnterior;
@@ -77,7 +77,6 @@ public class Doggie extends Sprite {
 		flip = false;
 
 		defineDoggie(x, y);
-//		setBounds(0,0, 16 / PPM, 16 / PPM);
 
 		// Animacoes do Doggie
 		animationRun = new Animation();
@@ -131,25 +130,9 @@ public class Doggie extends Sprite {
 
 	public void update(float dt) {
 		stateTimer += dt;
-
 		flagTimer += dt;
-//		
-//		if(flagTimer > 0.2)
-//			flagTimer = 0;
-
-//		Gdx.app.log("Doggie", "TIMER: " + stateTimer);
 
 		verificaEstado(dt);
-
-//		if(screen.cl.isPlayerOnGround())
-//			Gdx.app.log("log", "Doggie no chao");
-
-		// Mata Doggie caso o tempo acaba
-//        if (screen.getHud().isTimeUp() && !isDead()) {
-//            die();
-//        }
-
-//		setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
 
 		animationRun.update(dt);
 		animationIdle.update(dt);
@@ -159,7 +142,6 @@ public class Doggie extends Sprite {
 			body.setTransform(401 / PPM, body.getPosition().y, 0);
 		if (this.getPosition().x > 9800 / PPM)
 			terminouFase = true;
-//			body.setTransform(9798 / PPM, body.getPosition().y, 0);
 		
 		if (this.getPosition().y > 870 / PPM)
 		{
@@ -204,13 +186,10 @@ public class Doggie extends Sprite {
 			envenenado = false;
 		}
 
-//		if (stateTimer > 0.7f) {
-//			stateTimer = 0;
 			setTotalVidas(this.totalVidas - 1);
-//		}
+			
 		if (this.totalVidas < 0)
 			this.totalVidas = 0;
-		
 		
 	}
 
@@ -272,10 +251,6 @@ public class Doggie extends Sprite {
 			sb.draw(animationRun.getFrame(), body.getPosition().x * PPM - width / 2,
 					body.getPosition().y * PPM - height / 2);
 		}
-		
-		
-		
-		
 
 		sb.end();
 	}
@@ -284,8 +259,6 @@ public class Doggie extends Sprite {
 //		  {CAINDO, PULANDO, PARADO, CORRENDO, ATACANDO, MORTO};
 		estadoAnterior = estadoAtual;
 		estadoAtual = getState();
-
-//		  TextureRegion region;
 
 		switch (estadoAtual) {
 		case MORTO:
@@ -308,11 +281,8 @@ public class Doggie extends Sprite {
 //	            	SERA CRIADO FUNCAO QUE DESTROI O OBJETO
 		default:
 			estadoAtual = Estado.PARADO;
-//	                Gdx.app.log("log", "NENHUMESTADODETECTADO");
-		}// Propriedades das
-
-//	        stateTimer = estadoAtual == estadoAnterior ? stateTimer + dt : 0;
-
+		}
+		
 		return estadoAtual;
 	}
 
@@ -347,15 +317,6 @@ public class Doggie extends Sprite {
 			Filter filter = new Filter();
 			filter.maskBits = B2dVariaveis.BIT_NADA;
 			filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_OBJETOS;
-
-//	            for (Fixture fixture : body.getFixtureList()) {
-//	                fixture.setFilterData(filter);
-//	            }
-//	            body.applyLinearImpulse(new Vector2(0, 4f), body.getWorldCenter(), true);
-
-//	            COLOCAR UM TIMER PARA TROCAR PARA O ESTADO DE GAME OVER APOS O FIM DA ANIMACAO.
-//	            IMPLEMENTAcAO DEVE ACONTECER AQUI OU NA MAQUINA DE ESTADOS.
-
 		}
 	}
 
@@ -426,8 +387,6 @@ public class Doggie extends Sprite {
 		fDef.filter.categoryBits = B2dVariaveis.BIT_DOGGIE_HEAD;
 		fDef.filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_INIMIGO;
 		fDef.isSensor = true;
-//		body.createFixture(fDef).setUserData("headDoggie");
-
 		body.createFixture(fDef).setUserData(this);
 	}
 

@@ -2,19 +2,14 @@ package com.newhorizon.doggie.telas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.newhorizon.doggie.GameClass;
 import com.newhorizon.doggie.sprites.Doggie;
 
 public class Hud{
 
-	private Doggie doggie;
-	
-	private TextureRegion[] blocks;
-	
+	private Doggie doggie;	
 	private String vidas;
 	private String ossos;
-	
 	
 	public Hud(Doggie doggie, GameClass game) {
 		// TODO Auto-generated constructor stub

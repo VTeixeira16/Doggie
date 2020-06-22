@@ -32,9 +32,6 @@ public class DetectorColisoes implements ContactListener{
 		int fixA = fixtureA.getFilterData().categoryBits;
 		int fixB = fixtureB.getFilterData().categoryBits;
 		int fixC = fixtureA.getFilterData().categoryBits | fixtureB.getFilterData().categoryBits;
-//		System.out.println("A: " + fixtureA.getUserData());
-//		System.out.println("B: " + fixtureB.getUserData());
-//		System.out.println("C: " + fixC);
 				
 		switch(fixC) {
 			case B2dVariaveis.BIT_DOGGIE_PES | B2dVariaveis.BIT_INIMIGO_HEAD:	
@@ -78,8 +75,6 @@ public class DetectorColisoes implements ContactListener{
 		
 		if(fixA == B2dVariaveis.BIT_DOGGIE_PES || fixB == B2dVariaveis.BIT_DOGGIE_PES)
 			numDoggieGround ++;
-		
-//		ESTRUTURA ABAIXO DEVERÁ SER PORTADA PARA O CASE ACIMA
 		 			  
 		if(fixtureA.getUserData() != null && fixtureA.getUserData().equals("ossos"))
 		{
@@ -87,7 +82,6 @@ public class DetectorColisoes implements ContactListener{
 			bodiesToRemove.add(fixtureA.getBody());
 			((Doggie)fixtureB.getUserData()).somOsso();
 			
-
 		}
 		if(fixtureB.getUserData() != null && fixtureB.getUserData().equals("ossos"))
 		{

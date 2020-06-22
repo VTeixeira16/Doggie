@@ -20,8 +20,6 @@ public class GameOver implements Screen{
 	private String texto1;
 	private String texto2;
 
-	// Classe dever� ser corrigida e adaptada para funcionar com o Manager Cenas
-
 	public GameOver(GameClass game) {
 		this.game = game;
 		

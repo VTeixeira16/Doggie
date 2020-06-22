@@ -12,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.newhorizon.doggie.GameClass;
@@ -23,7 +22,6 @@ public class ComoJogar extends ApplicationAdapter implements Screen {
 	public Screen screen;
 	
     private Stage stage;
-    private Label outputLabel;
     private Skin skin;
     
     SpriteBatch sb;
@@ -32,7 +30,6 @@ public class ComoJogar extends ApplicationAdapter implements Screen {
 	String texto2;
 	String texto3;
 	String texto4;
-	
 	String txtVoltar;
 	String txtCreditos;
 	
@@ -123,7 +120,6 @@ public class ComoJogar extends ApplicationAdapter implements Screen {
 		
 		GameClass.fontMenu.draw(sb, texto1 + "\n \n" + texto2 + "\n \n" + texto3 + texto4, Gdx.graphics.getWidth() / 24, Gdx.graphics.getHeight() - 120);
 
-		
 		sb.end();
 		
 	}

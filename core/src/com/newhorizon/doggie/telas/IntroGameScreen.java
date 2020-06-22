@@ -26,11 +26,7 @@ public class IntroGameScreen extends ApplicationAdapter implements Screen{
 	private String texto6;
 	private String texto7;
 	private String texto8;
-	private String texto9;
-	
-	
-	
-			
+	private String texto9;			
 	
 	public IntroGameScreen (GameClass game) {
 		this.game = game;
@@ -66,24 +62,18 @@ public class IntroGameScreen extends ApplicationAdapter implements Screen{
 		}
 		game.telaAtual = "Null";	
 		
-		
 		sb = new SpriteBatch();
-		
-		
+
 	}
 	
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
 		
-		
-		
-		
 	}
 	@Override
 	public void render(float delta) {
 		introTimer += delta;
-//		Gdx.app.log("INTRO", "introTimer" + introTimer);
 		
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -115,7 +105,6 @@ public class IntroGameScreen extends ApplicationAdapter implements Screen{
         if(introTimer > 27.5f || (Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY)))
         	game.telaAtual = "Null";
         	
-
         sb.end();
 		
         if(introTimer > 28 || (Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY)))

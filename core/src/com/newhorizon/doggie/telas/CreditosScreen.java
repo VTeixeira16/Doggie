@@ -23,7 +23,6 @@ public class CreditosScreen extends ApplicationAdapter implements Screen {
 	public Screen screen;
 	
     private Stage stage;
-    private Label outputLabel;
     private Skin skin;
     
     SpriteBatch sb;

@@ -14,8 +14,6 @@ import com.newhorizon.doggie.telas.SplashScreen;
 import com.newhorizon.doggie.threads.ThreadMusica;
 import com.newhorizon.doggie.tools.Content;
 
-
-
 public class GameClass extends Game {
 
 	public String Language;
@@ -26,7 +24,6 @@ public class GameClass extends Game {
 	public static final int V_HEIGHT = 600;	
 	
 	public static SpriteBatch sb;
-	
 	
 	// Fontes
 	private FreeTypeFontGenerator fontGenerator;
@@ -53,10 +50,6 @@ public class GameClass extends Game {
 	private FreeTypeFontGenerator.FreeTypeFontParameter fontGameOverParameter;
 	public static BitmapFont fontGameOver;
 	
-	private FreeTypeFontGenerator fontSplashScreenGenerator;
-	private FreeTypeFontGenerator.FreeTypeFontParameter fontSplashScreenParameter;
-	public static BitmapFont fontSplashScreen;
-
 	public static Content res;
 	
 	public static AssetManager manager;
@@ -67,10 +60,7 @@ public class GameClass extends Game {
 	  
 	public void create() {
 		
-		debug = false;
-		
-		
-		
+		debug = true;
 		
 		//		ASSETS
 		res = new Content();
@@ -178,9 +168,6 @@ public class GameClass extends Game {
 			Language = "Portugues";
 			setScreen(new SplashScreen(this));
 		}
-
-		
-		
 		
 	}
 	@Override

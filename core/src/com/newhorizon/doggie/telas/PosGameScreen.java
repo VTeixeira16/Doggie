@@ -89,11 +89,7 @@ public class PosGameScreen extends ApplicationAdapter implements Screen{
 	
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
-		
-		
-		
-		
+		// TODO Auto-generated method stub	
 	}
 	@Override
 	public void render(float delta) {
@@ -154,12 +150,8 @@ public class PosGameScreen extends ApplicationAdapter implements Screen{
         	GameClass.fontIntro.draw(sb, texto5 , Gdx.graphics.getWidth() / 7, Gdx.graphics.getHeight() / 2 - 15);
         if(posGameTimer > 11 && posGameTimer < 16)
         	GameClass.fontIntro.draw(sb, texto6 + (16 - (int)posGameTimer), Gdx.graphics.getWidth() / 7, Gdx.graphics.getHeight() /2 - 220);
-        
-
         	
         }
-
-       	
 
         sb.end();
 		

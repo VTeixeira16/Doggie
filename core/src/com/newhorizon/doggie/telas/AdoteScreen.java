@@ -1,5 +1,8 @@
 package com.newhorizon.doggie.telas;
 
+import static com.newhorizon.doggie.telas.MenuScreen.col_width;
+import static com.newhorizon.doggie.telas.MenuScreen.row_height;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -9,13 +12,9 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.newhorizon.doggie.GameClass;
-import static com.newhorizon.doggie.telas.MenuScreen.col_width;
-import static com.newhorizon.doggie.telas.MenuScreen.Help_Guides;
-import static com.newhorizon.doggie.telas.MenuScreen.row_height;
 
 public class AdoteScreen extends ApplicationAdapter implements Screen {
 
@@ -23,9 +22,7 @@ public class AdoteScreen extends ApplicationAdapter implements Screen {
 	public Screen screen;
 	
     private Stage stage;
-    private Label outputLabel;
     private Skin skin;
-    
     SpriteBatch sb;
     
     private String texto1 = "www.naturezaemforma.org.br/como-adotar/";
@@ -37,9 +34,7 @@ public class AdoteScreen extends ApplicationAdapter implements Screen {
     private String texto7 = "www.adoteumfocinho.com.br";
     private String texto8 = "www.ilm.org.br/";
     private String texto9 = "www.ajudaanimal.wixsite.com/ajudaanimal";
-    
     private String texto10;
-    
     private String txtVoltar;
     private String txtContatos;
 
@@ -59,8 +54,6 @@ public class AdoteScreen extends ApplicationAdapter implements Screen {
 			txtContatos = "Contacts for adoption";
 			texto10 = "Adopt a pet, bring love to your home and \n earn Doggie Coins to use in the game!!!";
 			txtVoltar = "Return";
-
-
 		}
 	}
     
@@ -115,9 +108,7 @@ public class AdoteScreen extends ApplicationAdapter implements Screen {
 		GameClass.fontMenu.draw(sb, texto1 + "\n" + texto2 + "\n" + texto3 + "\n" + texto4 + "\n" + texto5 + "\n" + texto6 
 				+ "\n" + texto7 + "\n" + texto8 + "\n" + texto9 + "\n",
 				Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 140);
-		
-//		GameClass.fontMenu.draw(game.sb, "Creditos", Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 40);
-		
+				
 		sb.end();
 		
 	}

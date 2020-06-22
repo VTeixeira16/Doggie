@@ -1,15 +1,5 @@
 package com.newhorizon.doggie.telas;
 
-import java.awt.Cursor;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
-import java.awt.image.BufferedImage;
-
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -33,16 +23,15 @@ public class MenuScreen extends ApplicationAdapter implements Screen{
 	public Screen screen;
 	
     private Stage stage;
-    private Label outputLabel;
     private Skin skin;
     
-    private int btnJogar;
-    private int btnComoJogar;
-    private int btnSobreJogo;
-    private int btnCreditos;
-    private int btnAdote;
-    private int btnSair;
-    private int btnIdioma;
+//    private int btnJogar;
+//    private int btnComoJogar;
+//    private int btnSobreJogo;
+//    private int btnCreditos;
+//    private int btnAdote;
+//    private int btnSair;
+//    private int btnIdioma;
     
     private String txtJogar;
     private String txtComoJogar;
@@ -224,18 +213,6 @@ public class MenuScreen extends ApplicationAdapter implements Screen{
         stage.act();
         stage.draw();
 		
-		
-//		if(Gdx.input.isButtonJustPressed(menuLis.btnJogar))
-//		{
-//			System.out.println("Jogar pressionado");
-////			game.setScreen(new PlayScreen(game));
-//			
-//		}
-//		else if(Gdx.input.isButtonJustPressed(menuLis.btnSair))
-//		{
-//			System.out.println("Sair pressionado");
-////			System.exit(0);	
-//		}
 	}
 
 	@Override

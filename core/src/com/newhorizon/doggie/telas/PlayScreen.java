@@ -34,17 +34,11 @@ import com.newhorizon.doggie.sprites.Inimigos;
 import com.newhorizon.doggie.sprites.Ossos;
 import com.newhorizon.doggie.sprites.OssosVeneno;
 import com.newhorizon.doggie.threads.DoggieThread;
-import com.newhorizon.doggie.threads.InimigoThread;
 import com.newhorizon.doggie.tools.B2dVariaveis;
 import com.newhorizon.doggie.tools.DetectorColisoes;
 
 public class PlayScreen implements Screen {
-
-	// Se tiver em debug, o render mostrar� os colisores
-
-//	private boolean debug = false;
 	
-
 	private GameClass game;
 	
 	private float playTimer;
@@ -72,7 +66,6 @@ public class PlayScreen implements Screen {
 
 	// sprites
 	private Doggie doggie;
-	private DoggieThread doggieThread;
 	private Inimigos inimigo;
 	private Inimigos inimigo2;
 	private Inimigos inimigo3;
@@ -104,14 +97,8 @@ public class PlayScreen implements Screen {
 	private Inimigos inimigo28;
 	private Inimigos inimigo29;
 	private Inimigos inimigo30;
-	
-	private InimigoThread inimigo1Thread;
-	private InimigoThread inimigo2Thread;
-//    private Coleiras coleiras;
-//    private TiledMapManager tiledMapMan;
-	
-	public float posDoggieX;
-	public float posDoggieY;
+		
+	// Se tiver em debug, o render mostrar� os colisores
 	public boolean debug;
 	
 	public PlayScreen(GameClass game) {	
@@ -119,18 +106,6 @@ public class PlayScreen implements Screen {
 		this.game = game;
 		
 		debug = game.debug;
-		
-		if(game.faseAtual == 1)
-		{
-			
-		}
-		else if(game.faseAtual == 2)
-		{
-			
-		}
-		
-		
-		
 
 		// Cria Camera para seguir o Doggie
 		gamecam = new OrthographicCamera();
@@ -143,18 +118,13 @@ public class PlayScreen implements Screen {
 		// Cria um ViewPort para ter controle do jogo em diferentes tamanhos de janela.
 		gamePort = new FitViewport(GameClass.V_WIDTH / PPM, GameClass.V_HEIGHT / PPM, gamecam);
 
-		// Carrega o mapa e configura --- DESATIVADO, ATUALMENTE EST� SENDO EXECUTADO
-		// ATRAV�S DA FUN��O createTiles();
-//        tiledMapMan = new TiledMapManager(this);
-//        tiledMapMan.createTiles();
-
 		maploader = new TmxMapLoader();
 
 		// Configura��o de posi��es das c�meras
 		gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 		b2dCamera.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 
-		// Cria o mundo Box2D, onde o primeiro valor � a gravidade horizontal e o
+		// Cria o mundo Box2D, onde o primeiro valor é a gravidade horizontal e o
 		// segundo vertical.
 		world = new World(new Vector2(0, -10), true);
 		cl = new DetectorColisoes();
@@ -164,10 +134,7 @@ public class PlayScreen implements Screen {
 		b2dDR = new Box2DDebugRenderer();
 
 		// Criando Sprites no mundo.
-		// ((this), Posi��o X, Posi��o Y)
 		doggie = new Doggie(this, 400, 400);
-//		doggie = new Doggie(this, 9650, 400);
-		doggieThread = new DoggieThread(doggie);
 		doggie.terminouFase = false;
 		
 		inimigo = new InimigoCachorro(this, 230, 180, 0);
@@ -204,19 +171,11 @@ public class PlayScreen implements Screen {
 			inimigo29 = new InimigoCachorro(this, 2000, 180, 1);
 			inimigo30 = new InimigoCachorro(this, 3300, 180, 0);
 		}
-		
-//		inimigo1Thread = new InimigoThread(inimigo);
-//		inimigo2Thread = new InimigoThread(inimigo2);
-		
-		
-//		doggieThread.start();
-//		inimigo1Thread.start();
-//		inimigo2Thread.start();
-		
+			
 		// coleiras = new Coleiras(this);
 
-		// Cria HUD, onde valores e textos ser�o exibidos na tela. Na pr�tica � uma
-		// c�mera com mesmos valores da gamecam.
+		// Cria HUD, onde valores e textos serão exibidos na tela. Na prática é uma
+		// câmera com mesmos valores da gamecam.
 		hud = new Hud(doggie, this.game);
 		cameraHUD = new OrthographicCamera();
 		cameraHUD.setToOrtho(false, GameClass.V_WIDTH, GameClass.V_HEIGHT);
@@ -243,10 +202,6 @@ public class PlayScreen implements Screen {
 				doggie.body.applyLinearImpulse(new Vector2(0.1f, 0), doggie.body.getWorldCenter(), true);
 			else if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && doggie.body.getLinearVelocity().x >= -2)
 				doggie.body.applyLinearImpulse(new Vector2(-0.1f, 0), doggie.body.getWorldCenter(), true);
-//			else
-//				doggie.body.applyLinearImpulse(new Vector2(0,0), doggie.body.getWorldCenter(), true);
-//            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
-//            	doggie.fire();
 		}
 
 	}
@@ -281,9 +236,6 @@ public class PlayScreen implements Screen {
 		world.step(dt, 6, 2);
 		handleInput(dt);
 		gamecam.update();
-//		System.out.println("Inimigo estado:" + inimigo.estadoAtual);
-
-		
 
 		// Apagando Ossos
 		Array<Body> bodies = cl.getBodiesToRemove();
@@ -302,7 +254,6 @@ public class PlayScreen implements Screen {
 			Body bV = bodiesVeneno.get(i);
 			ossosVeneno.removeValue((OssosVeneno) bV.getUserData(), true);
 			world.destroyBody(bV);
-			//Colocar fun��o para remover vida do Doggie
 			doggie.Envenenado();
 		}
 		
@@ -341,14 +292,6 @@ public class PlayScreen implements Screen {
 			inimigo30.update(dt); 		
 		}
 	
-		posDoggieX = doggie.getPosition().x * PPM;
-		posDoggieY = doggie.getPosition().y * PPM;
-		
-		
-		
-//        ossos.update(dt);
-//		Gdx.app.log("log", "Estado atual: " + doggie.estadoAtual);
-
 		bodies.clear();
 		for (int i = 0; i < ossos.size; i++) {
 			ossos.get(i).update(dt);
@@ -359,7 +302,6 @@ public class PlayScreen implements Screen {
 			ossosVeneno.get(i).update(dt);
 		}
 	
-//		ManagerCenas.setScreen(new GameOver(this), game);
 	}
 	@Override
 	public void render(float delta) {
@@ -378,14 +320,6 @@ public class PlayScreen implements Screen {
 		tmr.setView(gamecam);
 		tmr.render();
 		
-		// Migrado para DoggieThread
-//		doggie.render(game.sb);
-		
-//		IMPLEMENTA��O USADA APENAS ENQUANTO N�O FOR RESOLVIDO O PROBLEMA DE MULTITHREADS
-		
-//		doggieThread.run();
-//		inimigo1Thread.run();
-//		inimigo2Thread.run();
 		inimigo.render(game.sb);
 		inimigo2.render(game.sb);
 		inimigo3.render(game.sb);
@@ -423,25 +357,18 @@ public class PlayScreen implements Screen {
 		
 		doggie.render(game.sb);
 		
-
-		
-		
-//		inimigo.render(game.sb);	
-//        ossos.render(game.sb);
 		// Camadas s�o renderizadas depois em cima do Doggie e de inimigos.
 		tmr.getBatch().begin();
 		tmr.renderTileLayer((TiledMapTileLayer) tiledMap.getLayers().get("FrenteCenario"));
 		tmr.getBatch().end();
 		game.sb.setProjectionMatrix(cameraHUD.combined);
 		hud.render(game.sb);
-
 		
 		// Renderiza a c�mera do Box2D
 		if (game.debug) {
 			b2dDR.render(world, b2dCamera.combined);
 			b2dCamera.position.set(doggie.body.getPosition().x, doggie.body.getPosition().y + 1f, 0);
 			b2dCamera.update();
-
 		}
 
 		game.sb.setProjectionMatrix(gamecam.combined);
@@ -454,30 +381,10 @@ public class PlayScreen implements Screen {
 		for (int i = 0; i < ossosVeneno.size; i++) {
 			ossosVeneno.get(i).render(game.sb);
 		}
-
-		// Como o sb est� sendo executado no game, verificar possibilidade de exclus�o
-		// dessas fun��es.
-//        game.sb.begin();      
-//        game.sb.end();
-
-		// Troca de tela em caso de Game Over (N�o implementado)
-//        if(gameOver()){
-//            game.setScreen(new GameOverScreen(game));
-//            dispose();
-//        }
 	}
-
-	// Estrutura de game over com possibilidade de jogo funcionar com timer
-//    public boolean gameOver(){
-//        if(player.currentState == doggie.Estado.MORTO && doggie.getStateTimer() > 3){
-//            return true;
-//        }
-//        return false;
-//    }
 
 	private void createTiles() {
 		
-
 		// Carregando mapa
 	if(game.faseAtual == 1)
 		tiledMap = new TmxMapLoader().load("Tiled/mapa1.tmx");			
@@ -541,15 +448,9 @@ public class PlayScreen implements Screen {
 				
 				fDef.isSensor = false;
 				
-				
-				
-				
 				world.createBody(bDef).createFixture(fDef);
-
 			}
-
 		}
-
 	}
 
 	private void createOssos() {
@@ -584,9 +485,6 @@ public class PlayScreen implements Screen {
 			ossos.add(c);
 
 			body.setUserData(c);
-			
-			
-
 		}
 	}
 	
@@ -623,9 +521,6 @@ public class PlayScreen implements Screen {
 			ossosVeneno.add(c);
 
 			body.setUserData(c);
-			
-			
-
 		}
 	}
 
@@ -675,8 +570,21 @@ public class PlayScreen implements Screen {
 		inimigo13.dispose();
 		inimigo14.dispose();
 		inimigo15.dispose();
-//        hud.dispose();
-
+		inimigo16.dispose();
+		inimigo17.dispose();
+		inimigo18.dispose();
+		inimigo19.dispose();
+		inimigo20.dispose();
+		inimigo21.dispose();
+		inimigo22.dispose();
+		inimigo23.dispose();
+		inimigo24.dispose();
+		inimigo25.dispose();
+		inimigo26.dispose();
+		inimigo27.dispose();
+		inimigo28.dispose();
+		inimigo29.dispose();
+		inimigo30.dispose();
 	}
 
 }

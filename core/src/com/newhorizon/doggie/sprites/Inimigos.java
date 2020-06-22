@@ -48,25 +48,10 @@ public abstract class Inimigos extends Sprite{
 		velocidade = new Vector2 (2,0);
 		
 		som = GameClass.manager.get("sons/latido/rosnadoinimigo.mp3", Sound.class);
-		
-//		this.screen = screen;
-//		this.world = screen.getWorld();
-//		animation = new Animation();
-//		animationIdle = new Animation();
-//		
-//		Texture tex = GameClass.res.getTexture("dogIdle");
-//		TextureRegion[] spritesInimigo = TextureRegion.split(tex, 82, 60)[0]; // Recorte do SpriteSheet
-//		
-//		criaInimigo(x,y);
-////		setBounds(0,0, 16 / PPM, 16 / PPM);
-//		
-//		setAnimation(spritesInimigo, 1 / 12f);	// Velocidade da troca de frame;
-//		setAnimationIdle(spritesInimigo, 1 / 1f);
 	}
 	
 	
     public abstract void hitOnHead(Doggie doggie);
-    public abstract void hitByEnemy(Inimigos inimigos);
     
     public void revVelocidade(boolean x, boolean y) {
     	if(x)
@@ -96,7 +81,6 @@ public abstract class Inimigos extends Sprite{
 	
 	public void update (float dt) {
 		stateTime += dt;
-//		System.out.println(stateTime);		
 		verificaEstado(dt);
 		
 		
@@ -107,26 +91,7 @@ public abstract class Inimigos extends Sprite{
 		{
 			revVelocidade(true,false);
 			body.setTransform(31 / PPM, body.getPosition().y, 0);
-		}
-		
-//			body.applyLinearImpulse(new Vector2(-1f, 0), body.getWorldCenter(), true);
-
-				
-//		animation.update(dt);
-//		
-//		setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeigth() / 2);
-//		animationIdle.update(dt);
-//		
-//		if(this.body.getLinearVelocity().x != 0)
-//			this.emMovimento = true;
-//		else
-//			this.emMovimento = false;
-//		
-//		if(this.body.getLinearVelocity().x < 0)
-//			this.flip = true;
-//		else if(this.body.getLinearVelocity().x > 0)
-//			this.flip = false;
-		
+		}		
 	}
 	
 	public void render (SpriteBatch sb) {
@@ -175,8 +140,6 @@ public abstract class Inimigos extends Sprite{
 //		  {CAINDO, PULANDO, PARADO, CORRENDO, ATACANDO, MORTO};
 	  estadoAnterior = estadoAtual;
 	  estadoAtual = getState();
-//		  TextureRegion region;
-//	  Gdx.app.log("log","estado" + this.estadoAtual); 
         switch(estadoAtual){
         
             case MORTO:          	  
@@ -206,8 +169,6 @@ public abstract class Inimigos extends Sprite{
         else if (body.getLinearVelocity().x > 0)
         	flip = false;
         
-//	        Gdx.app.log("log", "velocidade:" + body.getLinearVelocity().x);
-    	
         if(inimigoMorreu)
             return EstadoInimigos.MORTO;
         // Se a velocidade for diferente de 0 significa que está em movimento
@@ -222,23 +183,12 @@ public abstract class Inimigos extends Sprite{
     {
     	
         if (!inimigoMorreu) {
-
-        	// Para música do jogo e toca som de morte. 
-        	
         	inimigoMorreu = true;
-//            Filter filter = new Filter();
-//            filter.maskBits = B2dVariaveis.BIT_NADA;
-
-            
             Gdx.app.postRunnable(new Runnable(){
                 public void run(){
                     world.destroyBody(body);
                 }
-            });
-            
-//            COLOCAR UM TIMER PARA TROCAR PARA O ESTADO DE GAME OVER APÓS O FIM DA ANIMAÇÃO.
-//            IMPLEMENTAÇÃO DEVE ROLAR AQUI OU NA MÁQUINA DE ESTADOS.
-            
+            });           
         }
 	}
 	

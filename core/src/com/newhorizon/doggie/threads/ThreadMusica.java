@@ -10,13 +10,6 @@ public class ThreadMusica extends Thread{
 	GameClass game;
 	public Music musica;
 	
-	
-	
-//	public ThreadMusica(String url) {
-//		this.url = url;			 
-//
-//	}
-	
 	public ThreadMusica(GameClass game) {
 		this.game = game;			 
 
@@ -39,8 +32,6 @@ public class ThreadMusica extends Thread{
 			if(game.telaAtual == "Splash")
 			{
 			}	
-			
-//			System.out.println(game.telaAtual);
 			
 			if(game.telaAtual == "Menu")
 			{
@@ -83,16 +74,6 @@ public class ThreadMusica extends Thread{
 				musica.play();
 				musica.setLooping(true);				
 			}
-		
-			
-//		musica = GameClass.manager.get(url, Music.class);
-//		musica.play();
-//		musica.setLooping(true);
-		
 		}
-		
-		
-	
 	}
-
 }

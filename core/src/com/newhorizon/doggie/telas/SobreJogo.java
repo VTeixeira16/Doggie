@@ -23,7 +23,6 @@ public class SobreJogo extends ApplicationAdapter implements Screen {
 	public Screen screen;
 	
     private Stage stage;
-    private Label outputLabel;
     private Skin skin;
     
     SpriteBatch sb;
@@ -103,7 +102,6 @@ public class SobreJogo extends ApplicationAdapter implements Screen {
 		
 		GameClass.fontMenu.draw(sb, texto1 + "\n \n" + texto2, Gdx.graphics.getWidth() / 24, Gdx.graphics.getHeight() - 120);
 
-		
 		sb.end();
 		
 	}

@@ -20,7 +20,4 @@ public class B2dVariaveis {
 	public static final short BIT_INIMIGO_HEAD = 256;
 	public static final short BIT_INIMIGO_PES = 512;
 	public static final short BIT_OSSOS_ENVENENADOS = 1024;
-	
-	
-
 }

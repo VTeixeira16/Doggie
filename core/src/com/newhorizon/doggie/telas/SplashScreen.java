@@ -32,9 +32,6 @@ public class SplashScreen extends ApplicationAdapter implements Screen{
     private Sprite doggieLogo;
     private Sprite newHorizonLogo;
     
-    
-	
-	
 	public SplashScreen (GameClass game) {
 
 		this.game = game;
@@ -80,18 +77,11 @@ public class SplashScreen extends ApplicationAdapter implements Screen{
 		if(splashTimer > 0.1f)
 			game.telaAtual = "Splash";
 		
-		
 		splashTimer += delta;	
 		
 		// Escurecimento da tela
 		introAlphaTimer += delta * 2 ;
-	
-//		if(splashTimer >3f)	
-//			logoTimer += delta * 150;
-//		if(splashTimer >= 6.5f)
-//		{
-//			logoTimer -= delta * 300; 
-//		}
+
 		if(introAlphaTimer > 1)
 			introAlphaTimer = 1;
 		

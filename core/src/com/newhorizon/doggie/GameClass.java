@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.newhorizon.doggie.telas.MenuScreen;
+import com.newhorizon.doggie.telas.PlayScreen;
 import com.newhorizon.doggie.telas.SplashScreen;
 import com.newhorizon.doggie.threads.ThreadMusica;
 import com.newhorizon.doggie.tools.Content;
@@ -67,7 +67,7 @@ public class GameClass extends Game {
 	  
 	public void create() {
 		
-		debug = true;
+		debug = false;
 		
 		
 		
@@ -99,6 +99,8 @@ public class GameClass extends Game {
 		manager.load("sons/latido/latidodoggie.mp3", Sound.class);
 		manager.load("sons/latido/rosnadoinimigo.mp3", Sound.class);
 		manager.load("sons/menu/menuClick.mp3", Sound.class);
+		manager.load("sons/bones/up1.mp3", Sound.class);
+		manager.load("sons/bones/veneno1.mp3", Sound.class);
 		manager.finishLoading();
 		
 		sb = new SpriteBatch();
@@ -169,7 +171,7 @@ public class GameClass extends Game {
 		Language = "Portugues";
 //		Language = "Ingles";
 		
-		setScreen(new MenuScreen(this));
+		setScreen(new PlayScreen(this));
 
 		if(!debug)
 		{			

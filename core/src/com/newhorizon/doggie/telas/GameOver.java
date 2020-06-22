@@ -91,10 +91,6 @@ public class GameOver implements Screen{
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
-		GameClass.fontMenu.dispose();
-		GameClass.fontGameOver.dispose();
-		
-		
 	}
 
 	@Override

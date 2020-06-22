@@ -61,6 +61,8 @@ public class Doggie extends Sprite {
 	public float flagTimer;
 	
 	public Sound som;
+	public Sound somOsso;
+	public Sound somVeneno;
 
 	public Doggie(PlayScreen screen, int x, int y) {
 		
@@ -92,6 +94,8 @@ public class Doggie extends Sprite {
 		envenenado = false;
 		
 		som = GameClass.manager.get("sons/latido/latidodoggie.mp3", Sound.class);
+		somOsso = GameClass.manager.get("sons/bones/up1.mp3", Sound.class);
+		somVeneno = GameClass.manager.get("sons/bones/veneno1.mp3", Sound.class);
 
 		setAnimationIdle(spritesDoggie, 1 / 16f);
 		setAnimationRun(spritesDoggie, 1 / 16f);
@@ -113,6 +117,16 @@ public class Doggie extends Sprite {
 	public void somLatido()
 	{
 		som.play();
+	}
+	
+	public void somOsso()
+	{
+		somOsso.play();
+	}
+	
+	public void somVeneno()
+	{
+		somVeneno.play();
 	}
 
 	public void update(float dt) {

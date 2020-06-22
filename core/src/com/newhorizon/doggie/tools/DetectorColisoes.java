@@ -85,24 +85,29 @@ public class DetectorColisoes implements ContactListener{
 		{
 			//Remove Ossos
 			bodiesToRemove.add(fixtureA.getBody());
+			((Doggie)fixtureB.getUserData()).somOsso();
+			
 
 		}
 		if(fixtureB.getUserData() != null && fixtureB.getUserData().equals("ossos"))
 		{
 			//Remove Ossos
 			bodiesToRemove.add(fixtureB.getBody());	
+			((Doggie)fixtureA.getUserData()).somOsso();
 		}		
 		
 		if(fixtureA.getUserData() != null && fixtureA.getUserData().equals("ossosVeneno"))
 		{
 			//Remove Ossos
 			bodiesVToRemove.add(fixtureA.getBody());
+			((Doggie)fixtureB.getUserData()).somVeneno();
 
 		}
 		if(fixtureB.getUserData() != null && fixtureB.getUserData().equals("ossosVeneno"))
 		{
 			//Remove Ossos
 			bodiesVToRemove.add(fixtureB.getBody());	
+			((Doggie)fixtureA.getUserData()).somVeneno();
 		}
 	}
 

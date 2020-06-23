@@ -1,5 +1,7 @@
 package com.newhorizon.doggie.desktop;
 
+import org.lwjgl.opengl.Display;
+
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
@@ -14,8 +16,8 @@ public class DesktopLauncher {
 		config.height = GameClass.V_HEIGHT;
 		config.resizable = false;
 		config.addIcon("OutGame/dogLogo.png", FileType.Internal);
-		config.fullscreen = false;
-		
+//		config.fullscreen = true;
+		config.vSyncEnabled = true;
 		// Aqui se controla qual classe é carregada primeiro
 		new LwjglApplication(new GameClass(), config); 
 	}

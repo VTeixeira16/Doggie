@@ -114,7 +114,7 @@ public class TiledMapManager {
 				fDef.friction = 0;
 				fDef.shape = shape;
 				fDef.filter.categoryBits = bits;
-				fDef.filter.maskBits = B2dVariaveis.BIT_DOGGIE | B2dVariaveis.BIT_INIMIGO1;
+				fDef.filter.maskBits = B2dVariaveis.BIT_DOGGIE | B2dVariaveis.BIT_INIMIGO;
 				fDef.isSensor = false;
 //				world.createBody(bDef).createFixture(fDef);
 				Gdx.app.log("log","world body executado");

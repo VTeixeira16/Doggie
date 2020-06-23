@@ -16,24 +16,33 @@ import com.newhorizon.doggie.tools.Animation;
 import com.newhorizon.doggie.tools.B2dVariaveis;
 
 public class InimigoCachorro extends Inimigos{
+	
+	Texture tex;
 
-	public InimigoCachorro(PlayScreen screen, int x, int y) {
+	public InimigoCachorro(PlayScreen screen, int x, int y, int skin) {
 		super(screen, x, y);
 		this.screen = screen;
 		this.world = screen.getWorld();
 		animation = new Animation();
 		animationIdle = new Animation();
 		
-		Texture tex = GameClass.res.getTexture("dogIdle");
-		TextureRegion[] spritesInimigo = TextureRegion.split(tex, 82, 60)[0]; // Recorte do SpriteSheet
+		switch(skin) {
+		case 0:
+			tex = GameClass.res.getTexture("inimigoDoggie");
+			velocidade = new Vector2 (2,0);
+			break;
+		case 1 :
+			tex = GameClass.res.getTexture("inimigoDoggie2");
+			velocidade = new Vector2 (-3,0);
+			break;
+		}
 		
-		criaInimigo(x,y);
-//		setBounds(0,0, 16 / PPM, 16 / PPM);
 		
+		TextureRegion[] spritesInimigo = TextureRegion.split(tex, 79, 61)[0]; // Recorte do SpriteSheet
+		
+		criaInimigo(x,y);	
 		setAnimation(spritesInimigo, 1 / 12f);	// Velocidade da troca de frame;
 		setAnimationIdle(spritesInimigo, 1 / 1f);
-		
-		velocidade = new Vector2 (2,0);
 		
 
 	}
@@ -43,9 +52,7 @@ public class InimigoCachorro extends Inimigos{
 		BodyDef EnemybDef = new BodyDef();	
 		FixtureDef fDef = new FixtureDef();
 		PolygonShape shape = new PolygonShape();
-		
-					
-		
+
 		//Criando Inimigo. necessário reposicionar sempre que um novo for criado	
 		EnemybDef.position.set(x/PPM , y/PPM);
 		EnemybDef.type = BodyType.DynamicBody;
@@ -80,19 +87,6 @@ public class InimigoCachorro extends Inimigos{
 		fDef.filter.maskBits = B2dVariaveis.BIT_PLATAFORMA | B2dVariaveis.BIT_DOGGIE | B2dVariaveis.BIT_DOGGIE_PES;
 		fDef.isSensor = true;
 		body.createFixture(fDef).setUserData(this);
-
-		//Criando sensor de pés
-//		shape.setAsBox(10/PixelsPorMetro, 6/PixelsPorMetro, new Vector2(0, -10/PixelsPorMetro), 0);
-//		fDef.shape = shape;
-//		fDef.filter.categoryBits = b2dVariaveis.BIT_DOGGIE;
-//		fDef.filter.maskBits = b2dVariaveis.BIT_PLATAFORMA;
-//		fDef.isSensor = true;
-//		body.createFixture(fDef).setUserData("footDoggie");
-		
-
-		// Cria inimigo
-//		enemy1 = new Inimigos(body);
-//		body.setUserData(this);
 		
 	}
 	
@@ -112,41 +106,14 @@ public class InimigoCachorro extends Inimigos{
 			body.setTransform(35 / PPM, body.getPosition().y, 0);
 		}
 		
-//			body.applyLinearImpulse(new Vector2(-1f, 0), body.getWorldCenter(), true);
-
-				
-//		animation.update(dt);
-//		
-//		setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeigth() / 2);
-//		animationIdle.update(dt);
-//		
-//		if(this.body.getLinearVelocity().x != 0)
-//			this.emMovimento = true;
-//		else
-//			this.emMovimento = false;
-//		
-//		if(this.body.getLinearVelocity().x < 0)
-//			this.flip = true;
-//		else if(this.body.getLinearVelocity().x > 0)
-//			this.flip = false;
+		if(body.getPosition().y > 180 /PPM)
+			body.setTransform(body.getPosition().x, 180/PPM, 0);
 		
 	}
 
 	@Override
 	public void hitOnHead(Doggie doggie) {
-		// TODO Auto-generated method stub
-//		System.out.println("Catapimbas");
 		morreu();
-//		this.world.destroyBody(this.body);
-		
-		
 	}
-
-	@Override
-	public void hitByEnemy(Inimigos inimigos) {
-		// TODO Auto-generated method stub
-		
-	}
-	
 
 }

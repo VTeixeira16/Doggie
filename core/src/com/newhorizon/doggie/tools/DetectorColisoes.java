@@ -1,6 +1,5 @@
 package com.newhorizon.doggie.tools;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
@@ -15,12 +14,13 @@ public class DetectorColisoes implements ContactListener{
 	
 	private int numDoggieGround;
 	private Array<Body> bodiesToRemove;
+	private Array<Body> bodiesVToRemove;
 	
 	public DetectorColisoes() 
 	{
 		super();
 		bodiesToRemove = new Array<Body>();
-		
+		bodiesVToRemove = new Array<Body>();
 	}
 	
 	//Chamado quando 2 fixtures colidem
@@ -32,9 +32,6 @@ public class DetectorColisoes implements ContactListener{
 		int fixA = fixtureA.getFilterData().categoryBits;
 		int fixB = fixtureB.getFilterData().categoryBits;
 		int fixC = fixtureA.getFilterData().categoryBits | fixtureB.getFilterData().categoryBits;
-//		System.out.println("A: " + fixtureA.getUserData());
-//		System.out.println("B: " + fixtureB.getUserData());
-//		System.out.println("C: " + fixC);
 				
 		switch(fixC) {
 			case B2dVariaveis.BIT_DOGGIE_PES | B2dVariaveis.BIT_INIMIGO_HEAD:	
@@ -42,11 +39,13 @@ public class DetectorColisoes implements ContactListener{
 	            {
                     ((Inimigos)fixtureA.getUserData()).hitOnHead((Doggie) fixtureB.getUserData());
                     ((Doggie)fixtureB.getUserData()).jumpEnemy();
+                    ((Doggie)fixtureB.getUserData()).somLatido();;
 	            }
 	            else
 	            {
                     ((Inimigos)fixtureB.getUserData()).hitOnHead((Doggie) fixtureA.getUserData());
                     ((Doggie)fixtureA.getUserData()).jumpEnemy();
+                    ((Doggie)fixtureA.getUserData()).somLatido();;
 	            }
 				break;	
 			case B2dVariaveis.BIT_INIMIGO | B2dVariaveis.BIT_OBJETOS:
@@ -59,12 +58,14 @@ public class DetectorColisoes implements ContactListener{
 	            if(fixtureA.getFilterData().categoryBits == B2dVariaveis.BIT_DOGGIE)
 	            {
                     ((Doggie)fixtureA.getUserData()).RecebeDano();
+                    ((Inimigos)fixtureB.getUserData()).somRosnar();
                     ((Inimigos)fixtureB.getUserData()).revVelocidade(true, false);
                     
 	            }
                 else
                 {
 	            	((Doggie)fixtureB.getUserData()).RecebeDano();
+	            	((Inimigos)fixtureA.getUserData()).somRosnar();
                     ((Inimigos)fixtureA.getUserData()).revVelocidade(true, false);
                 }
 				break;
@@ -74,20 +75,34 @@ public class DetectorColisoes implements ContactListener{
 		
 		if(fixA == B2dVariaveis.BIT_DOGGIE_PES || fixB == B2dVariaveis.BIT_DOGGIE_PES)
 			numDoggieGround ++;
-		
-//		ESTRUTURA ABAIXO DEVERÁ SER PORTADA PARA O CASE ACIMA
 		 			  
-		if(fixtureA.getUserData() != null && fixtureA.getUserData().equals("coleiras"))
+		if(fixtureA.getUserData() != null && fixtureA.getUserData().equals("ossos"))
 		{
-			//Remove coleira
+			//Remove Ossos
 			bodiesToRemove.add(fixtureA.getBody());
+			((Doggie)fixtureB.getUserData()).somOsso();
+			
+		}
+		if(fixtureB.getUserData() != null && fixtureB.getUserData().equals("ossos"))
+		{
+			//Remove Ossos
+			bodiesToRemove.add(fixtureB.getBody());	
+			((Doggie)fixtureA.getUserData()).somOsso();
+		}		
+		
+		if(fixtureA.getUserData() != null && fixtureA.getUserData().equals("ossosVeneno"))
+		{
+			//Remove Ossos
+			bodiesVToRemove.add(fixtureA.getBody());
+			((Doggie)fixtureB.getUserData()).somVeneno();
 
 		}
-		if(fixtureB.getUserData() != null && fixtureB.getUserData().equals("coleiras"))
+		if(fixtureB.getUserData() != null && fixtureB.getUserData().equals("ossosVeneno"))
 		{
-			//Remove coleira
-			bodiesToRemove.add(fixtureB.getBody());	
-		}		
+			//Remove Ossos
+			bodiesVToRemove.add(fixtureB.getBody());	
+			((Doggie)fixtureA.getUserData()).somVeneno();
+		}
 	}
 
 	//Chamado quando 2 fixtures deixam de colidir
@@ -108,6 +123,7 @@ public class DetectorColisoes implements ContactListener{
 	
 	public boolean isPlayerOnGround() {return numDoggieGround > 0;}
 	public Array<Body> getBodiesToRemove() { return bodiesToRemove;}
+	public Array<Body> getBodiesVToRemove() { return bodiesVToRemove;}
 	
 
 	public void preSolve(Contact contact, Manifold oldManifold) {}

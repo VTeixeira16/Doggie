@@ -1,24 +1,21 @@
 package com.newhorizon.doggie.telas;
 
+import static com.newhorizon.doggie.telas.MenuScreen.col_width;
+import static com.newhorizon.doggie.telas.MenuScreen.row_height;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.newhorizon.doggie.GameClass;
-
-import static com.newhorizon.doggie.telas.MenuScreen.col_width;
-import static com.newhorizon.doggie.telas.MenuScreen.Help_Guides;
-import static com.newhorizon.doggie.telas.MenuScreen.row_height;
 
 public class CreditosScreen extends ApplicationAdapter implements Screen {
 
@@ -26,28 +23,51 @@ public class CreditosScreen extends ApplicationAdapter implements Screen {
 	public Screen screen;
 	
     private Stage stage;
-    private Label outputLabel;
     private Skin skin;
     
-	String texto1 = "Programação, Game Design, Roteiro e Level Design: Victor Teixeira.";
-	String texto2 = "Arte e sonoplastia: Gabriel Ventura.";
-	String texto3 = "Assets utilizados para conclusão do projeto:";
+    SpriteBatch sb;
+    
+	String texto1;
+	String texto2;
+	String texto3;
+	String textoDuque;
 	
-	String texto4 = "Tiles: (Cenário inicial)";
-	String texto5 = "https://www.gameart2d.com/free-platformer-game-tileset.html";
-	String texto6 = "Bricks: (tijolo)";
-	String texto7 = "https://opengameart.org/content/bricks-tiled-texture-64x64";
-	String texto8 = "Cidade:";
-	String texto9 = "https://craftpix.net/file-licenses/";
-	String texto10 = "Fundo do jogo (céu)";
-	String texto11 = "https://opengameart.org/content/ocean-background";
-	String texto12 = "Osso:";
-	String texto13 = "https://opengameart.org/content/pixel-art-femur";
-	String texto14 = "Skins:";
-	String texto15 = "https://github.com/czyzby/gdx-skins";
+	String txtVoltar;
+	String txtCreditos;
+	
+	String texto4 = "www.gameart2d.com/free-platformer-game-tileset.html";
+	String texto5 = "www.opengameart.org/content/bricks-tiled-texture-64x64";
+	String texto6 = "www.craftpix.net/file-licenses/";
+	String texto7 = "www.opengameart.org/content/ocean-background";
+	String texto8 = "www.opengameart.org/content/pixel-art-femur";
+	String texto9 = "www.designevo.com/res/templates/thumb_small/brown-and-white-dog.png";
+	String texto10 = "https://github.com/czyzby/gdx-skins";
+	String texto11 = "https://fontmeme.com/fonts/kong-quest-font/";
+
+	
 	
 	public CreditosScreen (GameClass game) {
 		this.game = game;
+		sb = new SpriteBatch();
+		
+		if(game.Language == "Portugues")
+		{	
+			txtVoltar = "Voltar";
+			texto1 = "ProgramaÃ§Ã£o, Game Design, Roteiro e Level Design: Victor Teixeira.";
+			texto2 = "Arte e Sound Design: Gabriel Ventura.";
+			texto3 = "Assets utilizados no projeto:";
+			textoDuque = "Apoio ao desenvolvimento da arte grafica: Narriman Duque";
+			txtCreditos = "CrÃ©ditos";
+		}
+		else if(game.Language == "Ingles")
+		{
+			txtVoltar = "Return";
+			texto1 = "Programming, Game Design, Screenplay and Level Design: Victor Teixeira.";
+			texto2 = "Art and sound design: Gabriel Ventura.";
+			texto3 = "Assets used in the project:";
+			textoDuque = "Support for the development of graphic art: Narriman Duque";	
+			txtCreditos = "Credits";
+		}
 	}
 
 	@Override
@@ -58,7 +78,7 @@ public class CreditosScreen extends ApplicationAdapter implements Screen {
         skin = new Skin(Gdx.files.internal("skins/plain-james/skin/plain-james-ui.json"));
 
         //ImageTextButton
-        ImageTextButton btnVoltar = new ImageTextButton("Voltar", skin);
+        ImageTextButton btnVoltar = new ImageTextButton(txtVoltar, skin);
         btnVoltar.setSize(col_width*2,(float)(row_height));
         btnVoltar.setPosition(Gdx.graphics.getWidth() / 1.2f - (col_width * 1),Gdx.graphics.getHeight()-row_height*11.5f);
         btnVoltar.addListener(new InputListener(){
@@ -81,24 +101,28 @@ public class CreditosScreen extends ApplicationAdapter implements Screen {
         stage.act();
         stage.draw();
         
-		game.sb.begin();
+		sb.begin();
 		
-		GameClass.fontMenuP.draw(game.sb, "Créditos", Gdx.graphics.getWidth() / 2 - Gdx.graphics.getWidth()/10 , Gdx.graphics.getHeight() - 40);
-		GameClass.fontMenu.draw(game.sb, texto1 , Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 120);
-		GameClass.fontMenu.draw(game.sb, texto2, Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 160);
-		GameClass.fontMenuM.draw(game.sb, texto3, Gdx.graphics.getWidth() / 2 - Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight() - 240);
+		GameClass.fontMenuP.draw(sb, txtCreditos , Gdx.graphics.getWidth() / 2 - Gdx.graphics.getWidth()/10 , Gdx.graphics.getHeight() - 40);
 		
-		GameClass.fontMenu.draw(game.sb, texto4 + "\n" + texto5 + "\n" + texto6 + "\n" + texto7 + "\n" + texto8 + "\n" + texto9
-				+ "\n" + texto10 + "\n" + texto11 + "\n" + texto12 + "\n" + texto13 + "\n" + texto14 + "\n" + texto15, 
-				Gdx.graphics.getWidth() / 12, Gdx.graphics.getHeight() - 280);
+		GameClass.fontMenu.draw(sb, texto1 , Gdx.graphics.getWidth() / 24, Gdx.graphics.getHeight() - 120);
+		GameClass.fontMenu.draw(sb, texto2, Gdx.graphics.getWidth() / 24, Gdx.graphics.getHeight() - 145);
+		GameClass.fontMenu.draw(sb, textoDuque, Gdx.graphics.getWidth() / 24, Gdx.graphics.getHeight() - 170);
 		
-		game.sb.end();
+		GameClass.fontMenuM.draw(sb, texto3, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() - 210);
+		
+		GameClass.fontMenu.draw(sb, texto4 + "\n" + texto5 + "\n" + texto6 + "\n" + texto7 + "\n" + texto8 + "\n" + texto9
+				+ "\n" + texto10 + "\n" + texto11,
+				Gdx.graphics.getWidth() / 24, Gdx.graphics.getHeight() - 250);
+		
+		sb.end();
 		
 	}
 
 	@Override
 	public void hide() {
 		stage.dispose();
+		sb.dispose();
 		
 	}
 }

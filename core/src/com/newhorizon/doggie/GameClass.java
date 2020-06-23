@@ -2,25 +2,28 @@ package com.newhorizon.doggie;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.newhorizon.doggie.telas.MenuScreen;
+import com.newhorizon.doggie.telas.PlayScreen;
+import com.newhorizon.doggie.telas.SplashScreen;
+import com.newhorizon.doggie.threads.ThreadMusica;
 import com.newhorizon.doggie.tools.Content;
-
-
 
 public class GameClass extends Game {
 
+	public String Language;
+	public boolean debug;
 	// Nome e tamanho do jogo
 	public static final String GAMENAME = "Doggie";
 	public static final int V_WIDTH = 800;
 	public static final int V_HEIGHT = 600;	
 	
-	
 	public static SpriteBatch sb;
-	
 	
 	// Fontes
 	private FreeTypeFontGenerator fontGenerator;
@@ -38,28 +41,62 @@ public class GameClass extends Game {
 	private FreeTypeFontGenerator fontMenuMGenerator;
 	private FreeTypeFontGenerator.FreeTypeFontParameter fontMenuMParameter;
 	public static BitmapFont fontMenuM;
-
-	// Necessário implementar Manager Cenas
+	
+	private FreeTypeFontGenerator fontIntroGenerator;
+	private FreeTypeFontGenerator.FreeTypeFontParameter fontIntroParameter;
+	public static BitmapFont fontIntro;
+	
+	private FreeTypeFontGenerator fontGameOverGenerator;
+	private FreeTypeFontGenerator.FreeTypeFontParameter fontGameOverParameter;
+	public static BitmapFont fontGameOver;
+	
 	public static Content res;
+	
+	public static AssetManager manager;
+	
+	public ThreadMusica threadMusica;
+	public static int faseAtual;
+	public static String telaAtual;
 	  
 	public void create() {
 		
+		debug = true;
+		
+		//		ASSETS
 		res = new Content();
-		res.loadTexture("images/doggie.png", "doggie");
-		res.loadTexture("images/doggie.png", "doggieIdle");
-		res.loadTexture("images/doggieBlack.png", "dogIdle");
-		res.loadTexture("images/crystal.png", "coleiras");
-//		res.loadTexture("images/osso4.png", "osso4");
 		res.loadTexture("images/ossinho.png", "ossinho");
-		res.loadTexture("images/DoggieCorrendo.png", "doggieCorrendo");
-//		res.loadTexture("images/DoggieAndando.png", "doggieAndando");
+		res.loadTexture("images/ossoVeneno.png", "ossoVeneno");
 		res.loadTexture("images/DoggieSprites.png", "doggieAndando");
-
+		res.loadTexture("images/inimigoDoggieRun.png", "inimigoDoggie");
+		res.loadTexture("images/inimigoDoggie2.png", "inimigoDoggie2");
+		
+		res.loadTexture("OutGame/dogLogo.png", "dogLogo");
+		res.loadTexture("OutGame/DoggieLogo.png", "doggieLogo");
+		res.loadTexture("OutGame/fatecLogo.png", "fatecLogo");
+		res.loadTexture("OutGame/liblogo.png", "libLogo");
+		res.loadTexture("OutGame/newHorizonLogo.png", "nhLogo");
+		
+		// SONS
+		manager = new AssetManager();
+		manager.load("sons/menu/DoggieMusicaMenu.mp3", Music.class);
+		manager.load("sons/musicas/DoggieMusica01.mp3", Music.class);
+		manager.load("sons/musicas/DoggieMusica02.mp3", Music.class);
+		manager.load("sons/musicas/DoggieMusica03.mp3", Music.class);
+		manager.load("sons/musicas/DoggieMusica04.mp3", Music.class);
+		manager.load("sons/musicas/DoggieMusica05.mp3", Music.class);
+		
+		manager.load("sons/GameOver/GameOver_noLoop.mp3", Sound.class);
+		manager.load("sons/latido/latidodoggie.mp3", Sound.class);
+		manager.load("sons/latido/rosnadoinimigo.mp3", Sound.class);
+		manager.load("sons/menu/menuClick.mp3", Sound.class);
+		manager.load("sons/bones/up1.mp3", Sound.class);
+		manager.load("sons/bones/veneno1.mp3", Sound.class);
+		manager.finishLoading();
 		
 		sb = new SpriteBatch();
 		
 		
-		// Maneira complexa que permite utilização de fontes externas.
+		// Maneira complexa que permite utilizacao de fontes externas.
 		fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Arial Black.ttf"));
 		fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		fontParameter.size = 18;
@@ -70,8 +107,8 @@ public class GameClass extends Game {
 		
 		fontMenuGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Arial Black.ttf"));
 		fontMenuParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-		fontMenuParameter.size = 16;
-		fontMenuParameter.borderWidth = 0.1f;
+		fontMenuParameter.size = 18;
+		fontMenuParameter.borderWidth = 0f;
 		fontMenuParameter.borderColor = Color.RED;
 		fontMenuParameter.color = Color.BLACK;
 		fontMenuParameter.spaceX = 0;
@@ -95,13 +132,42 @@ public class GameClass extends Game {
 		fontMenuMParameter.spaceX = 0;
 		fontMenuM = fontGenerator.generateFont(fontMenuMParameter);
 		
+		fontIntroGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Arial Black.ttf"));
+		fontIntroParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+		fontIntroParameter.size = 22;
+		fontIntroParameter.borderWidth = 0f;
+		fontIntroParameter.borderColor = Color.BLUE;
+		fontIntroParameter.color = Color.WHITE;
+		fontIntroParameter.spaceX = 0;
+		fontIntro = fontGenerator.generateFont(fontIntroParameter);
+		
+		fontGameOverGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Arial Black.ttf"));
+		fontGameOverParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+		fontGameOverParameter.size = 72;
+		fontGameOverParameter.borderWidth = 0f;
+		fontGameOverParameter.borderColor = Color.BLUE;
+		fontGameOverParameter.color = Color.BLACK;
+		fontGameOverParameter.spaceX = 0;
+		fontGameOver = fontGenerator.generateFont(fontGameOverParameter);
+				
+		threadMusica = new ThreadMusica(this);
+		
+		threadMusica.start();
 		
 		
 		
 		
-//		setScreen(new PlayScreen(this));
-		setScreen(new MenuScreen(this));
+		faseAtual = 2; // Serve apenas para testes na playscreen. Valor é alterado na IntroGameScreen
+		Language = "Portugues";
+//		Language = "Ingles";
 		
+		setScreen(new PlayScreen(this));
+
+		if(!debug)
+		{			
+			Language = "Portugues";
+			setScreen(new SplashScreen(this));
+		}
 		
 	}
 	@Override

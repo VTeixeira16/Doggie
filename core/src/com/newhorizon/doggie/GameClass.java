@@ -60,7 +60,7 @@ public class GameClass extends Game {
 	  
 	public void create() {
 		
-		debug = true;
+		debug = false;
 		
 		//		ASSETS
 		res = new Content();

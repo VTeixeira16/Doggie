@@ -55,7 +55,7 @@ public class SobreJogo extends ApplicationAdapter implements Screen {
 		{
 			txtCreditos = "About the Game";
 			texto1 = "Game developed by Victor Teixeira and Gabriel Ventura, students of Digital \n"
-					+ "Games at Fatec Carapicu�ba. The game aims to have fun bringing a \n"
+					+ "Games at Fatec Carapicuíba. The game aims to have fun bringing a \n"
 					+ "reflection on the difficulties faced by abandoned animals.";
 			
 			texto2 = "Project developed as work to conclude the 3rd semester. Developed in \n"

@@ -72,7 +72,7 @@ public class GameClass extends Game {
 		
 		res.loadTexture("OutGame/dogLogo.png", "dogLogo");
 		res.loadTexture("OutGame/DoggieLogo.png", "doggieLogo");
-		res.loadTexture("OutGame/fatecLogo.png", "fatecLogo");
+		res.loadTexture("OutGame/fateclogo.png", "fatecLogo");
 		res.loadTexture("OutGame/liblogo.png", "libLogo");
 		res.loadTexture("OutGame/newHorizonLogo.png", "nhLogo");
 		

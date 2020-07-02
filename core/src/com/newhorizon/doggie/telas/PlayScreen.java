@@ -33,13 +33,15 @@ import com.newhorizon.doggie.sprites.InimigoCachorro;
 import com.newhorizon.doggie.sprites.Inimigos;
 import com.newhorizon.doggie.sprites.Ossos;
 import com.newhorizon.doggie.sprites.OssosVeneno;
-import com.newhorizon.doggie.threads.DoggieThread;
+import com.newhorizon.doggie.threads.InputsThreads;
 import com.newhorizon.doggie.tools.B2dVariaveis;
 import com.newhorizon.doggie.tools.DetectorColisoes;
 
 public class PlayScreen implements Screen {
 	
 	private GameClass game;
+	public float deltaTime;
+	
 	
 	private float playTimer;
 
@@ -97,6 +99,8 @@ public class PlayScreen implements Screen {
 	private Inimigos inimigo28;
 	private Inimigos inimigo29;
 	private Inimigos inimigo30;
+	
+	private InputsThreads inputsThreads;
 		
 	// Se tiver em debug, o render mostrar� os colisores
 	public boolean debug;
@@ -184,6 +188,9 @@ public class PlayScreen implements Screen {
 		createTiles();
 		createOssos();
 		createOssosVeneno();		
+		
+		inputsThreads = new InputsThreads(this,doggie);
+		inputsThreads.start();
 	}
 
 	@Override
@@ -208,6 +215,8 @@ public class PlayScreen implements Screen {
 
 	public void update(float dt) {
 		playTimer += dt;
+		
+		deltaTime = dt;
 		
 		if(playTimer > 0.1f)
 		{
@@ -234,7 +243,7 @@ public class PlayScreen implements Screen {
 		}
 
 		world.step(dt, 6, 2);
-		handleInput(dt);
+//		handleInput(dt);
 		gamecam.update();
 
 		// Apagando Ossos

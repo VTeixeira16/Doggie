@@ -165,7 +165,7 @@ public class GameClass extends Game {
 
 		if(!debug)
 		{			
-			Language = "Portugues";
+			Language = "Ingles";
 			setScreen(new SplashScreen(this));
 		}
 		
